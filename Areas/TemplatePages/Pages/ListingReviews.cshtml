@@ -1,0 +1,143 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.ListingReviewsModel
+@{
+    Layout = "_DashBoard";
+
+}
+<div class="col-md-9">
+    <div class="dashboard-title   fl-wrap">
+        <h3>@sharedResource["Your Reviews"] </h3>
+    </div>
+    <!-- profile-edit-container-->
+    <div class="profile-edit-container fl-wrap block_box">
+        <!-- reviews-comments-item -->
+        @foreach (var item in Model.reviewlist)
+        {
+
+            <div class="reviews-comments-item">
+                <div class="review-comments-avatar">
+                    <img src="~/Images/default user.png" />
+                </div>
+                <div class="reviews-comments-item-text fl-wrap">
+                    <div class="reviews-comments-header fl-wrap">
+                        <h4><a href="#">@item.Name</a></h4>
+                        <div class="review-score-user">
+                            <span class="review-score-user_item">@item.Rating</span>
+                            <div class="listing-rating card-popup-rainingvis" data-starrating2="@item.Rating"></div>
+                        </div>
+                    </div>
+                    <p>@item.Title</p>
+                    <div class="reviews-comments-item-footer fl-wrap">
+                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>@item.ReviewDate.Date</span></div>
+                        @*<a href="#" class="rate-review"><i class="fal fa-reply"></i>  Reply </a>*@
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="pagination">
+
+        <!-- profile-edit-container end-->
+        @foreach (var item in Model.Pagenumbers)
+        {
+            var divid = item.ToString();
+
+            <a onclick="nextlist(this.id)" class="" id="@divid">@item</a>
+        }
+
+    </div>
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/color.css")">
+
+
+    }
+    //Arabic
+    else
+    {
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+
+    }
+}
+<script>
+    document.getElementById('1').classList.add("current-page");
+    //document.getElementById('1').classList.remove("current-page");
+    function nextlist(item) {
+        console.log("item" + item);
+        console.log(typeof (item))
+        var num = Number(item);
+        console.log(typeof (num))
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/ListingReviews?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(num),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                sessionStorage.setItem("reloading", "true");
+                sessionStorage.setItem("anchorid", item);
+                location.reload();
+                //changestyle(item);
+            },
+            failure: function (response) {
+            }
+        });
+    }
+    function changestyle(hrefid) {
+        console.log("item in changestyle function");
+        console.log(hrefid);
+        console.log(typeof (hrefid));
+        document.getElementById(hrefid).classList.add("current-page");
+    }
+    window.onload = function () {
+        var reloading = sessionStorage.getItem("reloading");
+        var hrefid = sessionStorage.getItem("anchorid");
+        if (reloading) {
+            document.getElementById('1').classList.remove("current-page");
+            sessionStorage.removeItem("reloading");
+            changestyle(hrefid);
+        }
+    }
+    //window.onbeforeunload = function () {
+    //    sessionStorage.removeItem("reloading");
+
+    //};
+    //if (window.history) {
+    //    var myOldUrl = window.location.href;
+    //    window.addEventListener('hashchange', function () {
+    //        window.history.pushState({}, null, myOldUrl);
+    //    });
+    //}
+    //window.addEventListener('hashchange', function () {
+    //    sessionStorage.removeItem("reloading");
+    //});
+
+    //window.addEventListener('popstate', function () {
+    //    sessionStorage.removeItem("reloading");
+    //});
+</script>

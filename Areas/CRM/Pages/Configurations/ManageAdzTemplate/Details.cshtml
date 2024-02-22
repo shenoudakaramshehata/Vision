@@ -1,0 +1,44 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageAdzTemplate.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AdTemplateConfig</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateConfig.AdTemplateFieldCaptionAr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateConfig.AdTemplateFieldCaptionAr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateConfig.AdTemplateFieldCaptionEn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateConfig.AdTemplateFieldCaptionEn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateConfig.ClassifiedAdsCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateConfig.ClassifiedAdsCategory.ClassifiedAdsCategoryId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateConfig.FieldType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateConfig.FieldType.FieldTypeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.AdTemplateConfig?.AdTemplateConfigId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

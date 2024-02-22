@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Vision.Models.ClassifiedAd
+@{
+    if (Model.Reel != null)
+    {
+        <div class="row">
+            <div class="col-xl-12">
+                <iframe src="/@Model.Reel" width="640" height="360" frameborder="0" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" controls autoplay>
+                </iframe>
+            </div>
+            <!-- end col -->
+            <!-- end col -->
+        </div>
+    }
+}

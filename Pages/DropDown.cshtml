@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+   
+}
+@model Vision.ViewModels.PartialModelVm
+ <div class="row">
+              
+                <div class="col-md-6" id="HrefCat">
+                    <label>@Model.AdTemplateFieldCaptionEn</label>
+                    <div class="listsearch-input-item">
+                        <select id="CatId" data-placeholder="@sharedResource["Select Category"]" onChange="selectedCat(this.value);" class="chosen-select no-search-select">
+                            <option>@sharedResource["All Categories"]</option>
+                           @* @foreach (var item in Categories)
+                            {
+                                <option value="@item.ClassifiedAdsCategoryId">@item.ClassifiedAdsCategoryTitleAr</option>
+                            }*@
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span id="SpanCatId" style="color:red;display:none">@sharedResource["Select Category"]</span>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>

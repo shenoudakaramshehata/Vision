@@ -1,0 +1,6 @@
+﻿@using Vision.Models;
+
+@model AdTemplateConfig
+
+<label>@Model.AdTemplateFieldCaptionEn  <i class="fal fa-briefcase"></i></label>
+<input type="text" name="@Model.AdTemplateConfigId" id="@Model.AdTemplateConfigId" required="@Model.IsRequired.ToString()">

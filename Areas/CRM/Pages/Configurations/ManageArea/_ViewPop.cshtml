@@ -1,0 +1,68 @@
+﻿
+@{
+}
+
+
+@model Vision.Models.Area
+
+<div class="modal fade" id="QuickViewPoup" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" id="close-modal"></button>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                 
+                    <br/>
+                    <div class="table-card">
+                        <table class="table mb-0">
+                            <tbody>
+                            
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["Area Title English"]</td>
+                                    <td id="DAreaTlEn"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["Area Title Arabic"]</td>
+                                    <td id="DAreaTlAr"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["City Title English"]</td>
+                                    <td id="DCityTlEn"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["City Title Arabic"]</td>
+                                    <td id="DCityTlAr"></td>
+                                </tr>
+
+                                  <tr>
+                                    <td class="fw-medium">@sharedResource["Sort"]</td>
+                                    <td id="DAreaOrderIndex"></td>
+                                </tr>
+                                   <tr>
+                                    <td class="fw-medium">@sharedResource["Active"]</td>
+                                    <td id="DAreaIsActive"></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table><!--end table-->
+                    </div>
+                </div>
+            </div><!--end card-->
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">
+                       @sharedResource["Close"] 
+                    </button>
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

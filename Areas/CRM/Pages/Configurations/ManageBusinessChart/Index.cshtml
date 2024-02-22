@@ -1,0 +1,641 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageBusinessChart.IndexModel
+@{
+}
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewBag.Title = @sharedResource["Manage Business"];
+    ViewBag.pTitle = @sharedResource["Classified Business"];
+    ViewBag.pageTitle = @sharedResource["Classified Business"];
+}
+<div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
+    <div class="file-manager-sidebar">
+        <div class="p-4 d-flex flex-column h-100">
+            <div class="mb-3">
+                <button class="btn btn-success w-100" data-bs-target="#createProjectModal" data-bs-toggle="modal"><i class="ri-add-line align-bottom"></i>@sharedResource["Add Category"] </button>
+            </div>
+
+
+
+            <div class="px-4 mx-n4" data-simplebar style="height: calc(100vh - 468px);">
+                <ul class="to-do-menu list-unstyled" id="projectlist-data">
+                    <li>
+                        <a data-bs-toggle="collapse" href="#velzonAdmin" class="nav-link fs-13 active">@sharedResource["Categories"] </a>
+                        <div class="collapse show" id="velzonAdmin">
+                            <div id="jstree">
+                            </div>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+                            <script type="text/javascript">
+                                $(function () {
+
+                                    $('#jstree').on('changed.jstree', function (e, data) {
+                                        var i, j;
+                                        var selectedItems = [];
+                                        for (i = 0, j = data.selected.length; i < j; i++) {
+
+                                            //Fetch the Id.
+                                            var id = data.selected[i];
+                                            console.log("This Is Id=" + id);
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "/CRM/Configurations/ManageBusinessChart/Index?handler=FillTemplateList",
+                                                data: { "id": id },
+                                                contentType: "application/json",
+                                                dataType: "json",
+                                                success: function (response) {
+                                                    console.log(response)
+                                                    var domainUrl = document.getElementById("UrlId").value;
+                                                    console.log(domainUrl)
+                                                    window.location.replace(domainUrl + "/CRM/Configurations/ManageBusinessChart/Index")
+                                                },
+                                                failure: function (response) {
+                                                    alert(response);
+                                                }
+                                            });
+
+
+                                            //Remove the ParentId.
+                                            if (id.indexOf('-') != -1) {
+                                                id = id.split("-")[1];
+                                            }
+
+                                            //Add the Node to the JSON Array.
+                                            selectedItems.push({
+                                                text: data.instance.get_node(data.selected[i]).text,
+                                                id: id,
+                                                parent: data.node.parents[0]
+                                            });
+                                        }
+
+                                        //Serialize the JSON Array and save in HiddenField.
+                                        $('#selectedItems').val(JSON.stringify(selectedItems));
+                                        console.log(JSON.stringify(selectedItems));
+
+                                    }).jstree({
+                                        "core": {
+                                            "themes": {
+                                                "variant": "large"
+                                            },
+                                            "data": @Html.Raw(Model.TreeViewJSON)
+                                                                                                                                                                                                                                    },
+                                        "checkbox": {
+                                            "keep_selected_style": false
+                                        },
+                                        "plugins": ["wholerow"],
+                                    });
+                                });
+                            </script>
+                            @*<ul class="mb-0 sub-menu list-unstyled ps-3 vstack gap-2 mb-2">
+                            <li>
+                            <a href="#!"><i class="ri-stop-mini-fill align-middle fs-15 text-danger"></i> v1.4.0</a>
+                            </li>
+                            <li>
+                            <a href="#!"><i class="ri-stop-mini-fill align-middle fs-15 text-secondary"></i> v1.5.0</a>
+                            </li>
+                            <li>
+                            <a href="#!"><i class="ri-stop-mini-fill align-middle fs-15 text-info"></i> v1.6.0</a>
+                            </li>
+                            <li>
+                            <a href="#!"><i class="ri-stop-mini-fill align-middle fs-15 text-primary"></i> v1.7.0</a>
+                            </li>
+                            <li>
+                            <a href="#!"><i class="ri-stop-mini-fill align-middle fs-15 text-warning"></i> v1.8.0</a>
+                            </li>
+                            </ul>*@
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div><!--end side content-->
+    <div class="file-manager-content w-100 p-0 pb-0">
+        <div class="card" id="orderList">
+            <div class="card-header border-0">
+                <div class="row align-items-center gy-3">
+                    <div class="col-sm">
+                        <h5 class="card-title mb-0">@sharedResource["Category Business Template Configuration"]</h5>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex gap-1 flex-wrap">
+                            <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModalAddModal"><i class="ri-add-line align-bottom me-1"></i>@sharedResource["Add Attribute"] </button>
+                            @*<button class="btn btn-soft-danger" id="remove-actions" onclick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pt-10">
+                <div>
+                   
+                        <div class="table-responsive table-card">
+                            <table id="myTable" class="table  dt-responsive nowrap  align-middle" style="width:100%">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th data-ordering="false" style="text-align:center!important">@sharedResource["Caption Ar"]</th>
+                                        <th data-ordering="false" style="text-align:center!important">@sharedResource["Caption En"]</th>
+                                        <th data-ordering="false" style="text-align:center!important">@sharedResource["Field Type"]</th>
+                                        <th data-ordering="false" style="text-align:center!important">@sharedResource["Category"]</th>
+
+                                        <th data-ordering="false">@sharedResource["Actions"]</th>
+                                    </tr>
+                                </thead>
+                       @* <table class="table table-nowrap align-middle" id="customerTable">
+                            <thead class="text-muted table-light">
+                                <tr class="text-uppercase">
+                                    <th class="sort" data-sort="id">@sharedResource["Caption Ar"]</th>
+                                    <th class="sort" data-sort="name">@sharedResource["Caption En"]</th>
+                                    <th class="sort" data-sort="company_name">@sharedResource["Field Type"]</th>
+                                    <th class="sort" data-sort="date">@sharedResource["Category"]</th>
+
+                                    <th class="sort" data-sort="leads_score">Action</th>
+                                </tr>
+                            </thead>*@
+                            <tbody >
+
+                                @{
+                                    if (@Model.BusinessTemplateConfigList != null)
+                                    {
+                                        if (@Model.BusinessTemplateConfigList.Count != 0)
+                                        {
+                                            foreach (var item in @Model.BusinessTemplateConfigList)
+
+                                            {
+                                                <tr>
+
+
+                                                        <td class=" text-center fw-bold">@item.BusinessTemplateFieldCaptionAr</td>
+                                                        <td class=" text-center fw-bold">@item.BusinessTemplateFieldCaptionEn</td>
+                                                    <td class=" text-center fw-bold">
+                                                        @item.FieldType?.FieldTypeTitle
+                                                  
+                                                    </td>
+                                                
+
+                                                    @{
+                                                        if (Model.BrowserCulture == "en-US")
+                                                        {
+                                                                <td class=" text-center fw-bold">@item.BusinessCategories?.BusinessCategoryTitleEn</td>
+                                                        }
+                                                        else
+                                                        {
+
+                                                                <td class=" text-center fw-bold">@item.BusinessCategories?.BusinessCategoryTitleAr</td>
+
+                                                        }
+                                                    }
+
+                                                    @{
+                                                        if (@item.FieldTypeId == 3 || @item.FieldTypeId == 6 || @item.FieldTypeId == 13)
+                                                        {
+
+                                                                <td class=" text-center fw-bold">
+                                                                <ul class="list-inline hstack gap-2 mb-0">
+
+
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                        data-bs-trigger="hover" data-bs-placement="top"
+                                                        title="Options">
+                                                                        <a asp-area="CRM" asp-page="/Configurations/ManageBusinessTemplateOptions/index" asp-route-id="@item.BusinessTemplateConfigId">
+                                                                            <i class="ri-eye-fill align-bottom text-muted"></i>
+                                                                        </a>
+                                                                    </li>
+
+                                                                </ul>
+                                                            </td>
+
+                                                        }
+
+                                                    }
+
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                       
+                    </div>
+
+                </div>
+                <div class="modal fade" id="showModalAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">@sharedResource["Add Attribute"]</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <input type="text" asp-for="@Model.Url" value="@Model.Url" hidden id="UrlId" />
+                            <form asp-area="CRM" asp-page="/Configurations/ManageBusinessChart/Index" asp-page-handler="AddAttribute" enctype="multipart/form-data" class="tablelist-form" autocomplete="off" onsubmit="return validateAddAttributeForm();">
+                                <div class="modal-body">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionAr" class="control-label">@sharedResource["Caption Ar"]</label>
+                                            <input asp-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionAr" class="form-control" />
+                                            <span asp-validation-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionAr" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionEn" class="control-label">@sharedResource["Caption En"]</label>
+                                            <input asp-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionEn" class="form-control" />
+                                            <span asp-validation-for="BusinessTemplateConfig.BusinessTemplateFieldCaptionEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                  
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.FieldTypeId" for="car-rental-name">@sharedResource["Field Type"] <small class="text-danger">*</small></label>
+
+                                            <select id="FieldId" data-val="true" data-val-required="@sharedResource["Please Select Field Type"]" asp-for="BusinessTemplateConfig.FieldTypeId" class="form-select required" aria-label="Default select example" required>
+                                                <option selected value="">@sharedResource["Select Field Type"]</option>
+
+                                                @{
+                                                    if (@Model.fieldTypes != null)
+                                                    {
+                                                        foreach (var item in @Model.fieldTypes)
+
+                                                        {
+
+                                                            <option value="@item.FieldTypeId">@item.FieldTypeTitle</option>
+
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+                                            @{
+                                                if (Model.BrowserCulture == "en-US")
+                                                {
+
+                                                    <span id="FieldSpanId" style="display:none" class="text-danger">Field Type Is Required</span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span id="FieldSpanId" style="display:none" class="text-danger">نوع الحقل مطلوب</span>
+
+
+
+                                                }
+
+
+                                            }
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="choices-multiple-groups" asp-for="BusinessTemplateConfig.BusinessCategoryId" class="form-label text-muted">
+                                                    @sharedResource["Business Category"] <small class="text-danger">*</small>
+                                                </label>
+                                                <select class="form-control" id="CatId" name="Multipleselection"  data-choices-search-true data-choices-removeItem data-choices  data-choices-multiple-groups="true"
+                                                        multiple>
+                                                    <option  value="">@sharedResource["Select Business Category"]</option>
+                                                    @{
+                                                        if (@Model.BusinessCategories != null)
+                                                        {
+                                                            foreach (var item in @Model.BusinessCategories)
+
+                                                            {
+
+                                                                if (Model.BrowserCulture == "en-US")
+                                                                {
+                                                                    <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleEn</option>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleAr</option>
+
+
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+@*                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.BusinessCategoryId" for="car-rental-name">@sharedResource["Business Category"] <small class="text-danger">*</small></label>
+
+                                            <select id="CatId" data-val="true" data-val-required="@sharedResource["Business Category"]" name="Multipleselection" class="form-select" multiple required>
+                                                <option selected value=0>@sharedResource["Select Business Category"]</option>
+
+                                                @{
+                                                    if (@Model.BusinessCategories != null)
+                                                    {
+                                                        foreach (var item in @Model.BusinessCategories)
+
+                                                        {
+
+                                                            if (Model.BrowserCulture == "en-US")
+                                                            {
+                                                                <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleEn</option>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleAr</option>
+
+
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+                                            @{
+                                                if (Model.BrowserCulture == "en-US")
+                                                {
+
+                                                    <span id="CatSpanId" style="display:none" class="text-danger">Category Is Required</span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span id="CatSpanId" style="display:none" class="text-danger">الفئة مطلوبة</span>
+
+
+
+                                                }
+
+
+                                            }
+                                        </div>
+*@                                    </div>
+                                    <br />
+                                   
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.SortOrder" class="control-label">@sharedResource["Sort Order"]</label>
+                                            <input asp-for="BusinessTemplateConfig.SortOrder" type="number" min="1" class="form-control" />
+                                            <span asp-validation-for="BusinessTemplateConfig.SortOrder" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6 pt-5">
+                                            <div class="form-check">
+                                                <input asp-for="BusinessTemplateConfig.IsRequired" class="form-check-input" id="chk" onclick="Required()" type="checkbox">
+                                                <label for="adTemplateConfig.IsRequired" class="form-check-label">@sharedResource["Is Required"]</label>
+                                                <span asp-validation-for="BusinessTemplateConfig.IsRequired" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <br />
+                                    <div class="row col-12" style="display:none" id="ValidationId">
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.ValidationMessageAr" class="control-label">@sharedResource["Validation Message Ar"]</label>
+                                            <input asp-for="BusinessTemplateConfig.ValidationMessageAr" class="form-control" />
+                                            <span asp-validation-for="BusinessTemplateConfig.ValidationMessageAr" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label asp-for="BusinessTemplateConfig.ValidationMessageEn" class="control-label">@sharedResource["Validation Message En"]</label>
+                                            <input asp-for="BusinessTemplateConfig.ValidationMessageEn" class="form-control" />
+                                            <span asp-validation-for="BusinessTemplateConfig.ValidationMessageEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="hstack gap-2 justify-content-end">
+
+                                        <button type="submit" class="btn btn-success" id="add-btn">@sharedResource["Create"]</button>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body p-5 text-center">
+                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                                <div class="mt-4 text-center">
+                                    <h4>You are about to delete a order ?</h4>
+                                    <div class="hstack gap-2 justify-content-center remove">
+                                        <button class="btn btn-link link-success fw-medium text-decoration-none" id="deleteRecord-close" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Close</button>
+                                        <button class="btn btn-danger" id="delete-record">Yes, Delete It</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end modal -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade zoomIn" id="createProjectModal" tabindex="-1" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-3 bg-soft-success">
+                <h5 class="modal-title" id="createProjectModalLabel">@sharedResource["Add Category"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="addProjectBtn-close" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" enctype="multipart/form-data" onsubmit="return validateAddCatForm();">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-lg-12">
+                        <div class="text-center col-lg-12">
+                            <div class="position-relative d-inline-block">
+                                <div class="position-absolute bottom-0 end-0">
+                                    <label for="file" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="@sharedResource["Select Image"]">
+                                        <div class="avatar-xs cursor-pointer">
+                                            <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                <i class="ri-image-fill"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input class="form-control d-none hidefromHere" name="file" id="file" type="file"
+                                           accept="image/*" required>
+                                </div>
+                                <div class="avatar-lg p-1">
+                                    <div class="avatar-title bg-light rounded-circle">
+                                        <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover" />
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="fs-13 mt-3">@sharedResource["Image"] </h5>
+
+                        </div>
+                    </div>
+                    <br />
+                   
+                    <div class="row col-12">
+                        <div class="form-group col-6">
+                            <label asp-for="AddbusinessCategory.BusinessCategoryTitleAr" class="control-label">@sharedResource["TitleAr"]</label>
+                            <input asp-for="AddbusinessCategory.BusinessCategoryTitleAr" class="form-control" />
+                            <span asp-validation-for="AddbusinessCategory.BusinessCategoryTitleAr" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-6">
+                            <label asp-for="AddbusinessCategory.BusinessCategoryTitleEn" class="control-label">@sharedResource["TitleEn"]</label>
+                            <input asp-for="AddbusinessCategory.BusinessCategoryTitleEn" class="form-control" />
+                            <span asp-validation-for="AddbusinessCategory.BusinessCategoryTitleEn" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                 
+                    <div class="row col-12">
+                        <div class="form-group col-6">
+                            <label asp-for="AddbusinessCategory.BusinessCategorySortOrder" class="control-label">@sharedResource["Sort Order"]</label>
+                            <input asp-for="AddbusinessCategory.BusinessCategorySortOrder" type="number" min="1" class="form-control" />
+                            <span asp-validation-for="AddbusinessCategory.BusinessCategorySortOrder" class="text-danger"></span>
+                        </div>
+                       
+                   
+                    <div class="form-group col-6">
+                        <label asp-for="AddbusinessCategory.BusinessCategoryParentId" for="car-rental-name">@sharedResource["Category"] <small class="text-danger">*</small></label>
+
+                        <select data-val="true" data-val-required="@sharedResource["Category"]" asp-for="AddbusinessCategory.BusinessCategoryParentId" class="form-select required" aria-label="Default select example" required>
+                            <option selected value=0>@sharedResource["Select Category"]</option>
+
+                            @{
+                                if (@Model.BusinessCategories != null)
+                                {
+                                    foreach (var item in @Model.BusinessCategories)
+
+                                    {
+
+                                        if (Model.BrowserCulture == "en-US")
+                                        {
+                                            <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleEn</option>
+
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.BusinessCategoryId">@item.BusinessCategoryTitleAr</option>
+
+
+
+                                        }
+
+                                    }
+                                }
+                            }
+
+                        </select>
+
+                        <span asp-validation-for="AddbusinessCategory.BusinessCategoryParentId" class="text-alert"></span>
+                    </div>
+                     </div>
+                    <br />
+                   
+                    <div class="row col-12">
+                        <div class="form-group">
+                            <label asp-for="AddbusinessCategory.BusinessCategoryDescAr" class="control-label">@sharedResource["Descripition Ar"]</label>
+                            <textarea asp-for="AddbusinessCategory.BusinessCategoryDescAr" class="form-control" rows="2"></textarea>
+                            <span asp-validation-for="AddbusinessCategory.BusinessCategoryDescAr" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                 
+                    <div class="row col-12">
+                        <div class="form-group">
+                            <label asp-for="AddbusinessCategory.BusinessCategoryDescEn" class="control-label">@sharedResource["Descripition En"] </label>
+                            <textarea asp-for="AddbusinessCategory.BusinessCategoryDescEn" class="form-control" rows="2"></textarea>
+                            <span asp-validation-for="AddbusinessCategory.BusinessCategoryDescEn" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <br />
+                   
+                    <div class="row col-12">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input asp-for="AddbusinessCategory.BusinessCategoryIsActive" class="form-check-input" type="checkbox">
+                                <label for="AddbusinessCategory.BusinessCategoryIsActive" class="form-check-label">@sharedResource["Is Active"]</label>
+                                <span asp-validation-for="AddbusinessCategory.BusinessCategoryIsActive" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group mt-2">
+                        <input type="submit" value="@sharedResource["Create"]" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <!-- list.js min js -->
+    <script src="~/assets/libs/list.js/list.min.js"></script>
+    <script src="~/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+    <!-- crm leads init -->
+    <script src="~/assets/js/pages/crm-leads.init.js"></script>
+}
+<script>
+    
+
+    function validateAddCatForm() {
+        if (document.getElementById("file").files.length == 0) {
+            alert("You Must Select Image");
+            return false;
+        }
+        return true;
+    }
+    function validateAddAttributeForm() {
+        var CatId = document.getElementById("CatId").value
+        var FieldId = document.getElementById("FieldId").value
+        console.log(CatId)
+        var CatSpanId = document.getElementById("CatSpanId")
+        var FieldSpanId = document.getElementById("FieldSpanId")
+        if (FieldId == 0) {
+            FieldSpanId.style.display = "flex";
+            return false;
+        }
+        if (CatId == 0) {
+            CatSpanId.style.display = "flex";
+            return false;
+        }
+
+        return true;
+    }
+    function Required() {
+        const ckeckvalue = document.getElementById("chk")
+        const requiredInputs = document.getElementById("ValidationId")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs.style.display = 'flex';
+        }
+        else {
+            requiredInputs.style.display = 'none';
+        }
+    }
+</script>

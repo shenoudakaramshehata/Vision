@@ -1,0 +1,173 @@
+﻿@page
+@model Vision.Pages.BDOfferDetailsModel
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+<!-- wrapper-->
+<div id="wrapper">
+    <!-- content-->
+    <div class="content">
+        <!--section-->
+        <section class="gray-bg small-padding no-top-padding-sec" id="sec1" style="padding-bottom: 0.2rem;">
+            <div class="container">
+                <div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
+                    <a asp-page="/Index">@sharedResource["Home"]</a> <a asp-page="/BDOffers">@sharedResource["Offers"]</a><span>@sharedResource["Details"]</span>
+                </div>
+                <div class="fl-wrap">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="fl-wrap block_box product-header">
+                                <div class="product-header-details">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="list-single-main-media fl-wrap">
+                                                <img src="/@Model.BDOfferObj.Pic" class="respimg" alt="Offer Pic">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @{
+                                                if (BrowserCulture == "en-US")
+                                                {
+
+                                                    <h3>@Model.BDOfferObj.TitleEn</h3>
+                                                }
+                                                else
+                                                {
+                                                    <h3>@Model.BDOfferObj.TitleAr</h3>
+
+
+                                                }
+                                            }
+
+
+                                            <span class="product-header-details_price">@Model.BDOfferObj.Price KD</span>
+
+                                            <span class="fw-separator"></span>
+                                            <div class="clearfix"></div>
+                                            <p>@Model.BDOfferObj.OfferDescription </p>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        @{
+            if (@Model.BDOfferObj != null)
+            {
+                if (@Model.BDOfferObj.BDOfferImages != null)
+                {
+                       <section class="gray-bg no-top-padding">
+            <div class="container">
+               
+                <div class="row">
+                    <!-- list-single-main-wrapper-col -->
+                    <div class="col-md-12">
+                        <div class="list-single-main-item fl-wrap block_box" id="sec3">
+                            <div class="list-single-main-item-title">
+                                <h3>@sharedResource["Offer Images"]</h3>
+                            </div>
+                            <div class="list-single-main-item_content fl-wrap">
+                                <div class="single-carousel-wrap fl-wrap lightgallery">
+                                    <div class="sc-next sc-btn color2-bg"><i class="fas fa-caret-right"></i></div>
+                                    <div class="sc-prev sc-btn color2-bg"><i class="fas fa-caret-left"></i></div>
+                                    <div class="single-carousel fl-wrap full-height">
+                                        <div class="swiper-container">
+                                            <div class="swiper-wrapper">
+                                                @{
+                                                    if (Model.BDOfferObj.BDOfferImages != null)
+                                                    {
+                                                        foreach (var item in Model.BDOfferObj.BDOfferImages)
+                                                        {
+                                                            <!-- swiper-slide-->
+                                                            <div class="swiper-slide">
+                                                                <div class="box-item">
+                                                                    <img src="/@item.Image" alt="">
+                                                                    <a href="/@item.Image" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <!-- swiper-slide end-->
+                                                        }
+                                                    }
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                    
+                }
+                
+            }
+            }
+        <section class="gray-bg no-top-padding">
+            <div class="container">
+               
+                <div class="row">
+                    <!-- list-single-main-wrapper-col -->
+                    <div class="col-md-12">
+                        <div class="list-single-main-item fl-wrap block_box" id="sec3">
+                            <div class="list-single-main-item-title">
+                                <h3>@sharedResource["Offer Images"]</h3>
+                            </div>
+                            <div class="list-single-main-item_content fl-wrap">
+                                <div class="single-carousel-wrap fl-wrap lightgallery">
+                                    <div class="sc-next sc-btn color2-bg"><i class="fas fa-caret-right"></i></div>
+                                    <div class="sc-prev sc-btn color2-bg"><i class="fas fa-caret-left"></i></div>
+                                    <div class="single-carousel fl-wrap full-height">
+                                        <div class="swiper-container">
+                                            <div class="swiper-wrapper">
+                                                @{
+                                                    if (Model.BDOfferObj.BDOfferImages != null)
+                                                    {
+                                                        foreach (var item in Model.BDOfferObj.BDOfferImages)
+                                                        {
+                                                            <!-- swiper-slide-->
+                                                            <div class="swiper-slide">
+                                                                <div class="box-item">
+                                                                    <img src="/@item.Image" alt="">
+                                                                    <a href="/@item.Image" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <!-- swiper-slide end-->
+                                                        }
+                                                    }
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--section end-->
+        <div class="limit-box fl-wrap"></div>
+    </div>
+    <!--content end-->
+
+</div>
+<!-- wrapper end-->

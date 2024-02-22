@@ -1,0 +1,134 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "";
+}
+@using Microsoft.AspNetCore.Localization;
+
+<!doctype html>
+<html lang="en">
+
+<!-- Mirrored from themesbrand.com/admiria/layouts/vertical/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Dec 2021 13:10:17 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <title>@sharedResource["Sign_in"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/images/IcityLogo.jpg">
+
+    @{
+        var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+        var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+        //English
+        if (BrowserCulture == "en-US")
+        {
+            <style>
+                html {
+                    direction: ltr !important;
+                }
+            </style>
+           
+            <link href="@Url.Content("~/Admin/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/app.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+        //Arabic
+        else
+        {
+            <style>
+                html {
+                    direction: rtl !important;
+                }
+            </style>
+            <link href="@Url.Content("~/Admin/assets/css/bootstrap-rtl.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/app-rtl.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+
+    }
+    <link href="~/Admin/assets/css/custom.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+    <!-- Begin page -->
+    <div class="accountbg" style="background: url('/images/download.jpg');background-size: cover;background-position: center;"></div>
+    <div class="account-pages mt-5 pt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-5 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="text-center mt-4">
+                                <div class="mb-3">
+                                    <a href="index.html"><img src="/images/IcityLogo.jpg" style="height: 7rem;width: 9rem;" alt="logo" ></a>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-size-18 mt-2 text-center">@sharedResource["Get Started"] !</h4>
+                                <p class="text-muted text-center mb-4">@sharedResource["It's free to signup and only takes a minute"].</p>
+
+                                <form asp-route-returnUrl="@Model.ReturnUrl" class="form-horizontal" method="post">
+                                    <div class="mb-3">
+
+                                        <label class="form-label" asp-for="Input.Email">@sharedResource["Email"]</label>
+                                        <input type="text" class="form-control" asp-for="Input.Email" id="username" placeholder="@sharedResource["username_placeholder"]">
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="Input.Password">@sharedResource["Password"]</label>
+                                        <input type="password" asp-for="Input.Password" class="form-control" id="userpassword" placeholder="@sharedResource["password_placeholder"]">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" asp-for="Input.ConfirmPassword">@sharedResource["Confirm Password"]</label>
+                                        <input type="password" asp-for="Input.ConfirmPassword" class="form-control" id="userpassword" placeholder="@sharedResource["Enter Confirm Password"]">
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-sm-6 text-center" style="margin:auto">
+                                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">@sharedResource["Register"]</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                                <p style="margin-top:.9rem" class="mg-t-40 mg-b-0">@sharedResource["Already have an account"]? <a asp-area="Identity" asp-page="Login">@sharedResource["Sign In"]</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="~/Admin/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/Admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Admin/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/Admin/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Admin/assets/libs/node-waves/waves.min.js"></script>
+
+    <script src="~/Admin/assets/js/app.js"></script>
+  
+</body>
+
+</html>
+ @section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

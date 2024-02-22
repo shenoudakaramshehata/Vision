@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Vision.Models.AdsImage>
+
+@{
+    if (Model.Count > 0)
+    {
+        <div class="col-xl-4 col-md-8 mx-auto">
+            <div class="product-img-slider sticky-side-div">
+                <div class="swiper product-thumbnail-slider p-2 rounded bg-light">
+                    <div class="swiper-wrapper">
+                    @{
+                        foreach (var item in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <img src="@item.Image" alt=""
+                         class="img-fluid d-block" />
+                                </div>
+                            }
+                    }
+                       
+                       
+                       
+                       
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <!-- end swiper thumbnail slide -->
+                <div class="swiper product-nav-slider mt-2">
+                    <div class="swiper-wrapper">
+                    @{
+                        foreach (var imageitem in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="nav-slide-item ">
+                                        <img src="@imageitem.Image" alt=""
+                             class="img-fluid d-block" />
+                                    </div>
+                                </div>
+                            }
+                    }
+                       
+                       
+                     
+                       
+                    </div>
+                </div>
+                <!-- end swiper nav slide -->
+            </div>
+        </div>
+
+    }
+}

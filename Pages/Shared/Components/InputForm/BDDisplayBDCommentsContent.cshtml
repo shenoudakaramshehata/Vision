@@ -1,0 +1,26 @@
+﻿@using Vision.Models;
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BusinessContent
+<div class="box-widget-content bwc-nopad">
+    <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+        <ul class="no-list-style">
+            <li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#">@Model.BusinessContentValues.FirstOrDefault().ContentValue</a></li>
+            <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="tel:@Model.BusinessContentValues.FirstOrDefault().ContentValue">@Model.BusinessContentValues.FirstOrDefault().ContentValue</a></li>
+            <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="mailto:@Model.BusinessContentValues.FirstOrDefault().ContentValue">@Model.BusinessContentValues.FirstOrDefault().ContentValue</a></li>
+            <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#">@Model.BusinessContentValues.FirstOrDefault().ContentValue</a></li>
+        </ul>
+    </div>
+    <div class="list-widget-social bottom-bcw-box  fl-wrap">
+        <ul class="no-list-style">
+            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+        <div class="bottom-bcw-box_link"><a href="#" class="show-single-contactform tolt" data-microtip-position="top" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a></div>
+    </div>
+</div>

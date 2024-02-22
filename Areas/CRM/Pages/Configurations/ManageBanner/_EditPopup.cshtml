@@ -1,0 +1,236 @@
+﻿
+@inject CRMDBContext _context
+@model Vision.Models.Banner
+
+                    <div class="modal fade" id="showEditModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-3">
+                                <div class="modal-header bg-light p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal"></button>
+                                </div>
+                                 <form method="post" enctype="multipart/form-data" asp-area="CRM" asp-page="/Configurations/ManageBanner/Index" asp-page-handler="EditBanner" onsubmit="return validateEditForm();">
+                                      <input type="text" hidden name="EditSelectedVal" id="EditSelValueId" />
+                                <input type="text" hidden name="SelectedVal" id="SelValueId" />
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="col-lg-12">
+                                    <div class="text-center col-lg-12">
+                                        <div class="position-relative d-inline-block">
+                                            <div class="position-absolute bottom-0 end-0">
+                                                <label for="file" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="@sharedResource["Select Image"]">
+                                                    <div class="avatar-xs cursor-pointer">
+                                                        <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                            <i class="ri-image-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                                <input class="form-control d-none hidefromHere" name="Editfile" id="file" type="file"
+                                                       accept="image/*" required>
+                                            </div>
+                                            <div class="avatar-lg p-1">
+                                                <div class="avatar-title bg-light rounded-circle">
+                                                    <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover bannerImgCla" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h5 class="fs-13 mt-3">@sharedResource["Image"] </h5>
+
+                                    </div>
+                                </div>
+
+                                <div class="row col-12">
+                                    <input asp-for="@Model.BannerId" id="BannerHiddenId" hidden>
+                                    <input asp-for="@Model.BannerPic" id="BannerPicHiddenId" hidden>
+                                    <div class="form-group col-12">
+                                        <label asp-for="@Model.EntityTypeId" for="car-rental-name">@sharedResource["Banner Type"] <small class="text-danger">*</small></label>
+
+                                        <select id="EditCatId" data-val="true" data-val-required="@sharedResource["Banner Type"]" asp-for="@Model.EntityTypeId" class="form-select required" aria-label="Default select example" required onchange="EditFillTypes(this.value)">
+                                            
+
+                                            @{
+                                                if (_context.EntityTypes.ToList() != null)
+                                                {
+                                                    foreach (var item in _context.EntityTypes.ToList())
+
+                                                    {
+
+                                                        
+                                                            <option value="@item.EntityTypeId">@item.EntityTitleEn</option>
+
+
+                                                      
+
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                        @{
+                                            
+
+
+                                        }
+
+
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="row col-12">
+
+                                    <div class="form-group col-12" id="EditControlContent">
+                                    </div>
+
+                                </div>
+                                 <div class="col-md-12 form-group pt-3" >
+                                    <img src="~/assets/images/users/user-dummy-img.jpg" class="bannerLargeImage" width="440" height="120">
+                                  </div>
+                                 <div class="col-md-12 form-group" style="padding-left: 1.3rem;">
+                                     <label for="formFile" class="form-label">@sharedResource["Large Image"]</label>
+                                     <input class="form-control" name="EditLargeImage" type="file">
+                                  </div>
+                                <div class="row col-12">
+                                     <div class="form-group col-6">
+                                        <label asp-for="@Model.BannerOrderIndex"  class="control-label">@sharedResource["Order Index"]</label>
+                                        <input asp-for="@Model.BannerOrderIndex" id="BannerOrderIndex" class="form-control" />
+                                        <span asp-validation-for="@Model.BannerOrderIndex" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6" style="padding-top: 2rem">
+                                        <div class="form-check">
+                                            <input asp-for="@Model.BannerIsActive" id="BannerIsActive" class="form-check-input" type="checkbox">
+                                            <label for="@Model.BannerIsActive" class="form-check-label">@sharedResource["Is Active"]</label>
+                                            <span asp-validation-for="@Model.BannerIsActive" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group mt-2">
+                                    <input type="submit" value="@sharedResource["Edit"]" class="btn btn-primary" />
+                                </div>
+                            </form>
+                           
+           @* <form asp-area="Admin" asp-page="/Category/Index" asp-page-handler="EditCategory" enctype="multipart/form-data">
+            <div class="modal-body">
+        <input type="hidden" id="id-field" />
+        <div class="row g-3">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <div class="position-relative d-inline-block">
+                        <div class="position-absolute bottom-0 end-0">
+                             <label for="Editfile" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
+                                                                <div class="avatar-xs cursor-pointer">
+                                                                    <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                                        <i class="ri-image-fill"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </label>
+                                        <input class="form-control d-none" name="Editfile" id="Editfile" type="file"
+                                                               accept="image/*">
+                        </div>
+                        <div class="avatar-lg p-1">
+                            <div class="avatar-title bg-light rounded-circle">
+                                @*id="CategoryPicId" 
+                                <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover categoryImgCla" />
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="fs-13 mt-3"> Image</h5>
+                </div>
+                <div>
+                        <label for="@Model.CategoryTLAR"
+                           class="form-label">@(sharedResource["TlAr"])</label>
+                    <input type="text" asp-for="@Model.CategoryTLAR" id="CategoryTLARId"
+                           class="form-control" placeholder="@sharedResource["Enter TlAr"]"
+                           required />
+                   
+                </div>
+                <div>
+                   <input asp-for="@Model.CategoryId" id="CategoryHiddenId" hidden>
+                   <input asp-for="@Model.CategoryPic" id="CategoryPicHiddenId" hidden>
+
+
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col-lg-12">
+                <div>
+                   <label for="@Model.CategoryTLEN"
+                           class="form-label">@sharedResource["TlEn"]</label>
+                    <input type="text" asp-for="@Model.CategoryTLEN" id="CategoryTLENId"
+                           class="form-control"
+                           placeholder="@sharedResource["Enter TlEn"]" required />
+                </div>
+            </div>
+              <div class="col-lg-12">
+                <div>
+                    <label for="@Model.SortOrder"
+                           class="form-label">@sharedResource["Sort"]</label>
+                    <input type="number" asp-for="@Model.SortOrder" id="SortOrderId"
+                           class="form-control"
+                           placeholder="@sharedResource["Enter Category Sort"]" required />
+                </div>
+            </div>
+             <div class="col-lg-12">
+                    <div>
+                                                <label for="@Model.DescriptionTLAR"
+                               class="form-label">@(sharedResource["Description In Arabic"])</label>
+                        <textarea asp-for="@Model.CategoryTLAR" id="DescriptionTLARId"
+                                  class="form-control" cols="2" 
+                                  placeholder="@sharedResource["Enter Description In Arabic"]"></textarea>
+                    </div>
+                </div>
+                 <div class="col-lg-12">
+                    <div>
+                                                <label for="@Model.DescriptionTLEN"
+                               class="form-label">@(sharedResource["Description In English"])</label>
+                        <textarea asp-for="@Model.DescriptionTLEN"  id="DescriptionTLENId"
+                                  class="form-control" cols="2" 
+                                  placeholder="@sharedResource["Enter Description In English"]"></textarea>
+                    </div>
+                </div>
+            <!--end col-->
+           
+                <!--end col-->
+       
+                <!--end col-->
+               
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light"
+                        data-bs-dismiss="modal">
+                    @sharedResource["Close"] 
+                </button>
+                <button type="submit" class="btn btn-success"
+                        id="add-btn">
+                     @sharedResource["Edit Category"] 
+                </button>
+              
+            </div>
+        </div>
+    </form>
+*@                          </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                

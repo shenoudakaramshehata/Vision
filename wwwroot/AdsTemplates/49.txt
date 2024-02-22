@@ -1,0 +1,150 @@
+    <div class="dashboard-title   fl-wrap">
+        <h3>Add Listing</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+            <div class="row">
+                <div class="col-md-12">
+                    ##531##
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    ##538##
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <div class="dashboard-title  dt-inbox fl-wrap">
+        <h3>Price</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap  block_box">
+        <div class="custom-form">
+        
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            ##532##
+                        </div>
+                        <div class="col-md-4">
+                            ##533##
+                        </div>
+                        
+                        <div class="col-md-4">
+                            ##534##
+                        </div>
+                        
+                    </div>
+               
+                
+           
+        </div>
+    </div>
+
+     <div class="dashboard-title  dt-inbox fl-wrap">
+        <h3>Real Estate</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap  block_box">
+        <div class="custom-form">
+        
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            ##539##
+                        </div>
+                        <div class="col-md-4">
+                            ##540##
+                        </div>
+                        
+                        <div class="col-md-4">
+                            ##542##
+                        </div>
+                    </div>
+               <div class="row">
+                        <div class="col-md-4">
+                            ##543##
+                        </div>
+                        <div class="col-md-4">
+                            ##544##
+                        </div>
+                        
+                        <div class="col-md-4">
+                            ##545##
+                        </div>
+                       
+                    </div>
+                
+           
+        </div>
+    </div>
+
+
+    <div class="dashboard-title  dt-inbox fl-wrap">
+        <h3>Facilities</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap block_box">
+         <div class="custom-form">
+        
+        
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            ##536##
+                        </div>
+                        <div class="col-md-6">
+                            ##546##
+                        </div>
+    </div>
+    <div class="dashboard-title  dt-inbox fl-wrap">
+        <h3>Photos</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+            <div class="row">
+               
+                <div class="col-md-12">
+                    <div class="add-list-media-wrap">
+                        <div class="listsearch-input-item fl-wrap">
+                            <div class="fuzone">
+                                <form>
+                                    <div class="fu-text">
+                                       ##537##
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-title  dt-inbox fl-wrap">
+        <h3>Location / Contacts</h3>
+    </div>
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+           
+             ##535##
+          <div class="row">
+            <div class="col-sm-6">
+               ##541##
+                  </div>
+                                           
+                                           
+              </div>
+
+
+        </div>
+    </div>
+    

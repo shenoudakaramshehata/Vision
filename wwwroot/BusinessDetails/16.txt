@@ -1,0 +1,56 @@
+﻿<!-- list-single-main-wrapper-col -->
+                    <div class="col-md-8">
+                        ##319##
+                        <!-- list-single-main-item-->
+                        ##318##
+                        <!-- list-single-main-item end -->
+                        <!-- list-single-main-item -->
+                        ##33##
+                        ##34##
+                        <!-- list-single-main-item -->
+                        ##0054##
+                        <!-- list-single-main-item end -->
+                        ##36##
+                    </div>
+                <!-- list-single-main-wrapper-col end -->
+                <!-- list-single-sidebar -->
+                <div class="col-md-4">
+                    <!--box-widget-item -->
+                    ##35##
+                    <!--box-widget-item end -->
+                    <!--box-widget-item -->
+                    <div class="box-widget-item fl-wrap block_box">
+    <div class="box-widget-item-header">
+        <h3>Location / Contacts  </h3>
+    </div>
+
+            <div class="box-widget">
+                    ##310##
+        
+       
+        
+        
+        <div class="box-widget-content bwc-nopad">
+    <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+        <ul class="no-list-style">
+            <li><span><i class="fal fa-map-marker"></i> Country :</span> <a href="#">##311##</a></li>
+            <li><span><i class="fal fa-map-marker"></i> City :</span> <a href="#">##312##</a></li>
+            <li><span><i class="fal fa-map-marker"></i> Address :</span> <a href="#">##313##</a></li>
+            <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="tel:##314##">##314##</a></li>
+            <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="mailto:##315##">##315##</a></li>
+            <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#">##316##</a></li>
+        </ul>
+    </div>
+    
+</div>
+        </div>
+        </div>
+                    <!--box-widget-item end -->
+                    <!--box-widget-item -->
+                    ##0055##
+                    <!--box-widget-item end -->
+                    ##37##
+                    <!--box-widget-item -->
+                    
+                    <!--box-widget-item end -->
+                </div>

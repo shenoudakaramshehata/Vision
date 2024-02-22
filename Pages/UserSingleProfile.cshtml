@@ -1,0 +1,428 @@
+﻿@page
+@model Vision.Pages.UserSingleProfileModel
+@inject CRMDBContext _context
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+     var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+<div id="wrapper">
+    <!-- content-->
+    <div class="content">
+        <section class="gray-bg no-top-padding-sec" id="sec1">
+            <div class="container">
+                <div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
+                    <a href="#">@sharedResource["Home"]</a><a href="#">@sharedResource["Pages"]</a> <span>@sharedResource["User Info"]</span>
+                </div>
+                <div class="fl-wrap">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <!-- list-single-main-item -->
+                            <div class="user-profile-header fl-wrap">
+                                <div class="user-profile-header_media fl-wrap">
+                                    <div class="bg" data-bg="images/bg/1.jpg"></div>
+                                    <div class="user-profile-header_media_title">
+                                        <h3>@Model.user.FullName</h3>
+                                        <h4>@Model.user.Job</h4>
+                                    </div>
+                                    <div class="user-profile-header_stats">
+                                        <ul class="no-list-style">
+                                            <li><span>@Model.ClassifiedCount</span>@sharedResource["Classified"]</li>
+                                            <li><span>@Model.ClassifiedCount</span>@sharedResource["Followers"]</li>
+                                            @*<li><span>@Model.ClassifiedCount</span>Following</li>*@
+                                        </ul>
+                                    </div>
+                                    @{
+                                        if (@Model.folowProfile == null)
+                                        {
+                                    <div id="FolowId" class="follow-btn color2-bg" onclick="FolowToProfile()">@sharedResource["Follow"] <i class="fal fa-user-plus"></i></div>
+
+                                        }
+                                        else
+                                        {
+                                    <div id="FolowId" class="follow-btn color2-bg" onclick="FolowToProfile()">Un Follow <i class="fal fa-user-plus"></i></div>
+                                            
+                                        }
+                                    }
+                                </div>
+                                <div class="user-profile-header_content fl-wrap">
+                                    <div class="user-profile-header-avatar">
+                                        <img src="/@Model.user.ProfilePicture" alt="User Profile">
+                                    </div>
+                                    <p>@Model.user.Bio </p>
+                                    <a href="@Model.user.Website" class="btn  float-btn color2-bg">@sharedResource["Visit Website"]<i class="fal fa-chevron-right"></i></a>
+                                </div>
+                            </div>
+                            <!-- list-single-main-item end -->
+                            <!-- list-main-wrap-header-->
+                            <div class="list-main-wrap-header fl-wrap block_box no-vis-shadow">
+                                <!-- list-main-wrap-title-->
+                                <div class="list-main-wrap-title">
+                                    <h2>@sharedResource["Added by"]  : <span>@Model.user.FullName </span></h2>
+                                </div>
+                                <!-- list-main-wrap-title end-->
+                                <!-- list-main-wrap-opt-->
+                                <div class="list-main-wrap-opt">
+                                    @*<!-- price-opt-->
+                                    <div class="price-opt">
+                                        <span class="price-opt-title">Sort   by:</span>
+                                        <div class="listsearch-input-item">
+                                            <select data-placeholder="Popularity" class="chosen-select no-search-select">
+                                                <option>Popularity</option>
+                                                <option>Average rating</option>
+                                                <option>Price: low to high</option>
+                                                <option>Price: high to low</option>
+                                            </select>
+                                        </div>
+                                    </div>*@
+                                    <!-- price-opt end-->
+                                    <!-- price-opt-->
+                                    <div class="grid-opt">
+                                        <ul class="no-list-style">
+                                            <li class="grid-opt_act"><span class="two-col-grid act-grid-opt tolt" data-microtip-position="bottom" data-tooltip="Grid View"><i class="fal fa-th"></i></span></li>
+                                            <li class="grid-opt_act"><span class="one-col-grid tolt" data-microtip-position="bottom" data-tooltip="List View"><i class="fal fa-list"></i></span></li>
+                                        </ul>
+                                    </div>
+                                    <!-- price-opt end-->
+                                </div>
+                                <!-- list-main-wrap-opt end-->
+                            </div>
+                            <!-- list-main-wrap-header end-->
+                             <!-- listing-item-container -->
+                            <div class="listing-item-container init-grid-items fl-wrap nocolumn-lic">
+                                @{
+                                    @foreach (var item in @Model.ClassifiedAdsList)
+                                    {
+                                        string title = " ";
+                                        string Desc = " ";
+                                        string Image = " ";
+                                        string strCon = "";
+                                        string Price = " ";
+                                        var TempObjForTitle = _context.AdTemplateConfigs.Where(e => e.FieldTypeId == 1 && e.ClassifiedAdsCategoryId == item.ClassifiedAdsCategoryId && e.AdTemplateFieldCaptionAr.Contains("العنوان") && e.AdTemplateFieldCaptionEn.Contains("Title")).FirstOrDefault();
+                                        var TempObjForPrice = _context.AdTemplateConfigs.Where(e => e.FieldTypeId == 2 && e.ClassifiedAdsCategoryId == item.ClassifiedAdsCategoryId && e.AdTemplateFieldCaptionAr.Contains("السعر") && e.AdTemplateFieldCaptionEn.Contains("Price")).FirstOrDefault();
+                                        var TempObjForImage = _context.AdTemplateConfigs.Where(e => e.FieldTypeId == 8 && e.ClassifiedAdsCategoryId == item.ClassifiedAdsCategoryId).FirstOrDefault();
+                                        var TempObjForDescribtion = _context.AdTemplateConfigs.Where(e => e.FieldTypeId == 7 && e.ClassifiedAdsCategoryId == item.ClassifiedAdsCategoryId).FirstOrDefault();
+                                        var TempObjForGallary = _context.AdTemplateConfigs.Where(e => e.FieldTypeId == 9 && e.ClassifiedAdsCategoryId == item.ClassifiedAdsCategoryId).FirstOrDefault();
+                                        if (TempObjForTitle != null)
+                                        {
+                                            var contentObj = _context.AdContents.Where(e => e.ClassifiedAdId == item.ClassifiedAdId && e.AdTemplateConfigId == TempObjForTitle.AdTemplateConfigId).FirstOrDefault();
+                                            if (contentObj != null)
+                                            {
+                                                title = _context.AdContentValues.Where(e => e.AdContentId == contentObj.AdContentId).FirstOrDefault().ContentValue;
+                                            }
+                                        }
+                                        if (TempObjForPrice != null)
+                                        {
+                                            var contentObj = _context.AdContents.Where(e => e.ClassifiedAdId == item.ClassifiedAdId && e.AdTemplateConfigId == TempObjForPrice.AdTemplateConfigId).FirstOrDefault();
+                                            if (contentObj != null)
+                                            {
+                                                Price = _context.AdContentValues.Where(e => e.AdContentId == contentObj.AdContentId).FirstOrDefault().ContentValue;
+                                            }
+                                        }
+                                        if (TempObjForImage != null)
+                                        {
+                                            var contentObj = _context.AdContents.Where(e => e.ClassifiedAdId == item.ClassifiedAdId && e.AdTemplateConfigId == TempObjForImage.AdTemplateConfigId).FirstOrDefault();
+                                            if (contentObj != null)
+                                            {
+                                                Image = _context.AdContentValues.Where(e => e.AdContentId == contentObj.AdContentId).FirstOrDefault().ContentValue;
+                                            }
+                                        }
+                                        if (TempObjForGallary != null)
+                                        {
+                                            var contentObj = _context.AdContents.Where(e => e.ClassifiedAdId == item.ClassifiedAdId && e.AdTemplateConfigId == TempObjForGallary.AdTemplateConfigId).Select(e=>e.AdContentId).ToList();
+                                            if (contentObj != null)
+                                            {
+                                                var AllImages = _context.AdContentValues.Where(e =>contentObj.Contains(e.AdContentId)).ToList();
+                                                foreach (var ele in AllImages)
+                                                {
+
+                                                    strCon += "{'src':" + "'/" + ele.ContentValue + "'" + "},";
+
+                                                }
+                                            }
+                                        }
+                                        if (TempObjForDescribtion != null)
+                                        {
+                                            var contentObj = _context.AdContents.Where(e => e.ClassifiedAdId == item.ClassifiedAdId && e.AdTemplateConfigId == TempObjForDescribtion.AdTemplateConfigId).FirstOrDefault();
+                                            if (contentObj != null)
+                                            {
+                                                Desc = _context.AdContentValues.Where(e => e.AdContentId == contentObj.AdContentId).FirstOrDefault().ContentValue;
+                                            }
+                                        }
+
+                                        var user = await UserManager.FindByIdAsync(@item.UseId);
+                                        string DateFormat = @item.PublishDate.Value.ToString("dddd, dd MMMM yyyy");
+                                        long Classifiedid = @item.ClassifiedAdId;
+
+                                        var cuurentuser = await UserManager.GetUserAsync(User);
+                                        if (cuurentuser == null)
+                                        {
+                                            // Context.Response.Redirect(Url.Content("~/identity/account/login"));
+                                        }
+                                        var favourite = _context.FavouriteClassifieds.Where(a => a.UserId == cuurentuser.Id && a.ClassifiedAdId == Classifiedid).FirstOrDefault();
+                                        var iconid = "heart" + Classifiedid.ToString();
+                                        <!-- listing-item  -->
+                                        <div class="listing-item">
+                                            <article class="geodir-category-listing fl-wrap">
+                                                <div class="geodir-category-img">
+                                                    @if (favourite == null)
+                                                    {
+                                                        <div class="geodir-js-favorite_btn" onclick="addTofavourite(this.id)" id="@Classifiedid"><i class="fal fa-heart" id="@iconid"></i><span>Save</span></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="geodir-js-favorite_btn" onclick="addfavourite(this.id)" id="@Classifiedid"><i class="fal fa-heart" id="@iconid" style="color:red"></i><span>Save</span></div>
+
+                                                    }
+                                                    <a asp-page="ClassifiedDetails" asp-route-ClassifiedId="@Classifiedid" class="geodir-category-img-wrap fl-wrap">
+                                                        @if (Image == " ")
+                                                        {
+                                                            <img src="~/Template/images/all/1.jpg" style="height: 300px;" alt="Classified Ads Pic">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/@Image" style="height: 300px;" alt="Classified Ads Pic">
+
+                                                        }
+                                                    </a>
+                                                    @if (user != null)
+                                                    {
+                                                        <div class="listing-avatar">
+                                                            <a href="author-single.html"><img src="/@user.ProfilePicture" alt="User Picture"></a>
+                                                            <span class="avatar-tooltip">Added By  <strong>@user.FullName</strong></span>
+                                                        </div>
+                                                    }
+                                                    <div class="geodir-category-opt">
+                                                        <div class="listing-rating-count-wrap">
+                                                            <div class="review-score">@Price</div>
+                                                            @* <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
+                                                                <br>
+                                                                <div class="reviews-count">12 reviews</div>*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="geodir_status_date color-bg"><i class="fal fa-clock"></i>@DateFormat</div>
+
+                                                </div>
+                                                <div class="geodir-category-content fl-wrap title-sin_item">
+                                                    <div class="geodir-category-content-title fl-wrap ">
+                                                        <div class="geodir-category-content-title-item">
+                                                            <h3 class="title-sin_map"><a asp-page="ClassifiedDetails" asp-route-ClassifiedId="@Classifiedid">@title</a></h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="geodir-category-text fl-wrap">
+                                                        <div style="height:50px">
+                                                            <p class="small-text" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">@Desc</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="geodir-category-footer fl-wrap">
+                                                        <a class="listing-item-category-wrap">
+                                                            <div class="listing-item-category purp-bg"><i class="fal fa-cocktail"></i></div>
+                                                            @{
+                                                                if (BrowserCulture == "en-US")
+                                                                {
+                                                                    <span>@item.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span>@item.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleAr</span>
+
+
+                                                                }
+                                                            }
+                                                        </a>
+                                                        <div class="geodir-opt-list">
+                                                            <ul class="no-list-style">
+                                                                <li>
+                                                                    <div class="dynamic-gal gdop-list-link" data-dynamicPath="[@strCon]"><i class="fal fa-search-plus"></i><span class="geodir-opt-tooltip">Gallery</span></div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                        </div>
+                                        <!-- End listing-item  -->
+                                    }
+                                }
+                             
+                            </div>
+                            <!-- listing-item-container end -->
+                        </div>
+                        <div class="col-md-4">
+                            <!--box-widget-item -->
+                            <div class="box-widget-item fl-wrap block_box">
+                                <div class="box-widget-item-header">
+                                    <h3>About Athor </h3>
+                                </div>
+                                <div class="box-widget">
+                                    <div class="box-widget-author fl-wrap">
+                                        <div class="box-widget-author-title">
+                                            <div class="box-widget-author-title-img">
+                                                <img src="/@Model.user.ProfilePicture" alt="">
+                                            </div>
+                                            <div class="box-widget-author-title_content">
+                                                <a href="user-single.html">@Model.user.FullName</a>
+                                                <span>@Model.ClassifiedCount Classified</span>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box-widget-item end -->
+                            <!--box-widget-item -->
+                            <div class="box-widget-item fl-wrap block_box">
+                                <div class="box-widget-item-header">
+                                    <h3>User Contacts  </h3>
+                                </div>
+                                <div class="box-widget">
+                                    <div class="box-widget-content bwc-nopad">
+                                        <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+                                            <ul class="no-list-style">
+                                                @*<li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#">@Model.user.</a></li>*@
+                                                <li><span><i class="fal fa-phone"></i> Phone :</span> <a >@Model.user.PhoneNumber</a></li>
+                                                <li><span><i class="fal fa-envelope"></i> Mail :</span> <a >@Model.user.Email</a></li>
+                                                <li><span><i class="fal fa-browser"></i> Website :</span> <a href="@Model.user.Website">@Model.user.Website</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="list-widget-social bottom-bcw-box  fl-wrap">
+                                            <ul class="no-list-style">
+                                                <li><a href="@Model.user.FacebookLink" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="@Model.user.TwitterLink" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="@Model.user.YoutubeLink" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                                                <li><a href="@Model.user.InstagramLink" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                            </ul>
+                                            @*<div class="bottom-bcw-box_link"><a href="#" class="show-single-contactform tolt" data-microtip-position="top" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a></div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--box-widget-item end -->
+                            <!--box-widget-item -->
+                          @*  <div class="box-widget-item fl-wrap block_box">
+                                <div class="box-widget-item-header">
+                                    <h3>Get in Touch </h3>
+                                </div>
+                                <div class="box-widget">
+                                    <div class="box-widget-content">
+                                        <form class="add-comment custom-form">
+                                            <fieldset>
+                                                <label><i class="fal fa-user"></i></label>
+                                                <input type="text" placeholder="Your Name *" value="" />
+                                                <div class="clearfix"></div>
+                                                <label><i class="fal fa-envelope"></i>  </label>
+                                                <input type="text" placeholder="Email Address*" value="" />
+                                                <textarea cols="40" rows="3" placeholder="Additional Information:"></textarea>
+                                            </fieldset>
+                                            <button class="btn float-btn color2-bg">Send Message<i class="fal fa-paper-plane"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <!--box-widget-item end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--content end-->
+</div>
+@{
+    
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+       
+
+    }
+    //Arabic
+    else
+    {
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+        <script src="~/TemplateRTL/js/jquery.min.js"></script>
+        <script src="~/TemplateRTL/js/plugins.js"></script>
+        <script src="~/TemplateRTL/js/scripts.js"></script>
+
+    }
+}
+
+<script>
+
+    function FolowToProfile() {
+           console.log("enter Function");
+           var UserId=0;
+           $.ajax({
+               type: "POST",
+               beforeSend: function (xhr) {
+                   xhr.setRequestHeader("XSRF-TOKEN",
+                       $('input:hidden[name="__RequestVerificationToken"]').val());
+               }
+               ,
+               url: "/UserSingleProfile?handler=FolowToProfile",
+               async: false,
+               data: JSON.stringify(UserId),
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+
+               success: function (response) {
+
+                   if (response == true) {
+                       console.log(response);
+                       document.getElementById("FolowId").innerHTML="Un Follow";
+                   
+                   } else
+                        document.getElementById("FolowId").innerHTML="Follow";
+
+               },
+               failure: function (response) {
+               }
+           });
+       }
+       function addTofavourite(Classifiedid) {
+           console.log("enter Function");
+
+           $.ajax({
+               type: "POST",
+               beforeSend: function (xhr) {
+                   xhr.setRequestHeader("XSRF-TOKEN",
+                       $('input:hidden[name="__RequestVerificationToken"]').val());
+               }
+               ,
+               url: "/ViewClassifiedAds?handler=Favourite",
+               async: false,
+               data: JSON.stringify(Classifiedid),
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+
+               success: function (response) {
+
+                   if (response == true) {
+                       console.log(response);
+                       document.getElementById('heart' + Classifiedid).style.color = "red";
+                   } else
+                       document.getElementById('heart' + Classifiedid).style.color = "white";
+
+               },
+               failure: function (response) {
+               }
+           });
+       }
+</script>

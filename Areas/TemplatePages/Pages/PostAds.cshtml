@@ -1,0 +1,412 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.PostAdsModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+<script>
+    const process = { env: {} };
+    process.env.GOOGLE_MAPS_API_KEY =
+      "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+</script>
+<style>
+    #map {
+        height: 100%;
+    }
+
+    #block-wrp {
+        width: 784px;
+        display: flex;
+        display: -webkit-flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+        #block-wrp .block-item {
+            height: 400px;
+            width: 48%;
+            position: relative;
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            -webkit-flex-direction: column
+        }
+
+            #block-wrp .block-item .map-item {
+                height: 90%
+            }
+
+            #block-wrp .block-item span.city-name {
+                text-align: center;
+                color: #000;
+                text-transform: uppercase;
+                font-weight: bold;
+                background: #a2ccff;
+                height: 10%;
+                line-height: 2em;
+            }
+    /*.photoUpload-files span {
+        display: none !important;
+    }*/
+     .category-carousel-item-container {
+        background: red !important;
+    }
+      .category-carousel-item-title {
+        color: white !important;
+    }
+
+</style>
+
+
+
+
+
+<form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+    <div class="col-md-9">
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                 <input type="text" hidden name="SelectedArea" id="SelectedAreaValueId" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Ad Arabic Title"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="@Model.ClassifiedAdObj.TitleAr" type="text" placeholder="@sharedResource["Enter Ad Arabic Title"]" />
+                        <span asp-validation-for="@Model.ClassifiedAdObj.TitleAr" style="color:red;padding: 0.2rem" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Ad English Title"] <i class="fal fa-briefcase"></i></label>
+                        <input asp-for="@Model.ClassifiedAdObj.TitleEn" type="text" placeholder="@sharedResource["Enter Ad English Title"]" />
+                        <span asp-validation-for="@Model.ClassifiedAdObj.TitleEn" style="color:red;padding: 0.2rem" class="text-danger"></span>
+
+                    </div>
+
+
+
+
+                </div>
+                 <div class="row">
+                    <div class="col-sm-6">
+                         <select data-val="true" data-val-required="@sharedResource["City"]" asp-for="@Model.ClassifiedAdObj.CityId" class="chosen-select no-search-select" required onchange="FillTypes(this.value)">
+                                <option selected value=0>@sharedResource["Select City"]</option>
+
+                                @{
+                                    if (@Model.Cities != null)
+                                    {
+                                        foreach (var item in @Model.Cities)
+
+                                        {
+
+                                            if (BrowserCulture == "en-US")
+                                            {
+                                                <option value="@item.CityId">@item.CityTlEn</option>
+
+
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.CityId">@item.CityTlAr</option>
+
+
+
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                            </select>
+
+                            <span asp-validation-for="@Model.ClassifiedAdObj.CityId" class="text-alert"></span>
+                        
+                    </div>
+                    <div class="col-sm-6" id="ControlContent">
+                        @* <select id="ControlContent" data-val="true" data-val-required="@sharedResource["Area"]"  class="chosen-select no-search-select" required>
+                                <option selected value=0>@sharedResource["Select Area"]</option>
+
+                                
+                            </select>*@
+
+                        
+                    </div>
+
+
+
+
+                </div>
+                 <div class="row">
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Price"] </label>
+                        <input asp-for="@Model.ClassifiedAdObj.Price" type="text" placeholder="@sharedResource["Enter Price"]" />
+                        <span asp-validation-for="@Model.ClassifiedAdObj.Price" style="color:red;padding: 0.2rem" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-check col-md-6" style="text-align: center;">
+                    <label class="form-check-label" style="text-align: center !important"> @sharedResource["Is Active"]</label>
+                    <input asp-for="@Model.ClassifiedAdObj.IsActive"  class="form-check-input" type="checkbox">
+                </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+         <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                    <!--col -->
+                    <div class="col-md-6">
+
+                        <div class="add-list-media-wrap">
+                            <div class="add-list-media-wrap">
+                                <div class="listsearch-input-item fl-wrap">
+                                    <div class="fuzone">
+                                        <div class="fu-text">
+                                            <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Main Picture"]</span>
+                                            <div class="photoUpload-files fl-wrap"></div>
+                                        </div>
+                                        <input type="file" id="file" accept="image/*" name="pic" class="upload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col end-->
+                    <!--col -->
+
+
+                    <div class="col-md-6">
+
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop More Photos"]</span>
+                                        <div class="photoUpload-files fl-wrap" id="chain"></div>
+                                    </div>
+                                    <input id="MoreFiles" type="file" accept="image/*" name="Photos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--col end-->
+                  </div>
+                  <div id="item_images" class="col-md-12 fl-wrap">
+                    <div class="col-md-12 fl-wrap">
+                    </div>
+                    </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="@Model.ClassifiedAdObj.Description" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+
+        @Html.Raw(Model.FormTemplate);
+        <input type="text" hidden name="LatId" id="LatId" />
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+
+                <button type="submit" class="btn float-btn color2-bg" id="submit">Add<i class="fal fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function FillTypes(CityId) {
+         console.log("Fill Types Function");
+         ControlContent=document.getElementById("ControlContent");
+       $.ajax({
+         type: "GET",
+                 beforeSend: function (xhr) {
+                     xhr.setRequestHeader("XSRF-TOKEN",
+                         $('input:hidden[name="__RequestVerificationToken"]').val());
+                 }
+                 ,
+         url: "/TemplatePages/PostAds?handler=SingleFillData",
+
+         data: { "CityId": CityId },
+         contentType: "application/json",
+         dataType: "json",
+         success: function (response) {
+             ControlContent.innerHTML = "";
+
+             var select = document.createElement('select');
+                 select.classList.add("nice-select");
+                 select.classList.add("chosen-select");
+                 select.classList.add("no-search-select");
+                 select.setAttribute('id', "SelectedAreaId");
+                 option = document.createElement('option');
+                 option.value = 0;
+                 if(localStorage.getItem("lang")=="en")
+                 {
+                     option.text  ="Select Area ";
+                 }else{
+                      option.text ="إختر المنطقة " ;
+
+                 }
+                  select.appendChild(option);
+
+                 for(let i=0;i<response["$values"].length;i++)
+                 {
+                     option = document.createElement('option');
+                     option.value = response["$values"][i].AreaId;
+                     option.text = response["$values"][i].AreaTlAr;
+                     select.appendChild(option);
+                 }
+                  ControlContent.appendChild(select);
+                
+
+            
+               
+             console.log(response);
+
+
+
+         },
+
+         failure: function (response) {
+             alert(response);
+         }
+     });
+
+
+
+
+
+     }
+  
+     $("#MoreFiles").change(function(e) {
+         removeAll();
+        console.log(e)
+        console.log(e.target)
+        console.log(e.target.files.length)
+
+
+
+        for (let i=0;i<e.target.files.length;i++) {
+            var url = URL.createObjectURL(e.target.files[i])
+
+        var Pardiv = document.createElement("div");
+        //Pardiv.classList.add("fl-wrap");
+        Pardiv.classList.add("col-md-4");
+        Pardiv.classList.add(i);
+        var anchor = document.createElement("a");
+         anchor.classList.add("category-carousel-item");
+         anchor.classList.add("fl-wrap");
+         anchor.classList.add("full-height");
+         var img = document.createElement("img");
+         img.src = url;
+         img.style.height="14rem"
+         var Fchdiv = document.createElement("div");
+        Fchdiv.classList.add("category-carousel-item-container");
+        var Schdiv = document.createElement("div");
+        Schdiv.classList.add("category-carousel-item-title");
+        Schdiv.innerHTML = "Remove";
+        Schdiv.id = i;
+        Schdiv.addEventListener("click", (e) => removePic(e))
+        Fchdiv.appendChild(Schdiv);
+        
+        anchor.appendChild(img);
+        anchor.appendChild(Fchdiv);
+        Pardiv.appendChild(anchor);
+    
+        item_images.appendChild(Pardiv);
+
+    }
+        //img.attr('src', url)
+    });
+
+    function removeAll() {
+            document.getElementById("item_images").innerHTML = "";
+        }
+     function removePic(e) {
+            console.log("remove pic")
+            console.log(e.target.id);
+
+               var myobj =document.getElementsByClassName(e.target.id)[0];
+                myobj.remove();
+                removeFileFromFileList(e.target.id)
+        }
+      function removeFileFromFileList(index) {
+          console.log(index)
+          var spans = document.getElementById("chain").getElementsByTagName("span");
+          spans[index].remove(); 
+      const dt = new DataTransfer()
+      const input = document.getElementById('MoreFiles')
+      console.log(input.files.length)
+
+      const { files } = input
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (index != i){
+            console.log("enter here")
+            dt.items.add(file) // here you exclude the file. thus removing it.
+        }
+
+      }
+
+      input.files = dt.files // Assign the updates list
+       console.log(input.files.length)
+    }
+
+     function validateMyForm() {
+        if (document.getElementById("file").files.length == 0) {
+            alert("You Must Select Main Pic");
+            return false;
+        }
+         if (document.getElementById("MoreFiles").files.length == 0) {
+            alert("You Must Select At Least On Image");
+            return false;
+        }
+        var SelectedVal=document.getElementById("SelectedAreaId").value;
+         if(SelectedVal==0){
+              alert("You Must Select Area");
+              return false;
+         }
+         document.getElementById("SelectedAreaValueId").value=parseInt(SelectedVal);
+        
+        return true;
+    }
+</script>

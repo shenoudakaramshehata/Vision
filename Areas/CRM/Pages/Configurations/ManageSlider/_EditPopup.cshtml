@@ -1,0 +1,134 @@
+﻿
+@inject CRMDBContext _context
+@model Vision.Models.Slider
+
+                    <div class="modal fade" id="showEditModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-3">
+                                <div class="modal-header bg-light p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal"></button>
+                                </div>
+                                 <form method="post" enctype="multipart/form-data" asp-area="CRM" asp-page="/Configurations/ManageSlider/Index" asp-page-handler="EditSlider" onsubmit="return validateEditForm();">
+                                      <input type="text" hidden name="EditSelectedVal" id="EditSelValueId" />
+                                <input type="text" hidden name="SelectedVal" id="SelValueId" />
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="col-lg-12">
+                                    <div class="text-center col-lg-12">
+                                        <div class="position-relative d-inline-block">
+                                            <div class="position-absolute bottom-0 end-0">
+                                                <label for="file" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="@sharedResource["Select Image"]">
+                                                    <div class="avatar-xs cursor-pointer">
+                                                        <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                            <i class="ri-image-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                                <input class="form-control d-none hidefromHere" name="Editfile" id="file" type="file"
+                                                       accept="image/*" required>
+                                            </div>
+                                            <div class="avatar-lg p-1">
+                                                <div class="avatar-title bg-light rounded-circle">
+                                                    <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover sliderImgCla" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h5 class="fs-13 mt-3">@sharedResource["Image"] </h5>
+
+                                    </div>
+                                </div>
+
+                                <div class="row col-12">
+                                    <input asp-for="@Model.SliderId" id="SliderHiddenId" hidden>
+                                    <input asp-for="@Model.Pic" id="SliderPicHiddenId" hidden>
+                                    <div class="form-group col-12">
+                                        <label asp-for="@Model.EntityTypeId" for="car-rental-name">@sharedResource["Slider Type"] <small class="text-danger">*</small></label>
+
+                                        <select id="EditCatId" data-val="true" data-val-required="@sharedResource["Slider Type"]" asp-for="@Model.EntityTypeId" class="form-select required" aria-label="Default select example" required onchange="EditFillTypes(this.value)">
+                                            
+
+                                            @{
+                                                if (_context.EntityTypes.ToList() != null)
+                                                {
+                                                    foreach (var item in _context.EntityTypes.ToList())
+
+                                                    {
+
+                                                        
+                                                            <option value="@item.EntityTypeId">@item.EntityTitleEn</option>
+
+
+                                                      
+
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                        @{
+                                            
+
+
+                                        }
+
+
+                                    </div>
+                                   
+                                </div>
+
+                                <div class="row col-12">
+
+                                    <div class="form-group col-12" id="EditControlContent">
+                                    </div>
+
+                                </div>
+                                
+                                 <div class="row col-12">
+                                    <div class="form-group col-12">
+                                        <label asp-for="@Model.PageIndex" class="control-label">@sharedResource["Page Index"]</label>
+                                        <input asp-for="@Model.PageIndex" id="SliderPageIndex" class="form-control" />
+                                        <span asp-validation-for="@Model.PageIndex" class="text-danger"></span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row col-12">
+                                     <div class="form-group col-6">
+                                        <label asp-for="@Model.OrderIndex"  class="control-label">@sharedResource["Order Index"]</label>
+                                        <input asp-for="@Model.OrderIndex" id="SliderOrderIndex" class="form-control" />
+                                        <span asp-validation-for="@Model.OrderIndex" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6" style="padding-top: 2rem">
+                                        <div class="form-check">
+                                            <input asp-for="@Model.IsActive" id="SliderIsActive" class="form-check-input" type="checkbox">
+                                            <label for="@Model.IsActive" class="form-check-label">@sharedResource["Is Active"]</label>
+                                            <span asp-validation-for="@Model.IsActive" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group mt-2">
+                                    <input type="submit" value="@sharedResource["Edit"]" class="btn btn-primary" />
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                

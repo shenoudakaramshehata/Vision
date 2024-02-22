@@ -1,0 +1,29 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BusinessTemplateConfig
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+
+
+@*<div class="form-group">
+    <label for="exampleInputEmail1">@Model.BusinessTemplateFieldCaptionEn</label>
+    <input type="text" class="form-control datepicker" name="@Model.BusinessTemplateConfigId" id="@Model.BusinessTemplateConfigId" required="@Model.IsRequired.ToString()">
+</div>*@
+
+
+<label for="exampleInputEmail1">@Model.BusinessTemplateFieldCaptionEn</label>
+
+<div class="listsearch-input-item clact date-container">
+    <span class="iconn-dec" style="top:1rem !important"><i class="fal fa-calendar"></i></span>
+    <input type="text" placeholder="Enter Date" name="datepicker-here" value="" id="@Model.BusinessTemplateConfigId" required="@Model.IsRequired.ToString()">
+
+    <span class="clear-singleinput" style="top:1rem"><i class="fal fa-times"></i></span>
+</div>

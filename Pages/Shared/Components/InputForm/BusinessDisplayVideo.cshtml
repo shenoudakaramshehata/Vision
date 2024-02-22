@@ -1,0 +1,26 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BusinessTemplateConfig
+
+@*<label>@Model.AdTemplateFieldCaptionEn <i class="fal fa-briefcase"></i></label>
+<input class="form-control" type="file" name="@Model.AdTemplateConfigId" id="@Model.AdTemplateConfigId" required="@Model.IsRequired.ToString()">
+*@
+
+<div class="fu-text">
+	<span><i class="fal fa-images"></i> Click here or drop @Model.BusinessTemplateFieldCaptionEn</span>
+	<div class="photoUpload-files fl-wrap"></div>
+</div>
+<input class="form-control" type="file" accept="video/*" name="@Model.BusinessTemplateConfigId" id="@Model.BusinessTemplateConfigId" required="@Model.IsRequired.ToString()">
+
+
+
+
+
+
+
+
+

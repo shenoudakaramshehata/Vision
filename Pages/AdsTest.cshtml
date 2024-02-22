@@ -1,0 +1,65 @@
+﻿@page
+@model Vision.Pages.AdsTestModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "FrontSite/_TemplateLayout";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+}
+<div class="demo-container">
+    <div id="gridContainer"></div>
+</div>
+
+@*@(Html.DevExtreme().DataGrid<Vision.Models.ClassifiedAd>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("ClassifiedAds")
+        .LoadAction("Get")
+        .Key("ClassifiedAdId")
+    )
+  
+)*@
+<script>
+ $('#gridContainer').dxDataGrid({
+      dataSource: DevExpress.data.AspNet.createStore({
+            key: 'ClassifiedAdId',
+            loadUrl: '/api/ClassifiedAds/Get',
+      
+      onBeforeSend(method, ajaxOptions) {
+        ajaxOptions.xhrFields = { withCredentials: true };
+      },
+    }),
+
+       
+    dataRowTemplate(container, item) {
+      const { data } = item;
+        const markup = '<tr class=\'main-row\'>' + `<td rowspan='2'><img src='${data.MainPic}'/></td>` + `<td>${data.TitleEn}</td>` + `<td>${data.Price}</td>` + '</tr>'
+    
+
+      container.append(markup);
+    },
+    rowAlternationEnabled: true,
+    hoverStateEnabled: true,
+    columnAutoWidth: true,
+    showBorders: true,
+    columns: [{
+      caption: 'Photo',
+      width: 100,
+      allowFiltering: false,
+      allowSorting: false,
+    }, {
+      dataField: 'Prefix',
+      caption: 'Title',
+      width: 70,
+    },
+    'FirstName'
+    
+   
+    ],
+  });
+
+
+
+</script>

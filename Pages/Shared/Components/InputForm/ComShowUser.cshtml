@@ -1,0 +1,44 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ApplicationUser
+@if (@Model == null)
+{
+    <p>Yes</p>
+}
+else
+{
+     <p>No</p>
+}
+
+<div class="box-widget-item fl-wrap block_box">
+                                    <div class="box-widget-item-header">
+                                        <h3> Added By </h3>
+                                    </div>
+                                    <div class="box-widget">
+                                        <div class="box-widget-author fl-wrap">
+                                            <div class="box-widget-author-title">
+                                                <div class="box-widget-author-title-img">
+                                                    <img src="/@Model.ProfilePicture" alt="">
+                                                </div>
+                                                <div class="box-widget-author-title_content">
+                                                    <a href="user-single.html">@Model.FullName</a>
+                                                    <span> Classiffied</span>
+                                                </div>
+                                                <div class="box-widget-author-title_opt">
+                                                    <a href="user-single.html" class="tolt green-bg" data-microtip-position="top" data-tooltip="View Profile"><i class="fas fa-user"></i></a>
+                                                    <a href="#" class="tolt color-bg cwb" data-microtip-position="top" data-tooltip="Chat With Owner"><i class="fas fa-comments-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--box-widget-item end -->
+
+
+
+
+

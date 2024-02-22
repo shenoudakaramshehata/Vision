@@ -1,0 +1,262 @@
+﻿@page
+@model Vision.Pages.CategoryModel
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+<div class="col-md-9">
+    <div class="dashboard-title">
+        <h3 style="text-align: center !important">@sharedResource["Select Category"]</h3>
+    </div>
+    @if (@Model.CategoriesTitle.Count != 0)
+    {
+        <div class="fl-wrap " style="padding: 2rem;">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="progressbar" class="no-list-style">
+
+                    <li onclick="RemoveFromStaticList(-1,0)" class="active"><span class="tolt" data-microtip-position="top" data-tooltip="All Catagory">0</span></li>
+                    @for (int i = 0; i < @Model.CategoriesTitle.Count; i++)
+                    {
+                        var item = i + 1;
+                        if (BrowserCulture == "en-US")
+                        {
+                            <li onclick="RemoveFromStaticList(@i,@Model.CategoriesTitle[i].ClassifiedAdsCategoryId)" class="active"><span class="tolt" data-microtip-position="top" data-tooltip="@Model.CategoriesTitle[i].ClassifiedAdsCategoryTitleEn">@item</span></li>
+
+
+                        }
+                        else
+                        {
+                            <li onclick="RemoveFromStaticList(@i,@Model.CategoriesTitle[i].ClassifiedAdsCategoryId)" class="active"><span class="tolt" data-microtip-position="top" data-tooltip="@Model.CategoriesTitle[i].ClassifiedAdsCategoryTitleAr">@item</span></li>
+
+
+                        }
+
+
+
+                    }
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+    }
+    
+    <!-- content-->
+    <div class="content">
+
+        <section class="gray-bg small-padding no-top-padding-sec" id="sec1">
+            <div class="container">
+
+
+                <div class="fl-wrap">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class=" fl-wrap lws_mobile   tabs-act block_box">
+                                <div class="filter-sidebar-header fl-wrap" id="filters-column">
+
+                                    <ul class="tabs-menu fl-wrap no-list-style">
+                                        <li onclick="CurrentTap()">
+                                            @*  <li >*@
+                                            <a>
+                                                @foreach (var item in @Model.CategoriesTitle)
+                                                {
+                                                    if (BrowserCulture == "en-US")
+                                                    {
+                                                        <span>@item.ClassifiedAdsCategoryTitleEn</span> <i class="fal fa-angle-right"></i>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.ClassifiedAdsCategoryTitleAr
+
+                                                        <i class="fal fa-angle-left"></i>
+
+                                                    }
+
+
+
+                                                }
+                                            </a>
+                                        </li>
+                                        @*<li><a id="SelectedTapId"> <i class="fal fa-image"></i>@sharedResource["Select Category"] </a></li>*@
+                                    </ul>
+                                </div>
+                                <div class="scrl-content filter-sidebar    fs-viscon">
+                                    <!--tabs -->
+                                    <div class="tabs-container fl-wrap">
+
+                                        <!--tab -->
+                                        <div class="tab">
+                                            <div id="TabDisId" class="tab-content" style="display: block !important;">
+                                                <div class="col-md-12 fl-wrap">
+                                                    @{
+                                                        @foreach (var item in @Model.classifiedAdsCategories)
+                                                        {
+
+                                                            <div class="col-md-4" onclick="selectedCat(@item.ClassifiedAdsCategoryId);">
+                                                                <a class="category-carousel-item fl-wrap full-height">
+                                                                    <img src="/Template/images/all/1.jpg" alt="ClassifiedAds Category Picture">
+                                                                    <div class="category-carousel-item-container">
+                                                                        @{
+                                                                            if (BrowserCulture == "en-US")
+                                                                            {
+                                                                                <div class="category-carousel-item-title">@item.ClassifiedAdsCategoryTitleEn</div>
+
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div class="category-carousel-item-title">@item.ClassifiedAdsCategoryTitleAr</div>
+
+                                                                            }
+                                                                        }
+
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+
+
+
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--tab end-->
+                                    </div>
+                                    <!--tabs end-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="limit-box fl-wrap"></div>
+    </div>
+    <!--content end-->
+</div>
+@{
+
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+    }
+    //Arabic
+    else
+    {
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+
+
+
+    }
+}
+<script>
+    function selectedCat(CatId)
+    {
+        console.log(CatId);
+    if(CatId!=0)
+           {
+               $.ajax({
+                    type: "GET",
+                    url: "/Category?handler=InfoList",
+                    data: { "CatId": CatId },
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+
+                        if(response==true){
+
+                          window.location.href = "/Category?categoryId=" +CatId;
+                          //document.getElementById("SelectedTapId").click();
+                        }else{
+                           window.location.href = "/TemplatePages/PostAds?categoryId=" +CatId;
+                        }
+
+                },
+
+                failure: function (response) {
+                        alert(response);
+                    }
+                });
+
+           }
+
+
+            }
+
+            function RemoveFromStaticList(index,CatId)
+    {
+        console.log(index);
+        console.log(CatId);
+  
+               $.ajax({
+                    type: "GET",
+                    url: "/Category?handler=RemoveFromStatic",
+                    data: { "index": index },
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (response) {
+
+                        if(response==true){
+                            if(CatId==0){
+                                window.location.href = "/Category";
+                            }
+                            else{
+                                window.location.href = "/Category?categoryId=" +CatId;
+                            }
+
+
+                        }
+
+
+                },
+
+                failure: function (response) {
+                        alert(response);
+                    }
+                });
+
+           
+
+
+            }
+            window.addEventListener('DOMContentLoaded', (event) => {
+                console.log("New")
+                    // document.getElementById("SelectedTapId").click();
+                      console.log("New New")
+
+                });
+                function CurrentTap(CatId)
+    {
+        document.getElementById("TabDisId").style.cssText += ';display:block !important;'
+
+        console.log("Current Tap")
+    }
+
+    //              function DisplayItem(item)
+    //{
+    //   document.getElementById("TabDisId").style.cssText += ';display:block !important;'
+
+    //    console.log(item)
+
+    //}
+
+
+</script>

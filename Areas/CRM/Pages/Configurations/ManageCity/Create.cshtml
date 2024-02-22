@@ -1,0 +1,54 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageCity.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>City</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.City.CityTlAr" class="control-label">City Title Ar</label>
+                <input asp-for="@Model.City.CityTlAr" class="form-control" />
+                <span asp-validation-for="@Model.City.CityTlAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.City.CityTlEn" class="control-label">City Title Ar</label>
+                <input asp-for="@Model.City.CityTlEn" class="form-control" />
+                <span asp-validation-for="@Model.City.CityTlEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.City.CityOrderIndex" class="control-label"></label>
+                <input asp-for="@Model.City.CityOrderIndex" class="form-control" />
+                <span asp-validation-for="@Model.City.CityOrderIndex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.City.CityIsActive" class="control-label"></label>
+                <input asp-for="@Model.City.CityIsActive" class="form-control" />
+                <span asp-validation-for="@Model.City.CityIsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

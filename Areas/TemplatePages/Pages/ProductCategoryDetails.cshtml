@@ -1,0 +1,148 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.ProductCategoryDetailsModel
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+<div class="col-md-9">
+        <!-- content-->
+        <div class="content">
+            <section class="listing-hero-section hidden-section" data-scrollax-parent="true" id="sec1">
+                <div class="bg-parallax-wrap">
+                    <div class="bg par-elem " data-bg="/@Model.ProductCategory.Pic" data-scrollax="properties: { translateY: '30%' }"></div>
+                    <div class="overlay"></div>
+                </div>
+            </section>
+            <!-- scroll-nav-wrapper-->
+            <div class="scroll-nav-wrapper fl-wrap">
+                <div class="container" style="
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+">
+                    <nav class="scroll-nav scroll-init">
+                        <h1>@Model.ProductCategory.TitleEn <span class="verified-badge"><i class="fal fa-check"></i></span></h1>
+                    </nav>
+                <div class="scroll-nav-wrapper-opt" style="margin-bottom: 2rem;">
+                        <a asp-page="ProductCategoryEdit" asp-area="TemplatePages" asp-route-ProductCategoryId="@Model.ProductCategory.ProductCategoryId" class="scroll-nav-wrapper-opt-btn"> <i class="fal fa-edit"></i> @sharedResource["Edit"] </a>
+                        <a asp-page="ProductCategoryDelete" asp-area="TemplatePages" asp-route-ProductCategoryId="@Model.ProductCategory.ProductCategoryId" class="scroll-nav-wrapper-opt-btn showshare"> <i class="fal fa-trash"></i> @sharedResource["Delete"] </a>
+
+                    </div>
+                </div>
+            </div>
+            <!-- scroll-nav-wrapper end-->
+            <section class="gray-bg no-top-padding">
+                    <div class="row">
+                        <!-- list-single-main-wrapper-col -->
+                        <div class="col-md-12">
+                            <!-- list-single-main-wrapper -->
+                            <div class="list-single-main-wrapper fl-wrap" id="sec2">
+                                
+
+                                <!-- list-single-main-item end -->
+                                <!-- list-single-main-item -->
+                                <div class="list-single-main-item fl-wrap block_box">
+                                    <div class="list-single-main-item-title">
+                                        <h3>@sharedResource["Product Category Details"]</h3>
+                                    </div>
+                                    <div class="list-single-main-item_content fl-wrap">
+                                        <div class="listing-features fl-wrap">
+                                            <ul class="no-list-style">
+
+                                        <li><i class="fa fa-rocket"></i>@sharedResource["Business directory"]: @Model.ProductCategory.ClassifiedBusiness.Title</li>
+                                        <li><i class="fa fa-rocket"></i>@sharedResource["Arabic title"]: @Model.ProductCategory.TitleAr</li>
+
+                                                    
+                                                        <li><i class="fa fa-rocket"></i>@sharedResource["Sort Order"]: @Model.ProductCategory.SortOrder</li>
+                                        @{
+                                            if(Model.ProductCategory.Isactive == true)
+                                            {
+                                                <li><i class="fa fa-rocket"></i>@sharedResource["Is Active"]</li>
+
+                                            }
+                                            else
+                                            {
+                                                <li><i class="fa fa-rocket"></i>@sharedResource["Is not Active"]</li>
+
+                                            }
+                                            }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- list-single-sidebar end -->
+                            </div>
+                        </div>
+
+                <div class="row">
+                    <!-- list-single-main-wrapper-col -->
+                    <div class="col-md-12">
+                        <!-- list-single-main-wrapper -->
+                        <div class="list-single-main-wrapper fl-wrap" id="sec2">
+
+
+                            <!-- list-single-main-item end -->
+                            <!-- list-single-main-item -->
+                            <div class="list-single-main-item fl-wrap block_box">
+                                <div class="list-single-main-item-title">
+                                    <h3>@sharedResource["Category Products"]</h3>
+                                </div>
+                                <div class="list-single-main-item_content fl-wrap">
+                                    <div class="listing-features fl-wrap">
+                                        <ul class="no-list-style">
+                                            @{
+                                                if (Model.ProductCategory.Products != null)
+                                                {
+                                                    foreach (var title in Model.ProductCategory.Products)
+                                                    {
+
+                                                        <li>
+                                                            <a asp-page="ProductCategoryDetails" asp-area="TemplatePages" asp-route-ProductCategoryId="@title.ProductCategoryId"><i class="fa fa-rocket"></i>@title.TitleEn</a>
+
+                                                        </li>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <li><i class="fa fa-rocket"></i>@sharedResource["There is no products for this category"]</li>
+
+                                                }
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- list-single-sidebar end -->
+                        </div>
+                    </div>
+
+        </section>
+            <div class="limit-box fl-wrap"></div>
+        <!--content end-->
+</div>

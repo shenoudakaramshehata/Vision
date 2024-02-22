@@ -1,0 +1,17 @@
+﻿@using Vision.Models;
+
+@model BusinessTemplateConfig
+
+<label>@Model.BusinessTemplateFieldCaptionAr</label>
+
+<ul class="fl-wrap filter-tags no-list-style ds-tg">
+    @{
+        foreach (var item in Model.BusinessTemplateOptions)
+        {
+            <li>
+                <input type="checkbox" name="@item.BusinessTemplateConfigId" id="@item.BusinessTemplateOptionId" value="@item.BusinessTemplateOptionId">
+                <label for="check-aaa5">@item.OptionAr</label>
+            </li>
+        }
+    }
+</ul>

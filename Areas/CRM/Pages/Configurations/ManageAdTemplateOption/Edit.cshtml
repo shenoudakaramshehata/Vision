@@ -1,0 +1,46 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageAdTemplateOption.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>AdTemplateOption</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AdTemplateOption.AdTemplateOptionId" />
+            <div class="form-group">
+                <label asp-for="AdTemplateOption.AdTemplateConfigId" class="control-label"></label>
+                <select asp-for="AdTemplateOption.AdTemplateConfigId" class="form-control" asp-items="ViewBag.AdTemplateConfigId"></select>
+                <span asp-validation-for="AdTemplateOption.AdTemplateConfigId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdTemplateOption.OptionAr" class="control-label"></label>
+                <input asp-for="AdTemplateOption.OptionAr" class="form-control" />
+                <span asp-validation-for="AdTemplateOption.OptionAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdTemplateOption.OptionEn" class="control-label"></label>
+                <input asp-for="AdTemplateOption.OptionEn" class="form-control" />
+                <span asp-validation-for="AdTemplateOption.OptionEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

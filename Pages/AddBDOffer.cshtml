@@ -1,0 +1,165 @@
+﻿@page
+@model Vision.Pages.EditBDOfferModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "FrontSite/_TemplateLayout";
+
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    .form-group .form-control {
+        background-color: #f4f4f4;
+        border: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-group .form-control:hover {
+            border-color: #000;
+            color: #000;
+        }
+
+        .form-group .form-control:focus {
+            outline: none;
+            border-color: #000;
+            color: #000;
+        }
+
+    .file-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+        .file-upload input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .file-upload label:hover {
+                background-color: #2980b9;
+            }
+
+        .file-upload .file-name {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .file-upload .file-names {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+
+</style>
+<!-- Start of Main -->
+<main class="main checkout" style="padding-top: 250px; padding-bottom: 50px;">
+    <!-- Start of PageContent -->
+    <div class="page-content d-flex align-items-center justify-content-center">
+        <div class="container">
+            <form class="form checkout-form" action="#" method="post">
+                <div class="row mb-9">
+                    <div class="col-lg-9 pr-lg-4 mb-4">
+                        <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
+                            Add Business Directory Offer
+                        </h3>
+
+                        <div class="row mb-9">
+
+
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-electronics mr-1"></i> Title Ar</label>
+                                <input type="text" class="form-control form-control-md" name="titleAr">
+                            </div>
+
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-electronics mr-1"></i> Title En</label>
+                                <input type="text" class="form-control form-control-md" name="titleEn">
+                            </div>
+
+
+
+                            <div class="col-lg-6 form-group">
+                                <label>
+                                    <i class="w-icon-wallet2 mr-1"></i> Price
+                                </label>
+                                <input type="number" class="form-control form-control-md" name="delivery_cost">
+                            </div>
+                        </div>
+                        <div class="row mb-9">
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-movie mr-1"></i> Image File</label>
+                                <div class="file-upload">
+                                    <input type="file" id="video-file" name="video-file">
+                                    <label for="video-file">Choose File</label>
+                                    <span class="file-name"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-withdraw mr-1"></i> Multiple Images</label>
+                                <div class="file-upload">
+                                    <input type="file" id="image-files" name="image-files" multiple>
+                                    <label for="image-files">Choose Files</label>
+                                    <span class="file-names"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="order-notes">Description</label>
+                            <textarea class="form-control mb-0" id="order-notes" name="order-notes" cols="30"
+                                      rows="4"
+                                      placeholder="Enter Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group place-order pt-6 row mb-9">
+                        <button type="submit" class="btn btn-dark btn-block btn-rounded" style="width: 930px;">
+                            Edit Offer
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End of PageContent -->
+</main>
+<!-- End of Main -->
+
+<script>
+
+
+    var videoFileInput = document.getElementById('video-file');
+    var videoFileNameSpan = document.querySelector('.form-group .file-name');
+    videoFileInput.addEventListener('change', function () {
+        videoFileNameSpan.textContent = this.files[0].name;
+    });
+
+    var imageFilesInput = document.getElementById('image-files');
+    var imageFileNamesSpan = document.querySelector('.form-group .file-names');
+    imageFilesInput.addEventListener('change', function () {
+        var fileNames = Array.from(this.files).map(function (file) {
+            return file.name;
+        });
+        imageFileNamesSpan.textContent = fileNames.join(', ');
+    });
+
+</script>

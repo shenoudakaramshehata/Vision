@@ -1,0 +1,263 @@
+﻿@page
+@model Vision.Pages.SelectedImageItemModel
+@{
+}
+
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+
+
+
+
+
+<style>
+    /*.photoUpload-files span {
+        display: none !important;
+    }*/
+     .category-carousel-item-container {
+        background: red !important;
+    }
+      .category-carousel-item-title {
+        color: white !important;
+    }
+    
+</style>
+
+
+<form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+    <div class="col-md-9">
+
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+
+                <div class="row">
+                    <!--col -->
+                    <div class="col-md-6">
+
+                        <div class="add-list-media-wrap">
+                            <div class="add-list-media-wrap">
+                                <div class="listsearch-input-item fl-wrap">
+                                    <div class="fuzone">
+                                        <div class="fu-text">
+                                            <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Main Picture"]</span>
+                                            <div class="photoUpload-files fl-wrap"></div>
+                                        </div>
+                                        <input type="file" id="file" accept="image/*" name="pic" class="upload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col end-->
+                    <!--col -->
+
+
+                    <div class="col-md-6">
+
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop More Photos"]</span>
+                                        <div class="photoUpload-files fl-wrap " id="chain"></div>
+                                    </div>
+                                    <input id="MoreFiles" type="file" accept="image/*" name="Photos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--col end-->
+                </div>
+                <div id="item_images" class="col-md-12 fl-wrap">
+                    <div class="col-md-12 fl-wrap">
+                    </div>
+                    </div>
+                @*<div class="listing-item-grid_container fl-wrap">
+                    <div id="item_images" class="row">
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    @* <div id="item_images" class="d-flex justify-content-center align-items-center" style="flex-wrap:wrap">
+
+        </div>*@
+
+
+
+</form>
+
+
+
+
+<script>
+        //img = $("#profilePhotoImg")
+
+    $("#MoreFiles").change(function(e) {
+        console.log(e)
+        console.log(e.target)
+        console.log(e.target.files.length)
+
+
+
+        for (let i=0;i<e.target.files.length;i++) {
+            var url = URL.createObjectURL(e.target.files[i])
+
+        var Pardiv = document.createElement("div");
+        //Pardiv.classList.add("fl-wrap");
+        Pardiv.classList.add("col-md-4");
+        Pardiv.classList.add(i);
+        var anchor = document.createElement("a");
+         anchor.classList.add("category-carousel-item");
+         anchor.classList.add("fl-wrap");
+         anchor.classList.add("full-height");
+         var img = document.createElement("img");
+         img.src = url;
+         img.style.height="14rem"
+         var Fchdiv = document.createElement("div");
+        Fchdiv.classList.add("category-carousel-item-container");
+        var Schdiv = document.createElement("div");
+        Schdiv.classList.add("category-carousel-item-title");
+        Schdiv.innerHTML = "Remove";
+        Schdiv.id = i;
+        Schdiv.addEventListener("click", (e) => removePic(e))
+        Fchdiv.appendChild(Schdiv);
+        
+        anchor.appendChild(img);
+        anchor.appendChild(Fchdiv);
+        Pardiv.appendChild(anchor);
+    ////anchor.innerHTML = "Remove";
+    ////anchor.id = i;
+    ////anchor.addEventListener("click", (e) => removePic(e))
+    
+    ////    var Fchdiv = document.createElement("div");
+    ////    Fchdiv.classList.add("listing-item-grid");
+    ////    var Schdiv = document.createElement("div");
+    ////    var img = document.createElement("img");
+    ////    img.src = url;
+    ////    img.width = "100%";
+    ////    img.height = "100%";
+    ////    img.objectFit = "cover";
+    ////    Schdiv.appendChild(img);
+    ////    var bgValue="/"+url;
+    ////    Schdiv.setAttribute('data-bg',bgValue);
+    ////    var Thchdiv = document.createElement("div");
+    ////    Thchdiv.classList.add("d-gr-sec");
+    ////    var Forchdiv = document.createElement("div");
+    ////    Forchdiv.classList.add("listing-item-grid_title");
+    ////    var header = document.createElement("h3");
+    ////    var anchor = document.createElement("a");
+    ////    anchor.innerHTML = "Remove";
+    ////    anchor.id = i;
+    ////    anchor.addEventListener("click", (e) => removePic(e))
+
+    ////    Fchdiv.appendChild(Schdiv);
+    ////    Fchdiv.appendChild(Thchdiv);
+    ////    header.appendChild(anchor);
+    ////    Forchdiv.appendChild(header);
+    ////    Fchdiv.appendChild(Forchdiv);
+    ////    Pardiv.appendChild(Fchdiv);
+
+
+
+        //var url = URL.createObjectURL(e.target.files[i])
+        //            var classNameImage=i;
+        //            var IdNameImage=i;
+        //            var img = document.createElement("img");
+        //            img.src = url;
+        //            img.width = 150;
+        //            img.classList.add("m-3");
+        //            var div = document.createElement("div");
+        //            div.classList.add("position-relative");
+        //            div.classList.add(i);
+        //            div.appendChild(img);
+        //            var x = document.createElement("div");
+        //            x.style.right = 0;
+        //            x.style.top = 0;
+        //            x.style.cursor  = "pointer";
+        //            x.addEventListener("click", (e) => removePic(e))
+
+        //            x.classList.add("fas");
+        //            x.classList.add("fa-times");
+        //            x.classList.add("position-absolute")
+        //           // x.innerHTML = "x";
+
+        //            x.id = i;
+        //            div.appendChild(x);
+
+        item_images.appendChild(Pardiv);
+
+    }
+        //img.attr('src', url)
+    });
+
+
+     function removePic(e) {
+            console.log("remove pic")
+            console.log(e.target.id);
+
+               var myobj =document.getElementsByClassName(e.target.id)[0];
+                myobj.remove();
+                removeFileFromFileList(e.target.id)
+        }
+      function removeFileFromFileList(index) {
+          var spans = document.getElementById("chain").getElementsByTagName("span");
+          spans[index].remove(); 
+
+//for(var a = 0; a < spans.length; a++) {
+//    var target = spans[a];
+//    target.innerHTML = a;
+//}
+          console.log(index)
+      const dt = new DataTransfer()
+      const input = document.getElementById('MoreFiles')
+      console.log(input.files.length)
+
+      const { files } = input
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (index != i){
+            console.log("enter here")
+            dt.items.add(file) // here you exclude the file. thus removing it.
+        }
+
+      }
+
+      input.files = dt.files // Assign the updates list
+       console.log(input.files.length)
+    }
+
+</script>

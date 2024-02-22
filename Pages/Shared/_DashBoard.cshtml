@@ -1,0 +1,731 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Vision.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject CRMDBContext _context
+@{
+    var currentuser = await UserManager.GetUserAsync(User);
+    var nickname = "User";
+        //var  TotalReview = _context.Reviews.Where(e => e.AddListing.CreatedByUser == currentuser.Email).ToList().Count();
+        //var  ActiveListing = _context.AddListings.Where(e => e.CreatedByUser == currentuser.Email).ToList().Count();
+        //var  TotalClassifiedAds = _context.ClassifiedAds.Where(e => e.AddedBy == currentuser.Email).ToList().Count();
+}
+<!DOCTYPE HTML>
+<html id="masterPageId" dir="ltr" lang="en">
+<head>
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+
+
+
+    <!--=============== basic  ===============-->
+    <meta charset="UTF-8">
+    <title>ICity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <!--=============== css  ===============-->
+    <link type="text/css" rel="stylesheet" href="~/Template/css/reset.css">
+    <link type="text/css" rel="stylesheet" href="~/Template/css/plugins.css">
+    <link id="styleen" type="text/css" rel="stylesheet" href="~/Template/css/style.css">
+    <link type="text/css" rel="stylesheet" href="~/Template/css/color.css">
+    @*<link id="stylear" type="text/css" rel="stylesheet" href="~/TemplateRTL/css/rtl-style.css">*@
+
+
+    <!--=============== favicons ===============-->
+    <link rel="shortcut icon" href="~/Template/css/images/favicon.ico">
+</head>
+<body>
+    <!--loader-->
+    <div class="loader-wrap">
+        <div class="loader-inner">
+            <div class="loader-inner-cirle"></div>
+        </div>
+    </div>
+    <!--loader end-->
+    <!-- main start  -->
+    <div id="main">
+        <!-- header -->
+
+        <header class="main-header">
+            <!-- logo-->
+            <a asp-page="index" class="logo-holder"><img src="/images/IcityLogo.jpg" style="height:3rem;width:7rem;" alt=""></a>
+            <!-- logo end-->
+            <!-- header-search_btn-->
+            <div class="header-search_btn show-search-button"><i class="fal fa-search"></i><span>@sharedResource["Search"]</span></div>
+            <!-- header-search_btn end-->
+            <!-- header opt -->
+            <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add-list color-bg">@sharedResource["Add Listing"] <span><i class="fal fa-layer-plus"></i></span></a>
+            <div class="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i class="fal fa-heart"></i><span class="cart-counter green-bg"></span> </div>
+
+            @if (currentuser == null)
+            {
+        <div class="show-reg-form modal-open avatar-img" data-srcav="images/avatar/3.jpg"><i class="fal fa-user"></i>@sharedResource["Sign In"]</div>
+            }
+            else
+            {
+                <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <div class="show-reg-form modal-open avatar-img" onclick="document.getElementById('form1').submit();" data-srcav="/@*@currentuser.ProfilePicture*@"><i class="fal fa-user"></i>@sharedResource["Log Out"]</div>
+                </form>
+
+                <div class="header-user-menu">
+                    <div class="header-user-name">
+                        <span><img src="/@currentuser.ProfilePicture" alt=""></span>
+                        @if (currentuser.NickName != null)
+                        {
+                            @currentuser.NickName;
+                        }
+                        else
+                        {
+                            @nickname
+                        }
+
+                    </div>
+                    <ul>
+                        <li><a asp-area="TemplatePages" asp-page="Profile"> @sharedResource["Edit profile"]</a></li>
+                        <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource["Add Listing"] </a></li>
+                        <li><a href="dashboard-bookings.html"> @sharedResource["Bookings"]   </a></li>
+                        <li><a asp-area="TemplatePages" asp-page="ListingReviews">@sharedResource["Reviews"]  </a></li>
+                    </ul>
+                </div>
+            }
+
+            <!-- header opt end-->
+            <!-- lang-wrap-->
+            <div class="lang-wrap">
+                <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong id="LangSelec"></strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                <ul class="lang-tooltip lang-action no-list-style">
+                    <a onclick="ChangeLang('en')" id="ang1" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="current-lan" data-lantext="En">English</a>
+                    <br />
+                    <br />
+                    <a onclick="ChangeLang('ar')" id="ang2" asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" data-lantext="Fr">اللغة العربية</a>
+                </ul>
+            </div>
+            <script>
+                function ChangeLang(lang) {
+                    document.getElementById("hello");
+                    var anch1 = document.getElementById("ang1");
+                    var anch2 = document.getElementById("ang2");
+                    if (lang == "en") {
+                        localStorage.setItem("lang", "en");
+                    }
+                    if (lang == "ar") {
+                        localStorage.setItem("lang", "ar");
+                    }
+                }
+                window.addEventListener('DOMContentLoaded', (event) => {
+                    var LangSelec = document.getElementById("LangSelec");
+                    console.log(LangSelec);
+                    console.log(LangSelec.value);
+                    var masterPage = document.getElementById("masterPageId");
+                    if (localStorage.getItem("lang") != "") {
+                        if (localStorage.getItem("lang") == "en") {
+                            console.log(LangSelec.value);
+                            LangSelec.innerHTML = "En";
+
+                            masterPage.dir = "ltr";
+
+                            var stylesheet = document.getElementById("stylear");
+                            stylesheet.setAttribute('href', '/Template/css/style.css');
+                            var stylesheet1 = document.getElementById("stylear");
+                            stylesheet1.setAttribute('href', '');
+                        }
+                        else if (localStorage.getItem("lang") == "ar") {
+                            masterPage.dir = "rtl"
+                            LangSelec.innerHTML = "AR";
+
+                            var stylesheet1 = document.getElementById("stylear");
+                            stylesheet1.setAttribute('href', '/TemplateRTL/css/rtl-style.css');
+                        }
+                    }
+                });
+            </script>
+
+            <!-- lang-wrap end-->
+            <!-- nav-button-wrap-->
+            <div class="nav-button-wrap color-bg">
+                <div class="nav-button">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+            <!-- nav-button-wrap end-->
+            <!--  navigation -->
+            <div class="nav-holder main-menu">
+                <nav>
+                    <ul class="no-list-style">
+                        <li>
+                            <a href="#" class="act-link">@sharedResource["Home"] <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li><a href="index.html">Parallax Image</a></li>
+                                <li><a href="index2.html">Slider</a></li>
+                                <li><a href="index3.html">Slideshow</a></li>
+                                <li><a href="index4.html">Video</a></li>
+                                <li><a href="index5.html">Map</a></li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                        <li>
+                            <a href="#">@sharedResource["Listings"] <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li><a href="listing.html">Column map</a></li>
+                                <li><a href="listing2.html">Column map 2</a></li>
+                                <li><a href="listing3.html">Fullwidth Map</a></li>
+                                <li><a href="listing4.html">Fullwidth Map 2</a></li>
+                                <li><a href="listing5.html">Without Map</a></li>
+                                <li><a href="listing6.html">Without Map 2</a></li>
+                                <li>
+                                    <a href="#">Single <i class="fa fa-caret-down"></i></a>
+                                    <!--third  level  -->
+                                    <ul>
+                                        <li><a href="listing-single.html">Style 1</a></li>
+                                        <li><a href="listing-single2.html">Style 2</a></li>
+                                        <li><a href="listing-single3.html">Style 3</a></li>
+                                        <li><a href="listing-single4.html">Style 4</a></li>
+                                    </ul>
+                                    <!--third  level end-->
+                                </li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                        <li>
+                            <a href="blog.html">@sharedResource["News"]</a>
+                        </li>
+                        <li>
+                            <a href="#">@sharedResource["Pages"] <i class="fa fa-caret-down"></i></a>
+                            <!--second level -->
+                            <ul>
+                                <li>
+                                    <a href="#">@sharedResource["Shop"]<i class="fa fa-caret-down"></i></a>
+                                    <!--third  level  -->
+                                    <ul>
+                                        <li><a href="shop.html">@sharedResource["Products"]</a></li>
+                                        <li><a href="product-single.html">Product single</a></li>
+                                        <li><a href="cart.html">Cart</a></li>
+                                    </ul>
+                                    <!--third  level end-->
+                                </li>
+                                <li><a href="about.html">@sharedResource["About"]</a></li>
+                                <li><a href="contacts.html">@sharedResource["Contacts"]</a></li>
+                     
+                                <li><a asp-area="TemplatePages" asp-page="DashBoardAddListing">@sharedResource["Add Listing"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="DisplayListing">@sharedResource["Buisness List"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="ClassifiedAds/Listing">@sharedResource["Classified Ads Listing"]</a></li>
+                                <li><a asp-area="TemplatePages" asp-page="PageNF">404</a></li>
+                            </ul>
+                            <!--second level end-->
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- navigation  end -->
+            <!-- header-search_container -->
+            <div class="header-search_container header-search vis-search">
+                <div class="container small-container">
+                    <div class="header-search-input-wrap fl-wrap">
+                        <!-- header-search-input -->
+                        <div class="header-search-input">
+                            <label><i class="fal fa-keyboard"></i></label>
+                            <input type="text" placeholder="What are you looking for ?" value="" />
+                        </div>
+                        <!-- header-search-input end -->
+                        <!-- header-search-input -->
+                        <div class="header-search-input location autocomplete-container">
+                            <label><i class="fal fa-map-marker"></i></label>
+                            <input type="text" placeholder="Location..." class="autocomplete-input" id="autocompleteid2" value="" />
+                            <a href="#"><i class="fal fa-dot-circle"></i></a>
+                        </div>
+                        <!-- header-search-input end -->
+                        <!-- header-search-input -->
+                        <div class="header-search-input header-search_selectinpt ">
+                            <select data-placeholder="Category" class="chosen-select no-radius">
+                                <option>All Categories</option>
+                                <option>All Categories</option>
+                                <option>Shops</option>
+                                <option>Hotels</option>
+                                <option>Restaurants</option>
+                                <option>Fitness</option>
+                                <option>Events</option>
+                            </select>
+                        </div>
+                        <!-- header-search-input end -->
+                        <button class="header-search-button green-bg" onclick="window.location.href='listing.html'"><i class="far fa-search"></i> Search </button>
+                    </div>
+                    <div class="header-search_close color-bg"><i class="fal fa-long-arrow-up"></i></div>
+                </div>
+            </div>
+            <!-- header-search_container  end -->
+            <!-- wishlist-wrap-->
+            @if (currentuser != null)
+            {
+                <div class="header-modal novis_wishlist">
+                    <!-- header-modal-container-->
+                    <div class="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+                        <!--widget-posts-->
+                        <div class="widget-posts  fl-wrap">
+                            <ul class="no-list-style">
+                               @* @{
+
+                                    var favourite = _context.Favourites.Include(a => a.AddListing).ThenInclude(a => a.Category).Where(a => a.UserId == currentuser.Id).ToList();
+                                }
+                                @foreach (var item in favourite)
+                                {
+
+                                    <li>
+
+                                        <div class="widget-posts-img">
+                                            <a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId"><img src="/@item.AddListing.ListingLogo" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-descr">
+                                            <h4><a href="listing-single.html">@item.AddListing.Title </a></h4>
+                                            <div class="geodir-category-location fl-wrap"><a href="#"><i class="fas fa-map-marker-alt"></i>@* @item.AddListing.City</a></div>
+                                            <div class="widget-posts-descr-link"><a href="listing.html">@item.AddListing.Category.CategoryTitleEn </a></div>
+                                            <div class="widget-posts-descr-score">@item.AddListing.Rating</div>
+                                            <div onclick="addfavourite(@item.AddListingId)" class="clear-wishlist"><i class="fal fa-times-circle"></i></div>
+                                        </div>
+                                    </li>
+                                }
+*@
+                              
+ 
+                            </ul>
+                        </div>
+                        <!-- widget-posts end-->
+                    </div>
+                    <!-- header-modal-container end-->
+                    <div class="header-modal-top fl-wrap">
+                        <h4>Your Wishlist : <span><strong></strong> @sharedResource["Listings"]</span></h4>
+                        @*<div class="close-header-modal"><i class="far fa-times"></i></div>*@
+                    </div>
+                </div>
+            }
+
+            <!--wishlist-wrap end -->
+        </header>
+
+
+
+
+
+        <div id="wrapper">
+            <!-- content-->
+            <div class="content">
+                <!--  section  -->
+                <section class="parallax-section dashboard-header-sec gradient-bg" data-scrollax-parent="true">
+                    <div class="container">
+                        <div class="dashboard-breadcrumbs breadcrumbs"><a href="#">@sharedResource["Home"]</a><a href="#">@sharedResource["Dashboard"]</a><span>@sharedResource["Main page"]</span></div>
+                        <!--Tariff Plan menu-->
+                        <div class="tfp-btn"><span>Tariff Plan : </span> <strong>Extended</strong></div>
+                        <div class="tfp-det">
+                            <p>You Are on <a href="#">Extended</a> . Use link bellow to view details or upgrade. </p>
+                            <a href="#" class="tfp-det-btn color2-bg">Details</a>
+                        </div>
+                        <!--Tariff Plan menu end-->
+                        <div class="dashboard-header_conatiner fl-wrap dashboard-header_title">
+                            <h1>@sharedResource["Welcome  :"] <span>@*@currentuser.NickName*@</span></h1>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="dashboard-header fl-wrap">
+                        <div class="container">
+                            <div class="dashboard-header_conatiner fl-wrap">
+                                <div class="dashboard-header-avatar">
+                                    @if (currentuser.ProfilePicture == null)
+                                    {
+                                        <img src="~/Images/default user.png" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="/@currentuser.ProfilePicture" alt="">
+                                    }
+                                </div>
+                                <div class="dashboard-header-stats-wrap">
+                                    <div class="dashboard-header-stats">
+                                        <div class="swiper-container">
+                                            <div class="swiper-wrapper">
+                                                <!--  dashboard-header-stats-item -->
+                                                <div class="swiper-slide">
+                                                    <div class="dashboard-header-stats-item">
+                                                        <i class="fal fa-map-marked"></i>
+                                                        @sharedResource["Active Listings"]
+                                                        <span>21</span>
+                                                    </div>
+                                                </div>
+                                                <!--  dashboard-header-stats-item end -->
+                                                <!--  dashboard-header-stats-item -->
+                                                <div class="swiper-slide">
+                                                    <div class="dashboard-header-stats-item">
+                                                        <i class="fal fa-chart-bar"></i>
+                                                       @sharedResource["Total Listing"] 
+                                                       @* <span>@ActiveListing</span>*@
+                                                    </div>
+                                                </div>
+                                                <!--  dashboard-header-stats-item end -->
+                                                <!--  dashboard-header-stats-item -->
+                                                <div class="swiper-slide">
+                                                    <div class="dashboard-header-stats-item">
+                                                        <i class="fal fa-comments-alt"></i>
+                                                        @sharedResource["Total Reviews"] 
+                                                       @* <span>@TotalReview</span>*@
+                                                    </div>
+                                                </div>
+                                                <!--  dashboard-header-stats-item end -->
+                                                <!--  dashboard-header-stats-item -->
+                                                <div class="swiper-slide">
+                                                    <div class="dashboard-header-stats-item">
+                                                        <i class="fal fa-heart"></i>
+                                                        @sharedResource["Total Classified Ads"] 
+                                                       @* <span>@TotalClassifiedAds</span>*@
+                                                    </div>
+                                                </div>
+                                                <!--  dashboard-header-stats-item end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  dashboard-header-stats  end -->
+                                    <div class="dhs-controls">
+                                        <div class="dhs dhs-prev"><i class="fal fa-angle-left"></i></div>
+                                        <div class="dhs dhs-next"><i class="fal fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                                <!--  dashboard-header-stats-wrap end -->
+                                <a asp-area="TemplatePages" asp-page="DashBoardAddListing" class="add_new-dashboard">@sharedResource["Add Listing"] <i class="fal fa-layer-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gradient-bg-figure" style="right:-30px;top:10px;"></div>
+                    <div class="gradient-bg-figure" style="left:-20px;bottom:30px;"></div>
+                    <div class="circle-wrap" style="left:120px;bottom:120px;" data-scrollax="properties: { translateY: '-200px' }">
+                        <div class="circle_bg-bal circle_bg-bal_small"></div>
+                    </div>
+                    <div class="circle-wrap" style="right:420px;bottom:-70px;" data-scrollax="properties: { translateY: '150px' }">
+                        <div class="circle_bg-bal circle_bg-bal_big"></div>
+                    </div>
+                    <div class="circle-wrap" style="left:420px;top:-70px;" data-scrollax="properties: { translateY: '100px' }">
+                        <div class="circle_bg-bal circle_bg-bal_big"></div>
+                    </div>
+                    <div class="circle-wrap" style="left:40%;bottom:-70px;">
+                        <div class="circle_bg-bal circle_bg-bal_middle"></div>
+                    </div>
+                    <div class="circle-wrap" style="right:40%;top:-10px;">
+                        <div class="circle_bg-bal circle_bg-bal_versmall" data-scrollax="properties: { translateY: '-350px' }"></div>
+                    </div>
+                    <div class="circle-wrap" style="right:55%;top:90px;">
+                        <div class="circle_bg-bal circle_bg-bal_versmall" data-scrollax="properties: { translateY: '-350px' }"></div>
+                    </div>
+                </section>
+                <!--  section  end-->
+                <!--  section  -->
+                <section class="gray-bg main-dashboard-sec" id="sec1">
+                    <div class="container">
+                        <!--  dashboard-menu-->
+                        <div class="col-md-3">
+                            <div class="mob-nav-content-btn color2-bg init-dsmen fl-wrap"><i class="fal fa-bars"></i> Dashboard menu</div>
+                            <div class="clearfix"></div>
+                            <div class="fixed-bar fl-wrap" id="dash_menu">
+                                <div class="user-profile-menu-wrap fl-wrap block_box">
+                                    <!-- user-profile-menu-->
+                                    <div class="user-profile-menu">
+                                        <h3>@sharedResource["Main"]</h3>
+                                        <ul class="no-list-style">
+                                            <li><a asp-area="TemplatePages" asp-page="DashBoard" class="user-profile-act"><i class="fal fa-chart-line"></i>@sharedResource["Dashboard"]</a></li>
+                                            @*<li><a href="dashboard-feed.html"><i class="fal fa-rss"></i>Your Feed <span>7</span></a></li>*@
+                                            <li><a asp-area="TemplatePages" asp-page="Profile"><i class="fal fa-user-edit"></i>@sharedResource["Edit profile"] </a></li>
+                                            @*<li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>*@
+                                            <li><a  asp-page="ChangePasswordP"><i class="fal fa-key"></i>@sharedResource["Change Password"]</a></li>
+                                       @*     <li>
+                                                <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
+                                                <ul class="no-list-style">
+                                                    <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
+                                                    <li><a href="#"> <i class="fal fa-calendar-check"></i> Submenu 2</a></li>
+                                                    <li><a href="#"><i class="fal fa-comments-alt"></i>Submenu 2</a></li>
+                                                    <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
+                                                </ul>
+
+                                            </li>*@
+                                        </ul>
+                                    </div>
+                                    <!-- user-profile-menu end-->
+                                    <!-- user-profile-menu-->
+                                    <div class="user-profile-menu">
+                                        <h3>@sharedResource["Listings"]</h3>
+                                        <ul class="no-list-style">
+                                            <li><a  asp-page="/MyBussiness"><i class="fal fa-th-list"></i>@sharedResource["My Buisness"]   </a></li>
+                                            <li><a asp-area="TemplatePages" asp-page="/DashBoardAddListing"><i class="fal fa-file-plus"></i> @sharedResource["Add New Bussiness"]</a></li>
+
+                                            <li><a asp-page="/Ads"><i class="fal fa-file-plus"></i> @sharedResource["My Classified Ads"]</a></li>
+                                            <li><a  asp-page="/category"><i class="fal fa-file-plus"></i> @sharedResource["Add New Classified Ads"]</a></li>
+
+
+
+                                            @*<li><a href="dashboard-bookings.html"> <i class=" fal fa-calendar-check"></i> Bookings <span>2</span></a></li>*@
+                                            <li><a asp-area="TemplatePages" asp-page="/ListingReviews"><i class="fal fa-comments-alt"></i>@sharedResource["Reviews"] <span>@*@TotalReview*@</span>  </a></li>
+@*                                            <li>
+                                                <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
+                                                <ul class="no-list-style">
+                                                    <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
+                                                    <li><a href="#"> <i class="fal fa-calendar-check"></i> Submenu 2</a></li>
+                                                    <li><a href="#"><i class="fal fa-comments-alt"></i>Submenu 2</a></li>
+                                                    <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
+                                                </ul>
+
+                                            </li>*@
+                                        </ul>
+                                    </div>
+                                    <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                        <button class="logout_btn color2-bg">@sharedResource["Log Out"] <i class="fas fa-sign-out"></i></button>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <a class="back-tofilters color2-bg custom-scroll-link fl-wrap" href="#dash_menu">@sharedResource["Back to Menu"]<i class="fas fa-caret-up"></i></a>
+                        </div>
+
+                        @RenderBody()
+                         
+                    </div>
+                </section>
+                <div class="limit-box fl-wrap"></div>
+            </div>
+        </div>
+        <footer class="main-footer fl-wrap">
+            <!-- footer-header-->
+            <div class="footer-header fl-wrap grad ient-dark">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="subscribe-header">
+                                <h3>Subscribe For a <span>Newsletter</span></h3>
+                                <p>Whant to be notified about new locations ?  Just sign up.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="subscribe-widget">
+                                <div class="subcribe-form">
+                                    <form id="subscribe">
+                                        <input class="enteremail fl-wrap" name="email" id="subscribe-email" placeholder="Enter Your Email" spellcheck="false" type="text">
+                                        <button type="submit" id="subscribe-button" class="subscribe-button"><i class="fal fa-envelope"></i></button>
+                                        <label for="subscribe-email" class="subscribe-message"></label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer-header end-->
+            <!--footer-inner-->
+            <div class="footer-inner   fl-wrap">
+                <div class="container">
+                    <div class="row">
+                        <!-- footer-widget-->
+                        <div class="col-md-4">
+                            <div class="footer-widget fl-wrap">
+                                <div class="footer-logo"><a href="index.html"><img src="~/Template/images/logo.png" alt=""></a></div>
+                                <div class="footer-contacts-widget fl-wrap">
+                                    <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna. Etiam suscipit commodo gravida.   </p>
+                                    <ul class="footer-contacts fl-wrap no-list-style">
+                                        <li><span><i class="fal fa-envelope"></i> Mail :</span><a href="#" target="_blank">yourmail@domain.com</a></li>
+                                        <li> <span><i class="fal fa-map-marker"></i> Adress :</span><a href="#" target="_blank">USA 27TH Brooklyn NY</a></li>
+                                        <li><span><i class="fal fa-phone"></i> Phone :</span><a href="#">+7(111)123456789</a></li>
+                                    </ul>
+                                    <div class="footer-social">
+                                        <span>Find  us on: </span>
+                                        <ul class="no-list-style">
+                                            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+                                            <li><a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- footer-widget end-->
+                        <!-- footer-widget-->
+                        <div class="col-md-4">
+                            <div class="footer-widget fl-wrap">
+                                <h3>Our Last News</h3>
+                                <div class="footer-widget-posts fl-wrap">
+                                    <ul class="no-list-style">
+                                        <li class="clearfix">
+                                            <a href="#" class="widget-posts-img"><img src="~/Template/images/all/1.jpg" class="respimg" alt=""></a>
+                                            <div class="widget-posts-descr">
+                                                <a href="#" title="">Vivamus dapibus rutrum</a>
+                                                <span class="widget-posts-date"><i class="fal fa-calendar"></i> 21 Mar 09.05 </span>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#" class="widget-posts-img"><img src="~/Template/images/all/1.jpg" class="respimg" alt=""></a>
+                                            <div class="widget-posts-descr">
+                                                <a href="#" title=""> In hac habitasse platea</a>
+                                                <span class="widget-posts-date"><i class="fal fa-calendar"></i> 7 Mar 18.21 </span>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#" class="widget-posts-img"><img src="~/Template/images/all/1.jpg" class="respimg" alt=""></a>
+                                            <div class="widget-posts-descr">
+                                                <a href="#" title="">Tortor tempor in porta</a>
+                                                <span class="widget-posts-date"><i class="fal fa-calendar"></i> 7 Mar 16.42 </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <a href="blog.html" class="footer-link">Read all <i class="fal fa-long-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- footer-widget end-->
+                        <!-- footer-widget  -->
+                        <div class="col-md-4">
+                            <div class="footer-widget fl-wrap ">
+                                <h3>Our  Twitter</h3>
+                                <div class="twitter-holder fl-wrap scrollbar-inner2" data-simplebar data-simplebar-auto-hide="false">
+                                    <div id="footer-twiit"></div>
+                                </div>
+                                <a href="#" class="footer-link twitter-link" target="_blank">Follow us <i class="fal fa-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- footer-widget end-->
+                    </div>
+                </div>
+                <!-- footer bg-->
+                <div class="footer-bg" data-ran="4"></div>
+                <div class="footer-wave">
+                    <svg viewbox="0 0 100 25">
+                        <path fill="#fff" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
+                    </svg>
+                </div>
+                <!-- footer bg  end-->
+            </div>
+            <!--footer-inner end -->
+            <!--sub-footer-->
+            <div class="sub-footer  fl-wrap">
+                <div class="container">
+                    <div class="copyright"> &#169; ICity 2022 .  All rights reserved.</div>
+                    <div class="lang-wrap">
+                        <div class="show-lang"><span><i class="fal fa-globe-europe"></i><strong>En</strong></span><i class="fa fa-caret-down arrlan"></i></div>
+                        <ul class="lang-tooltip lang-action no-list-style">
+                            <li><a href="#" class="current-lan" data-lantext="En">English</a></li>
+                            <li><a href="#" data-lantext="Fr">Français</a></li>
+                            <li><a href="#" data-lantext="Es">Español</a></li>
+                            <li><a href="#" data-lantext="De">Deutsch</a></li>
+                        </ul>
+                    </div>
+                    <div class="subfooter-nav">
+                        <ul class="no-list-style">
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--sub-footer end -->
+        </footer>
+        <!--footer end -->
+        <!--register form -->
+        <div class="main-register-wrap modal">
+            <div class="reg-overlay"></div>
+            <div class="main-register-holder tabs-act">
+                <div class="main-register fl-wrap  modal_main">
+                    <div class="main-register_title">Welcome to <span><strong>Town</strong>Hub<strong>.</strong></span></div>
+                    <div class="close-reg"><i class="fal fa-times"></i></div>
+                    <ul class="tabs-menu fl-wrap no-list-style">
+                        <li class="current"><a href="#tab-1"><i class="fal fa-sign-in-alt"></i> Login</a></li>
+                        <li><a href="#tab-2"><i class="fal fa-user-plus"></i> Register</a></li>
+                    </ul>
+                    <!--tabs -->
+                    <div class="tabs-container">
+                        <div class="tab">
+                            <!--tab -->
+                            <div id="tab-1" class="tab-content first-tab">
+                                <div class="custom-form">
+                                    <form method="post" name="registerform">
+                                        <label>Username or Email Address <span>*</span> </label>
+                                        <input name="email" type="text" onClick="this.select()" value="">
+                                        <label>Password <span>*</span> </label>
+                                        <input name="password" type="password" onClick="this.select()" value="">
+                                        <button type="submit" class="btn float-btn color2-bg"> Log In <i class="fas fa-caret-right"></i></button>
+                                        <div class="clearfix"></div>
+                                        <div class="filter-tags">
+                                            <input id="check-a3" type="checkbox" name="check">
+                                            <label for="check-a3">Remember me</label>
+                                        </div>
+                                    </form>
+                                    <div class="lost_password">
+                                        <a href="#">Lost Your Password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tab end -->
+                            <!--tab -->
+                            <div class="tab">
+                                <div id="tab-2" class="tab-content">
+                                    <div class="custom-form">
+                                        <form method="post" name="registerform" class="main-register-form" id="main-register-form2">
+                                            <label>Full Name <span>*</span> </label>
+                                            <input name="name" type="text" onClick="this.select()" value="">
+                                            <label>Email Address <span>*</span></label>
+                                            <input name="email" type="text" onClick="this.select()" value="">
+                                            <label>Password <span>*</span></label>
+                                            <input name="password" type="password" onClick="this.select()" value="">
+                                            <div class="filter-tags ft-list">
+                                                <input id="check-a2" type="checkbox" name="check">
+                                                <label for="check-a2">I agree to the <a href="#">Privacy Policy</a></label>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="filter-tags ft-list">
+                                                <input id="check-a" type="checkbox" name="check">
+                                                <label for="check-a">I agree to the <a href="#">Terms and Conditions</a></label>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <button type="submit" class="btn float-btn color2-bg"> Register  <i class="fas fa-caret-right"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tab end -->
+                        </div>
+                        <!--tabs end -->
+                        <div class="log-separator fl-wrap"><span>or</span></div>
+                        <div class="soc-log fl-wrap">
+                            <p>For faster login or register use your social account.</p>
+                            <a href="#" class="facebook-log"> Facebook</a>
+                        </div>
+                        <div class="wave-bg">
+                            <div class='wave -one'></div>
+                            <div class='wave -two'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--register form end -->
+        <a class="to-top"><i class="fas fa-caret-up"></i></a>
+    </div>
+    <!-- Main end -->
+    <!--=============== scripts  ===============-->
+    <script src="~/Template/js/jquery.min.js"></script>
+    <script src="~/Template/js/plugins.js"></script>
+    <script src="~/Template/js/scripts.js"></script>
+    <script src="~/Template/js/charts.js"></script>
+
+    <script src="~/Template/js/dashboard.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("NToastNotify")
+  
+     
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+   
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+            <div class="row">
+                <div class="col-md-12">
+                    ##215##
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    ##222##
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="profile-edit-container fl-wrap  block_box">
+        <div class="custom-form">
+        
+                    <div class="row">
+                        <div class="col-md-4">
+                            ##217##
+                        </div>
+                        <div class="col-md-4">
+                            ##218##
+                        </div>
+                        
+                        <div class="col-md-4">
+                            ##216##
+                        </div>
+                        
+                    </div>
+               
+                
+           
+        </div>
+    </div>
+
+     
+    <div class="profile-edit-container fl-wrap  block_box">
+        <div class="custom-form">
+        
+                    <div class="row">
+                        <div class="col-md-6">
+                            ##223##
+                        </div>
+                        <div class="col-md-6">
+                            ##224##
+                        </div>
+                        
+                        
+                       
+                    </div>
+               
+               <div class="row">
+                        <div class="col-md-6">
+                            ##225##
+                        </div>
+                        <div class="col-md-6">
+                            ##226##
+                        </div>
+                        
+                        
+                       
+                    </div>
+                
+           
+        </div>
+    </div>
+
+
+   
+    <div class="profile-edit-container fl-wrap block_box">
+         <div class="custom-form">
+        
+                    <div class="row">
+                        <div class="col-md-12">
+                            ##220##
+                        </div>
+                       
+    </div>
+     <div class="profile-edit-container fl-wrap block_box">
+         <div class="custom-form">
+        
+                    <div class="row">
+                        
+                       
+    </div>
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+            <div class="row">
+               
+                <div class="col-md-12">
+                    <div class="add-list-media-wrap">
+                        <div class="listsearch-input-item fl-wrap">
+                            <div class="fuzone">
+                               
+                                    <div class="fu-text">
+                                       ##221##
+                                    </div>
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+   
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+           
+             ##219##
+          
+
+
+        </div>
+    </div>
+    

@@ -1,0 +1,139 @@
+    
+   <div class="custom-form">
+<div class="profile-edit-container fl-wrap block_box">
+    <div class="custom-form">
+        <div class="row">
+            <div class="col-md-12">
+                ##799##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                ##806##
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="profile-edit-container fl-wrap  block_box">
+    <div class="custom-form">
+
+        <div class="row">
+            <div class="col-md-6">
+                ##800##
+            </div>
+            <div class="col-md-6">
+                ##801##
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div class="profile-edit-container fl-wrap  block_box">
+    <div class="custom-form">
+
+        <div class="row">
+            <div class="col-md-6">
+                ##802##
+            </div>
+            <div class="col-md-6">
+                ##803##
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="profile-edit-container fl-wrap  block_box">
+    <div class="custom-form">
+
+        <div class="row">
+            <div class="col-md-6">
+                ##805##
+            </div>
+            <div class="col-md-6">
+                ##804##
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+     <div class="profile-edit-container fl-wrap block_box">
+         <div class="custom-form">
+        
+                    <div class="row">
+                        
+                       
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <form>
+                                        <div class="fu-text">
+                                            ##807##
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <form>
+                                        <div class="fu-text">
+                                            ##808##
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+
+                ##809##
+
+
+
+            </div>
+        </div>
+        </div>

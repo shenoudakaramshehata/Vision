@@ -1,0 +1,7 @@
+﻿@using Vision.Models;
+@using Microsoft.AspNetCore.Localization;
+    
+@model BusinessTemplateConfig
+
+<label>@Model.BusinessTemplateFieldCaptionAr  <i class="fal fa-briefcase"></i></label>
+<input type="text" name="@Model.BusinessTemplateConfigId" id="@Model.BusinessTemplateConfigId" required="@Model.IsRequired.ToString()">

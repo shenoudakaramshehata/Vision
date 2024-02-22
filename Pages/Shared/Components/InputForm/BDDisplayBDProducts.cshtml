@@ -1,0 +1,79 @@
+﻿@using Vision.Models;
+@inject CRMDBContext _context
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Product>
+
+
+@*
+@{
+    if (Model != null)
+    {
+        if (Model.Count != 0)
+        {
+            <div class="list-single-main-item fl-wrap block_box" id="sec4">
+                <div class="list-single-main-item-title">
+                    <h3>Restaurant Menu</h3>
+                </div>
+                <div class="list-single-main-item_content fl-wrap">
+                    <div class="menu-filters">
+                        <a href="#" class="gallery-filter  menu-filters-active" data-filter="*">All</a>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <a href="#" class="gallery-filter" onclick="GetProduct(@item.ProductCategory.ProductCategoryId)" data-filter="@item.ProductCategory.TitleEn.ToLower()">@item.ProductCategory.TitleEn</a>
+                            }
+                        }
+                    </div>
+                    <div class="restor-menu-widget fl-wrap" id="pages">
+                        <!--restmenu-item-->
+                       
+                        <!--restmenu-item end-->
+                        <!--restmenu-item-->
+
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <br />
+            <br />
+            <br />
+            <br />
+        }
+    }}*@
+
+
+
+
+
+<div class="list-single-main-item fl-wrap block_box" id="sec4">
+    <div class="list-single-main-item-title">
+        <h3>Restaurant Menu</h3>
+    </div>
+    <div class="list-single-main-item_content fl-wrap">
+        <div class="menu-filters">
+            <a href="#" class="gallery-filter  menu-filters-active" data-filter="*">All</a>
+
+            @{
+                foreach (var item in Model)
+                {
+                    <a href="#" class="gallery-filter" onclick="GetProduct(@item.ProductCategory.ProductCategoryId)" data-filter=".@item.ProductCategory.TitleEn.ToLower()">@item.ProductCategory.TitleEn</a>
+                }
+            }
+            @* <a href="#" class="gallery-filter" data-filter=".main">Main</a>
+            <a href="#" class="gallery-filter" data-filter=".dessert">Dessert</a>
+            <a href="#" class="gallery-filter" data-filter=".lunch">Lunch</a>*@
+        </div>
+        
+            <div class="restor-menu-widget fl-wrap" style="height:auto !important" id="pages">
+          
+        </div>
+    </div>
+</div>
+
+
+
+            

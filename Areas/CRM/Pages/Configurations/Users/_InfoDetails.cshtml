@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Vision.ViewModels.UserProfileMainInfoVM
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Info</h5>
+        <div class="table-responsive">
+            <table class="table table-borderless mb-0">
+                <tbody>
+                    <tr>
+                        <th class="ps-0" scope="row">Full Name :</th>
+                        <td class="text-muted">@Model.FullName</td>
+                    </tr>
+                    @{
+                        if (Model.nickName != null)
+                        {
+                             <tr>
+                        <th class="ps-0" scope="row">Nick Name :</th>
+                        <td class="text-muted">@Model.nickName</td>
+                    </tr>
+                        }
+                    }
+                   
+                    <tr>
+                        <th class="ps-0" scope="row">Mobile :</th>
+                        <td class="text-muted">@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <th class="ps-0" scope="row">E-mail :</th>
+                        <td class="text-muted">@Model.Email</td>
+                    </tr>
+
+                    @{
+                        if (Model.Gender != null)
+                        {
+                            <tr>
+                                <th class="ps-0" scope="row">Gender :</th>
+                                <td class="text-muted">@Model.Gender</td>
+                            </tr>
+                        }
+                    }
+
+                    @{
+                        if (Model.martialStatus != null)
+                        {
+                           <tr>
+                        <th class="ps-0" scope="row">MartialStatus :</th>
+                        <td class="text-muted">@Model.martialStatus</td>
+                    </tr>
+                        }
+                    }
+
+                    @{
+                        if (Model.Location != null)
+                        {
+                            <tr>
+                        <th class="ps-0" scope="row">Location :</th>
+                        <td class="text-muted">
+                            @Model.Location
+                        </td>
+                    </tr>
+                        }
+                    }
+                    
+                    @{
+                        if (Model.Nationality != null)
+                        {
+                            <tr>
+                                <th class="ps-0" scope="row">Nationality :</th>
+                                <td class="text-muted">
+                                    @Model.Nationality
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                    @{
+                        if (Model.birthDay != null)
+                        {
+                            <tr>
+                                <th class="ps-0" scope="row">Birthday Date</th>
+                                <td class="text-muted">@Model.birthDay.Value.ToShortDateString()</td>
+                            </tr>
+                        }
+                    }
+
+
+                    @{
+                        if (Model.Qualification != null)
+                        {
+                            <tr>
+                                <th class="ps-0" scope="row">Qualifation</th>
+                                <td class="text-muted">@Model.Qualification</td>
+                            </tr>
+                        }
+                    }
+
+                    @{
+                        if (Model.Job != null)
+                        {
+                            <tr>
+                                <th class="ps-0" scope="row">Job</th>
+                                <td class="text-muted">@Model.Job</td>
+                            </tr>
+                        }
+                    }
+                   
+                </tbody>
+            </table>
+        </div>
+    </div><!-- end card body -->
+</div><!-- end card -->

@@ -1,0 +1,194 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.BusinessOrderUpdateModel
+@{
+}
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+<div class="col-md-9">
+
+    <div class="dashboard-title   fl-wrap">
+        <h3>@sharedResource["Edit Order"]</h3>
+
+    </div>
+    <form asp-page-handler="EditProductCategory" enctype="multipart/form-data">
+        <input asp-for="@Model.order.OrderId" hidden />
+        <input asp-for="@Model.order.ClassifiedBusinessId" hidden />
+        <div class="col-md-12">
+            <div class="profile-edit-container fl-wrap block_box">
+                <div class="custom-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>@sharedResource["Order Net"]  <i class="fal fa-briefcase"></i></label>
+                            <input type="text" asp-for="@Model.order.OrderNet" >
+                        </div>
+                        <div class="col-md-6">
+                            <label>@sharedResource["Delivery cost"] <i class="fal fa-briefcase"></i></label>
+                            <input type="text" asp-for="@Model.order.Deliverycost" >
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-edit-container fl-wrap block_box">
+                    <div class="custom-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>@sharedResource["Discount"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Discount" >
+                            </div>
+                            <div class="col-md-6">
+                                <label class="check">
+
+                                    <span>@sharedResource["Is Deliverd"]</span>
+                                    @{
+                                        if (Model.order?.IsDeliverd == true)
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsDeliverd" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsDeliverd">
+
+                                        }
+
+                                    }
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="check">
+
+                                    <span>@sharedResource["Is Paid"]</span>
+                                    @{
+                                        if (Model.order?.IsPaid == true)
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsPaid" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsPaid">
+
+                                        }
+
+                                    }
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="check">
+
+                                    <span>@sharedResource["Is Cancelled"]</span>
+                                    @{
+                                        if (Model.order?.IsCancelled == true)
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsCancelled" checked>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" asp-for="@Model.order.IsCancelled">
+
+                                        }
+
+                                    }
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span>@sharedResource["Order Notes"]</span>
+                                <textarea type="checkbox" asp-for="@Model.order.OrderNotes"></textarea>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="profile-edit-container fl-wrap block_box">
+                    <div class="custom-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>@sharedResource["Governorate"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Governorate" >
+                            </div>
+                            <div class="col-md-6">
+                                <label>@sharedResource["Area"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Area" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>@sharedResource["Street"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Street" >
+                            </div>
+                            <div class="col-md-6">
+                                <label>@sharedResource["Building"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Building" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>@sharedResource["Floor"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Floor" >
+                            </div>
+                            <div class="col-md-6">
+                                <label>@sharedResource["Apartment Number"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.ApartmentNumber" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>@sharedResource["Piece"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Piece" >
+                            </div>
+                            <div class="col-md-6">
+                                <label>@sharedResource["Avenue"] <i class="fal fa-briefcase"></i></label>
+                                <input type="text" asp-for="@Model.order.Avenue" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span>@sharedResource["Address"]</span>
+                                <textarea type="checkbox" asp-for="@Model.order.Adress"></textarea>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="profile-edit-container fl-wrap block_box">
+                    <div class="custom-form">
+
+                        <button type="submit" class="btn float-btn color2-bg">@sharedResource["Edit"]<i class="fal fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

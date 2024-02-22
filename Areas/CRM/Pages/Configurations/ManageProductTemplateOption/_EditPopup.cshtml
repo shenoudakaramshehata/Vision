@@ -1,0 +1,88 @@
+﻿
+@{
+}
+@model Vision.Models.ProductTemplateOption
+
+                    <div class="modal fade" id="showEditModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-light p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal"></button>
+                                </div>
+                           
+            <form asp-area="CRM" asp-page="/Configurations/ManageProductTemplateOption/index" asp-page-handler="EditOption" enctype="multipart/form-data">
+            <div class="modal-body">
+        <input type="hidden" id="id-field" />
+        <div class="row g-3">
+            <div class="col-lg-12">
+               
+                <div>
+                        <label for="@Model.OptionAr"
+                           class="form-label">@sharedResource["TlAr"]</label>
+                    <input type="text" asp-for="@Model.OptionAr" id="OptionTLARId"
+                           class="form-control" placeholder="@sharedResource["Enter TlAr"]"
+                           required />
+                   
+                </div>
+                <div>
+                   <input asp-for="@Model.ProductTemplateOptionId" id="OptionHiddenId" hidden>
+                   
+
+
+                </div>
+            </div>
+            <!--end col-->
+            <div class="col-lg-12">
+                <div>
+                   <label for="@Model.OptionEn"
+                           class="form-label">@sharedResource["TlEn"]</label>
+                    <input type="text" asp-for="@Model.OptionEn" id="OptionTLENId"
+                           class="form-control"
+                           placeholder="@sharedResource["Enter TlEn"]" required />
+                </div>
+            </div>
+             
+            
+                
+            
+               
+               
+                <!--end col-->
+            </div>
+            <!--end row-->
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light"
+                        data-bs-dismiss="modal">
+                    @sharedResource["Close"] 
+                </button>
+                <button type="submit" class="btn btn-success"
+                        id="add-btn">
+                     @sharedResource["Edit"] 
+                </button>
+              
+            </div>
+        </div>
+    </form>
+                          </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                

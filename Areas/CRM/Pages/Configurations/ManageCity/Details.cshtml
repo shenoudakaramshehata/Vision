@@ -1,0 +1,44 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageCity.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>City Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City.CityTlAr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City.CityTlAr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City.CityTlEn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City.CityTlEn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City.CityOrderIndex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City.CityOrderIndex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.City.CityIsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City.CityIsActive)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.City?.CityId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

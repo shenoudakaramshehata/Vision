@@ -1,0 +1,470 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageProductChart.IndexModel
+@{
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewBag.Title = @sharedResource["Manage Products"];
+    ViewBag.pTitle = @sharedResource["Products"];
+    ViewBag.pageTitle = "Chart";
+}
+<div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
+    <div class="file-manager-sidebar">
+        <div class="p-4 d-flex flex-column h-100">
+            <div class="mb-3">
+                <button class="btn btn-success w-100" data-bs-target="#createProjectModal" data-bs-toggle="modal"><i class="ri-add-line align-bottom"></i>@sharedResource["Add Product Type"] </button>
+            </div>
+
+
+
+            <div class="px-4 mx-n4" data-simplebar style="height: calc(100vh - 468px);">
+                <ul class="to-do-menu list-unstyled" id="projectlist-data">
+                    <li>
+                        <a data-bs-toggle="collapse" href="#velzonAdmin" class="nav-link fs-13 active">@sharedResource["Product Types"] </a>
+                        <div class="collapse show" id="velzonAdmin">
+                            <div id="jstree">
+                            </div>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+                            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+                            <script type="text/javascript">
+                                                    $(function () {
+
+                                                        $('#jstree').on('changed.jstree', function (e, data) {
+                                                            var i, j;
+                                                            var selectedItems = [];
+                                                            for (i = 0, j = data.selected.length; i < j; i++) {
+
+                                                                //Fetch the Id.
+                                                                var id = data.selected[i];
+                                                                console.log("This Is Id="+id);
+                                                                $.ajax({
+                                    type: "GET",
+                                    url: "/CRM/Configurations/ManageProductChart/Index?handler=FillTemplateList",
+                                    data: { "id": id },
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    success: function(response) {
+                                        console.log("helloo"+response)
+                                        var domainUrl = document.getElementById("UrlId").value;
+                                        console.log(domainUrl)
+                                        window.location.replace(domainUrl+"/CRM/Configurations/ManageProductChart/Index")
+                                    },
+                                    failure: function(response) {
+                                        alert(response);
+                                    }
+                                });
+
+
+                                                                //Remove the ParentId.
+                                                                if (id.indexOf('-') != -1) {
+                                                                    id = id.split("-")[1];
+                                                                }
+
+                                                                //Add the Node to the JSON Array.
+                                                                selectedItems.push({
+                                                                    text: data.instance.get_node(data.selected[i]).text,
+                                                                    id: id,
+                                                                    parent: data.node.parents[0]
+                                                                });
+                                                            }
+
+                                                            //Serialize the JSON Array and save in HiddenField.
+                                                            $('#selectedItems').val(JSON.stringify(selectedItems));
+                                                            console.log(JSON.stringify(selectedItems));
+
+                                                        }).jstree({
+                                                            "core": {
+                                                                "themes": {
+                                                                    "variant": "large"
+                                                                },
+                                                                "data": @Html.Raw(Model.TreeViewJSON)
+                                                                                                                                                                                                    },
+                                                            "checkbox": {
+                                                                "keep_selected_style": false
+                                                            },
+                                                            "plugins": ["wholerow"],
+                                                        });
+                                                    });
+                            </script>
+                   
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div><!--end side content-->
+    <div class="file-manager-content w-100 p-0 pb-0">
+        <div class="card" id="orderList">
+            <div class="card-header border-0">
+                <div class="row align-items-center gy-3">
+                    <div class="col-sm">
+                        <h5 class="card-title mb-0">@sharedResource["Category Product Template Configuration"]</h5>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex gap-1 flex-wrap">
+                            <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModalAddModal"><i class="ri-add-line align-bottom me-1"></i>@sharedResource["Add Attribute"] </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body pt-10">
+                <div>
+                    <div class="table-responsive table-card mb-1">
+                        <table class="table table-nowrap align-middle" id="orderTable">
+                            <thead class="text-muted table-light">
+                                <tr class="text-uppercase">
+                                    <th class="sort" data-sort="product_name">@sharedResource["Caption Ar"]</th>
+                                    <th class="sort" data-sort="date">@sharedResource["Caption En"]</th>
+                                    <th class="sort" data-sort="customer_name">@sharedResource["Field Type"]</th>
+                                    <th class="sort" data-sort="amount">@sharedResource["Product Type"]</th>
+                                    <th class="sort" data-sort="amount">@sharedResource["Actions"]</th>
+
+                                    @*<th class="sort" data-sort="city">Action</th>*@
+                                </tr>
+                            </thead>
+                            <tbody class="list form-check-all">
+
+                                @{
+                                    if (@Model.AdTemplateConfigsList != null)
+                                    {
+                                        if (@Model.AdTemplateConfigsList.Count != 0)
+                                        {
+                                            foreach (var item in @Model.AdTemplateConfigsList)
+
+                                            {
+                                                <tr>
+
+
+                                                    <td class="product_name">@item.ProductTemplateFieldCaptionAr</td>
+                                                    <td class="date">@item.ProductTemplateFieldCaptionEn</td>
+                                                    <td class="customer_name">@item.FieldType.FieldTypeTitle</td>
+
+                                                    @{
+                                                        if (Model.BrowserCulture == "en-US")
+                                                        {
+                                                            <td class="amount">@item.ProductType.TitleAr</td>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <td class="amount">@item.ProductType.TitleAr</td>
+
+                                                        }
+                                                    }
+                                                     @{
+                                                        if (@item.FieldTypeId==3||@item.FieldTypeId==6||@item.FieldTypeId==13)
+                                                        {
+                                                            
+                                                                <td>
+                                                                    <ul class="list-inline hstack gap-2 mb-0">
+                                                                      
+                                                                    
+                                                                        <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                                    data-bs-trigger="hover" data-bs-placement="top"
+                                                                    title="Options">
+                                                                         <a asp-area="CRM" asp-page="/Configurations/ManageProductTemplateOption/index" asp-route-id="@item.ProductTemplateConfigId" >
+                                                                        <i class="ri-eye-fill align-bottom text-muted" ></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    
+                                                                    </ul>
+                                                                </td>
+
+                                                        }
+               
+                                                    }
+
+                                                     
+
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+                        <div class="noresult" style="display: none">
+                            <div class="text-center">
+                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style="width:75px;height:75px"></lord-icon>
+                                <h5 class="mt-2">Sorry! No Result Found</h5>
+                                <p class="text-muted">We've searched more than 150+ Orders We did not find any orders for you search.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            
+                <div class="modal fade" id="showModalAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light p-3">
+                                <h5 class="modal-title" id="exampleModalLabel">@sharedResource["Add Attribute"]</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                            </div>
+                            <input type="text" asp-for="@Model.Url" value="@Model.Url" hidden id="UrlId" />
+                            <form asp-area="CRM" asp-page="/Configurations/ManageProductChart/Index" asp-page-handler="AddAttribute" enctype="multipart/form-data" class="tablelist-form" autocomplete="off" onsubmit="return validateAddAttributeForm();">
+                                <div class="modal-body">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.ProductTemplateFieldCaptionAr" class="control-label">@sharedResource["Caption Ar"]</label>
+                                            <input asp-for="adTemplateConfig.ProductTemplateFieldCaptionAr" class="form-control" />
+                                            <span asp-validation-for="adTemplateConfig.ProductTemplateFieldCaptionAr" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.ProductTemplateFieldCaptionEn" class="control-label">@sharedResource["Caption En"]</label>
+                                            <input asp-for="adTemplateConfig.ProductTemplateFieldCaptionEn" class="form-control" />
+                                            <span asp-validation-for="adTemplateConfig.ProductTemplateFieldCaptionEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.FieldTypeId" for="car-rental-name">@sharedResource["Field Type"] <small class="text-danger">*</small></label>
+
+                                            <select id="FieldId" data-val="true" data-val-required="@sharedResource["Please Select Field Type"]" asp-for="adTemplateConfig.FieldTypeId" class="form-select required" aria-label="Default select example" required>
+                                                <option selected value=0>@sharedResource["Select Field Type"]</option>
+
+                                                @{
+                                                    if (@Model.fieldTypes != null)
+                                                    {
+                                                        foreach (var item in @Model.fieldTypes)
+
+                                                        {
+
+                                                            <option value="@item.FieldTypeId">@item.FieldTypeTitle</option>
+
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+                                            @{
+                                                if (Model.BrowserCulture == "en-US")
+                                                {
+
+                                                    <span id="FieldSpanId" style="display:none" class="text-danger">Field Type Is Required</span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span id="FieldSpanId" style="display:none" class="text-danger">نوع الحقل مطلوب</span>
+
+
+
+                                                }
+
+
+                                            }
+                                        </div>
+
+
+
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.ProductTypeId" for="car-rental-name">@sharedResource["Product Type"] <small class="text-danger">*</small></label>
+
+                                            <select id="CatId" data-val="true" data-val-required="@sharedResource["Product Type"]" asp-for="adTemplateConfig.ProductTypeId" class="form-select required" aria-label="Default select example" required>
+                                                <option selected value=0>@sharedResource["Select Product Type"]</option>
+
+                                                @{
+                                                    if (@Model.ProductTypes != null)
+                                                    {
+                                                        foreach (var item in @Model.ProductTypes)
+
+                                                        {
+
+                                                            if (Model.BrowserCulture == "en-US")
+                                                            {
+                                                                <option value="@item.ProductTypeId">@item.TitleEn</option>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.ProductTypeId">@item.TitleAr</option>
+
+
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+                                            @{
+                                                if (Model.BrowserCulture == "en-US")
+                                                {
+
+                                                    <span id="CatSpanId" style="display:none" class="text-danger">Product Type Is Required</span>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span id="CatSpanId" style="display:none" class="text-danger">نوع المنتج مطلوب</span>
+
+
+
+                                                }
+
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.ValidationMessageAr" class="control-label">@sharedResource["Validation Message Ar"]</label>
+                                            <input asp-for="adTemplateConfig.ValidationMessageAr" class="form-control" />
+                                            <span asp-validation-for="adTemplateConfig.ValidationMessageAr" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.ValidationMessageEn" class="control-label">@sharedResource["Validation Message En"]</label>
+                                            <input asp-for="adTemplateConfig.ValidationMessageEn" class="form-control" />
+                                            <span asp-validation-for="adTemplateConfig.ValidationMessageEn" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row col-12">
+                                        <div class="form-group col-6">
+                                            <label asp-for="adTemplateConfig.SortOrder" class="control-label">@sharedResource["Sort Order"]</label>
+                                            <input asp-for="adTemplateConfig.SortOrder" class="form-control" />
+                                            <span asp-validation-for="adTemplateConfig.SortOrder" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-6 pt-5">
+                                            <div class="form-check">
+                                                <input asp-for="adTemplateConfig.IsRequired" class="form-check-input" type="checkbox">
+                                                <label for="adTemplateConfig.IsRequired" class="form-check-label">@sharedResource["Is Required"]</label>
+                                                <span asp-validation-for="adTemplateConfig.IsRequired" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="hstack gap-2 justify-content-end">
+
+                                        <button type="submit" class="btn btn-success" id="add-btn">@sharedResource["Create"]</button>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade zoomIn" id="createProjectModal" tabindex="-1" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header p-3 bg-soft-success">
+                <h5 class="modal-title" id="createProjectModalLabel">@sharedResource["Add Product Type"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" id="addProjectBtn-close" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" enctype="multipart/form-data" onsubmit="return validateAddCatForm();">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-lg-12">
+                        <div class="text-center col-lg-12">
+                            <div class="position-relative d-inline-block">
+                                <div class="position-absolute bottom-0 end-0">
+                                    <label for="file" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="@sharedResource["Select Image"]">
+                                        <div class="avatar-xs cursor-pointer">
+                                            <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                <i class="ri-image-fill"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input class="form-control d-none hidefromHere" name="file" id="file" type="file"
+                                           accept="image/*" required>
+                                </div>
+                                <div class="avatar-lg p-1">
+                                    <div class="avatar-title bg-light rounded-circle">
+                                        <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover" />
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="fs-13 mt-3">@sharedResource["Image"] </h5>
+
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="form-group col-12">
+                            <label asp-for="AddProductType.TitleAr" class="control-label">@sharedResource["TitleAr"]</label>
+                            <input asp-for="AddProductType.TitleAr" class="form-control" />
+                            <span asp-validation-for="AddProductType.TitleAr" class="text-danger"></span>
+                        </div>
+                         </div>
+                         <div class="row col-12">
+                        <div class="form-group col-12">
+                            <label asp-for="AddProductType.TitleEn" class="control-label">@sharedResource["TitleEn"]</label>
+                            <input asp-for="AddProductType.TitleEn" class="form-control" />
+                            <span asp-validation-for="AddProductType.TitleEn" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+
+                   
+
+
+
+                    <div class="form-group mt-2">
+                        <input type="submit" value="@sharedResource["Create"]" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+<!-- list.js min js -->
+<script src="~/assets/libs/list.js/list.min.js"></script>
+<script src="~/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+<!-- crm leads init -->
+<script src="~/assets/js/pages/crm-leads.init.js"></script>
+}
+<script>
+    function validateAddCatForm() {
+        if (document.getElementById("file").files.length == 0) {
+            alert("You Must Select Image");
+            return false;
+        }
+        return true;
+    }
+    function validateAddAttributeForm() {
+        var CatId = document.getElementById("CatId").value
+        var FieldId = document.getElementById("FieldId").value
+        console.log(CatId)
+        var CatSpanId = document.getElementById("CatSpanId")
+        var FieldSpanId = document.getElementById("FieldSpanId")
+        if (FieldId == 0) {
+           FieldSpanId.style.display = "flex";
+            return false;
+        }
+        if (CatId == 0) {
+           CatSpanId.style.display = "flex";
+            return false;
+        }
+
+        return true;
+    }
+
+</script>

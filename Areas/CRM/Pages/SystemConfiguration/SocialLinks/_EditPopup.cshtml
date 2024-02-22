@@ -1,0 +1,104 @@
+﻿@{
+}
+@model Vision.Models.SoicialMidiaLink
+
+<div class="modal fade" id="showEditModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" id="close-modal"></button>
+            </div>
+
+            <form asp-area="CRM" asp-page="/SystemConfiguration/SocialLinks/Index" asp-page-handler="EditSocial" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <input type="text" hidden  asp-for="@Model.id" id="EditSocialMediaLinkId"  />
+
+                    <div class="row g-3">
+                        <div class="col-lg-12">
+                           
+                            <div>
+                                <label for="@Model.facebooklink"
+                                       class="form-label">@sharedResource["Facebook"]</label>
+                                <input type="text" asp-for="@Model.facebooklink" id="FacebookId"
+                                       class="form-control" placeholder="@sharedResource["Enter Facebook Link"]"
+                                       required />
+
+                            </div>
+                           @* <div>
+                                <input asp-for="@Model.id" id="SocialHiddenId" hidden>
+
+
+
+                            </div>*@
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.TwitterLink"
+                                       class="form-label">@sharedResource["Twitter"]</label>
+                                <input type="text" asp-for="@Model.TwitterLink" id="TwitterId"
+                                       class="form-control"
+                                       placeholder="@sharedResource["Enter Twitter Link"]" required />
+                            </div>
+                        </div>
+                         <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.Instgramlink"
+                                       class="form-label">@sharedResource["Instgram"]</label>
+                                <input type="text" asp-for="@Model.Instgramlink" id="InstgramId"
+                                       class="form-control"
+                                       placeholder="@sharedResource["Enter Instgram Link"]" required />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.LinkedInlink"
+                                       class="form-label">@sharedResource["LinkedIn"]</label>
+                                <input type="text" asp-for="@Model.LinkedInlink" id="LinkedInId"
+                                       class="form-control"
+                                       placeholder="@sharedResource["Enter LinkedIn Link"]" required />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.WhatsApplink"
+                                       class="form-label">@sharedResource["WhatsApp"]</label>
+                                <input type="text" asp-for="@Model.WhatsApplink" id="WhatsAppId"
+                                       class="form-control"
+                                       placeholder="@sharedResource["Enter WhatsApp"]" required />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.YoutubeLink"
+                                       class="form-label">@sharedResource["Youtube"]</label>
+                                <input type="text" asp-for="@Model.YoutubeLink" id="YoutubeId"
+                                       class="form-control"
+                                       placeholder="@sharedResource["Enter Youtube Link"]" required />
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <!--end row-->
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            @sharedResource["Close"]
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                                id="add-btn">
+                            @sharedResource["Edit Social Links"]
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

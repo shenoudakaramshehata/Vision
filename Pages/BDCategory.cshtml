@@ -1,0 +1,139 @@
+﻿@page
+@model Vision.Pages.BDCategoryModel
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+     Layout = "FrontSite/_TemplateLayout";
+      var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+<div class="container">
+<section class="category-masonry-section mb-10">
+    <h4 class="title title-center mb-7">Popular Categories</h4>
+    <div class="category-grid show-code-action">
+        <div class="grid-item1">
+            <div class="category category-banner category-absolute overlay-zoom overlay-dark br-sm">
+                <a href="shop-banner-sidebar.html">
+                    <figure class="category-media">
+                        <img src="~/FrontSite/assets/images/categories/banners/banner-4.jpg" alt="Category Banner" width="280" height="520">
+                    </figure>
+                    <div class="category-content">
+                        <h4 class="category-name">Women's Wear</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="grid-item2">
+            <div class="category category-banner category-absolute overlay-zoom br-sm">
+                <a href="shop-banner-sidebar.html">
+                    <figure class="category-media">
+                        <img src="~/FrontSite/assets/images/categories/banners/banner-5.jpg" alt="category" width="580" height="215">
+                    </figure>
+                    <div class="category-content">
+                        <h4 class="category-name">Cosmetic</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="grid-item3">
+            <div class="category category-banner category-absolute overlay-zoom overlay-dark br-sm">
+                <a href="shop-banner-sidebar.html">
+                    <figure>
+                        <img src="~/FrontSite/assets/images/categories/banners/banner-7.jpg" alt="Category Banner" width="280" height="520">
+                    </figure>
+                    <div class="category-content">
+                        <h4 class="category-name">Men's Wear</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="grid-item2">
+            <div class="category category-banner category-absolute overlay-zoom br-sm">
+                <a href="shop-banner-sidebar.html">
+                    <figure class="category-media">
+                        <img src="~/FrontSite/assets/images/categories/banners/banner-6.jpg" alt="category" width="580" height="215">
+                    </figure>
+                    <div class="category-content">
+                        <h4 class="category-name">Couple Watches</h4>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mt-10 pt-1 mb-10 pb-1">
+    <h4 class="title title-center mb-5">All Categories</h4>
+    <div class="swiper-container swiper-theme show-code-action swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events" data-swiper-options="{
+                            'spaceBetween': 20,
+                            'slidesPerView': 1,
+                            'breakpoints': {
+                                '576': {
+                                    'slidesPerView': 2
+                                },
+                                '768': {
+                                    'slidesPerView': 3
+                                },
+                                '992': {
+                                    'slidesPerView': 4
+                                }
+                            }
+                        }">
+        <div class="swiper-wrapper " id="swiper-wrapper-6c5523bf1b72717e" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+            <div class="swiper-slide category-wrap swiper-slide-active" style="width: 295px; margin-right: 20px;" role="group" aria-label="1 / 4">
+                <div class="category category-default1 category-absolute br-sm">
+                    <a href="#">
+                        <figure class="category-media">
+                            <img src="~/FrontSite/assets/images/categories/category-16.jpg" alt="Category" width="295" height="295" style="background-color: #C3C8CE;">
+                        </figure>
+                    </a>
+                    <div class="category-content">
+                        <h4 class="category-name">For Women's</h4>
+                        <span class="category-count">16 Products</span>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide category-wrap swiper-slide-next" style="width: 295px; margin-right: 20px;" role="group" aria-label="2 / 4">
+                <div class="category category-default1 category-absolute br-sm">
+                    <a href="#">
+                        <figure class="category-media">
+                            <img src="~/FrontSite/assets/images/categories/category-17.jpg" alt="Category" width="295" height="295" style="background-color: #EBEDEA;">
+                        </figure>
+                    </a>
+                    <div class="category-content">
+                        <h4 class="category-name">Skates</h4>
+                        <span class="category-count">20 Products</span>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide category-wrap" style="width: 295px; margin-right: 20px;" role="group" aria-label="3 / 4">
+                <div class="category category-default1 category-absolute br-sm">
+                    <a href="#">
+                        <figure class="category-media">
+                            <img src="~/FrontSite/assets/images/categories/category-18.jpg" alt="Category" width="295" height="295" style="background-color: #CBCDCC;">
+                        </figure>
+                    </a>
+                    <div class="category-content">
+                        <h4 class="category-name">For Men's</h4>
+                        <span class="category-count">26 Products</span>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide category-wrap" style="width: 295px; margin-right: 20px;" role="group" aria-label="4 / 4">
+                <div class="category category-default1 category-absolute br-sm">
+                    <a href="#">
+                        <figure class="category-media">
+                            <img src="~/FrontSite/assets/images/categories/category-19.jpg" alt="Category" width="295" height="295" style="background-color: #BCBBB6;">
+                        </figure>
+                    </a>
+                    <div class="category-content">
+                        <h4 class="category-name">Accessories</h4>
+                        <span class="category-count">20 Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets" style="display: none;"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1"></span></div>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+    </div>
+</section>
+</div>

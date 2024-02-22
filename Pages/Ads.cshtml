@@ -1,0 +1,1612 @@
+﻿@page
+@model Vision.Pages.AdsModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "FrontSite/_TemplateLayout";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+}
+<!-- Start of Main -->
+<main class="main">
+    <!-- Start of Breadcrumb -->
+    <nav class="breadcrumb-nav">
+        <div class="container">
+            <ul class="breadcrumb bb-no">
+                <li><a href="demo1.html">Home</a></li>
+                <li><a href="shop-banner-sidebar.html">Vehicles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End of Breadcrumb -->
+    <!-- Start of Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <!-- Start of Shop Banner -->
+            <div class="shop-default-banner banner d-flex align-items-center mb-5 br-xs"
+                 style="background-image: url(FrontSite/assets/images/shop/banner1.jpg); background-color: #FFC74E;">
+                <div class="banner-content">
+                    <h4 class="banner-subtitle font-weight-bold">CARS Collection</h4>
+                    <h3 class="banner-title text-white text-uppercase font-weight-bolder ls-normal">
+                        Elegant
+                        Cars
+                    </h3>
+                    <a href="shop-banner-sidebar.html" class="btn btn-dark btn-rounded btn-icon-right">
+                        Discover
+                        Now<i class="w-icon-long-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- End of Shop Banner -->
+
+            <div class="shop-default-brands mb-5">
+                <div class="brands-swiper swiper-container swiper-theme "
+                     data-swiper-options="{
+                                'slidesPerView': 2,
+                                'breakpoints': {
+                                    '576': {
+                                        'slidesPerView': 3
+                                    },
+                                    '768': {
+                                        'slidesPerView': 4
+                                    },
+                                    '992': {
+                                        'slidesPerView': 6
+                                    },
+                                    '1200': {
+                                        'slidesPerView': 7
+                                    }
+                                },
+                                'autoplay': {
+                                    'delay': 4000,
+                                    'disableOnInteraction': false
+                                }
+                            }">
+                    <div class="swiper-wrapper row gutter-no cols-xl-7 cols-lg-6 cols-md-4 cols-sm-3 cols-2">
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/1.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/2.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/3.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/4.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/5.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/6.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                        <div class="swiper-slide">
+                            <figure>
+                                <img src="~/FrontSite/assets/images/brands/category/7.png" alt="Brand" width="160" height="90" />
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!-- End of Shop Brands-->
+            <!-- Start of Shop Category -->
+            <div class="shop-default-category category-ellipse-section mb-6">
+                <div class="swiper-container swiper-theme shadow-swiper"
+                     data-swiper-options="{
+                            'spaceBetween': 20,
+                            'slidesPerView': 2,
+                            'breakpoints': {
+                                '480': {
+                                    'slidesPerView': 3
+                                },
+                                '576': {
+                                    'slidesPerView': 4
+                                },
+                                '768': {
+                                    'slidesPerView': 6
+                                },
+                                '992': {
+                                    'slidesPerView': 7
+                                },
+                                '1200': {
+                                    'slidesPerView': 8,
+                                    'spaceBetween': 30
+                                }
+                            }
+                        }">
+                    <div class="swiper-wrapper row gutter-lg cols-xl-8 cols-lg-7 cols-md-6 cols-sm-4 cols-xs-3 cols-2">
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-4.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #5C92C0;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-5.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #B8BDC1;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-6.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #99C4CA;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-7.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #4E5B63;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-8.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #D3E5EF;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-9.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #65737C;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-20.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #E4E4E4;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide category-wrap">
+                            <div class="category category-ellipse">
+                                <figure class="category-media">
+                                    <a href="shop-banner-sidebar.html">
+                                        <img src="~/FrontSite/assets/images/categories/category-21.jpg" alt="Categroy"
+                                             width="190" height="190" style="background-color: #D3D8DE;" />
+                                    </a>
+                                </figure>
+                                <div class="category-content">
+                                    <h4 class="category-name">
+                                        <a href="shop-banner-sidebar.html">Car Vendor</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!-- End of Shop Category -->
+            <!-- Start of Shop Content -->
+            <div class="shop-content row gutter-lg mb-10">
+                <!-- Start of Sidebar, Shop Sidebar -->
+                <aside class="sidebar shop-sidebar sticky-sidebar-wrapper sidebar-fixed">
+                    <!-- Start of Sidebar Overlay -->
+                    <div class="sidebar-overlay"></div>
+                    <a class="sidebar-close" href="#"><i class="close-icon"></i></a>
+
+                    <!-- Start of Sidebar Content -->
+                    <div class="sidebar-content scrollable">
+                        <!-- Start of Sticky Sidebar -->
+                        <div class="sticky-sidebar">
+                            <div class="filter-actions">
+                                <label>Filter :</label>
+                                <a href="#" class="btn btn-dark btn-link filter-clean">Clean All</a>
+                            </div>
+                            <!-- Start of Collapsible widget -->
+                            <div class="widget widget-collapsible">
+                                <div class="dropdown category-dropdown show">
+                                    <a href="#" class="category-toggle text-capitalize pl-0 bg-white" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+                                        <i class="w-icon-category"></i>
+                                        <span>All Categories</span>
+                                    </a>
+
+                                    <div class="dropdown-box text-default">
+                                        <ul class="menu vertical-menu category-menu">
+                                            @{
+                                                foreach (var item in Model.ClassifiedAdsCategory)
+                                                {
+                                                    <li class="has-submenu">
+                                                        <a href="shop-fullwidth-banner.html">
+                                                            <i class="w-icon-tshirt2"></i>@item.ClassifiedAdsCategoryTitleEn
+                                                        </a>
+                                                        <ul class="megamenu">
+                                                            @{
+                                                                var childCategories = _context.ClassifiedAdsCategories.Where(e => e.ClassifiedAdsCategoryParentId == item.ClassifiedAdsCategoryId).ToList();
+                                                                foreach (var child in childCategories)
+                                                                {
+                                                                    var childchild = _context.ClassifiedAdsCategories.Where(e => e.ClassifiedAdsCategoryParentId == child.ClassifiedAdsCategoryId).ToList();
+                                                                    <li>
+                                                                        <h4 class="menu-title">@child.ClassifiedAdsCategoryTitleEn</h4>
+                                                                        <hr class="divider">
+                                                                        <ul>
+                                                                            @{
+                                                                                foreach (var childchildchild in childchild)
+                                                                                {
+                                                                                    <li>
+                                                                                        <a href="shop-fullwidth-banner.html">@childchildchild.ClassifiedAdsCategoryTitleEn</a>
+                                                                                    </li>
+
+                                                                                }
+                                                                            }
+
+
+                                                                        </ul>
+                                                                    </li>
+
+
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                }
+                                            }
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--City-->
+                            <div class="widget widget-collapsible">
+                                <div id="FilterByCityID" class="widget widget-filter">
+                                    <h4 class="widget-title">Location</h4>
+                                    <div class="widget-body">
+
+                                        <select name="City" id="selectBox" onchange="changeFunc();" class="form-control">
+                                            <option value="choose" selected="selected">Choose City ...</option>
+                                            @{
+                                                foreach (var item in Model.Cities)
+                                                {
+                                                    <option value="@item.CityId">@item.CityTlEn</option>
+                                                }
+                                            }
+
+
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                                <!--Area-->
+                                <div id="FilterByAreaID" style="display:none" class="widget widget-filter">
+                                    @*                            <h4 class="widget-title">Filter By Area</h4>
+                                    *@                            <div class="widget-body">
+
+                                        <select id="pages" onchange="childchangeFunc();" name="childCategory" class="form-control">
+                                            @* <option  value="choose" selected="selected">Choose Category ...</option>*@
+
+
+
+                                        </select>
+
+                                    </div>
+                                    <!--End Categoryparent-->
+                                    <!-- End of Widget -->
+
+                                </div>
+                                <!--End Area-->
+                            </div>
+                            <!--End City-->
+                            <!-- End of Collapsible Widget -->
+                            <!-- Start of Collapsible Widget -->
+                            <div class="widget widget-collapsible">
+                                <h3 class="widget-title"><span>Price</span></h3>
+                                <div class="widget-body">
+                                    @* <ul class="filter-items search-ul">
+                                    <li><a href="#">$0.00 - $100.00</a></li>
+                                    <li><a href="#">$100.00 - $200.00</a></li>
+                                    <li><a href="#">$200.00 - $300.00</a></li>
+                                    <li><a href="#">$300.00 - $500.00</a></li>
+                                    <li><a href="#">$500.00+</a></li>
+                                    </ul>*@
+                                    <form class="price-range">
+                                        <input type="number" name="min_price" class="min_price text-center"
+                                               placeholder="From"><span class="delimiter">-</span><input type="number" name="max_price" class="max_price text-center"
+                                                                                                         placeholder="To">
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- End of Collapsible Widget -->
+                            
+                            <div id="ControlContent"></div>
+
+                            <!-- Start of Collapsible Widget -->
+                            @*<div class="widget widget-collapsible">
+                            <h3 class="widget-title"><span>Size</span></h3>
+                            <ul class="widget-body filter-items item-check mt-1">
+                            <li><a href="#">Extra Large</a></li>
+                            <li><a href="#">Large</a></li>
+                            <li><a href="#">Medium</a></li>
+                            <li><a href="#">Small</a></li>
+                            </ul>
+                            </div>*@
+                            <!-- End of Collapsible Widget -->
+                            <!-- Start of Collapsible Widget -->
+                            @*<div class="widget widget-collapsible">
+                            <h3 class="widget-title"><span>Brand</span></h3>
+                            <ul class="widget-body filter-items item-check mt-1">
+                            <li><a href="#">Abarath</a></li>
+                            <li><a href="#">Acura</a></li>
+                            <li><a href="#">Alfa Romeo</a></li>
+                            <li><a href="#">Aston Martin</a></li>
+                            <li><a href="#">Audi</a></li>
+                            <li><a href="#">BAIC</a></li>
+                            <li><a href="#">BMW</a></li>
+                            <li><a href="#">BYD</a></li>
+                            <li><a href="#">Bentley</a></li>
+                            <li><a href="#">Bestune</a></li>
+                            <li><a href="#">Borgward</a></li>
+                            </ul>
+                            </div>*@
+                            <!-- End of Collapsible Widget -->
+                            <!-- Start of Collapsible Widget -->
+                            @* <div class="widget widget-collapsible">
+                            <h3 class="widget-title"><span>Color</span></h3>
+                            <ul class="widget-body filter-items item-check mt-1">
+                            <li><a href="#">Black</a></li>
+                            <li><a href="#">Blue</a></li>
+                            <li><a href="#">Brown</a></li>
+                            <li><a href="#">Green</a></li>
+                            <li><a href="#">Grey</a></li>
+                            <li><a href="#">Orange</a></li>
+                            <li><a href="#">Yellow</a></li>
+                            </ul>
+                            </div>*@
+                            <!-- End of Collapsible Widget -->
+                        </div>
+                        <!-- End of Sidebar Content -->
+                    </div>
+                    <!-- End of Sidebar Content -->
+                </aside>
+                <!-- End of Shop Sidebar -->
+                <!-- Start of Shop Main Content -->
+                <div class="main-content">
+                    <nav class="toolbox sticky-toolbox sticky-content fix-top">
+                        <div class="toolbox-left">
+                            <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle
+                                        btn-icon-left d-block d-lg-none">
+                                <i class="w-icon-category"></i><span>Filters</span>
+                            </a>
+                            <div class="toolbox-item toolbox-sort select-box text-dark">
+                                <label>Sort By :</label>
+                                <select name="orderby" class="form-control">
+                                    <option value="default" selected="selected">Default sorting</option>
+                                    <option value="popularity">Sort by popularity</option>
+                                    <option value="rating">Sort by average rating</option>
+                                    <option value="date">Sort by latest</option>
+                                    <option value="price-low">Sort by pric: low to high</option>
+                                    <option value="price-high">Sort by price: high to low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="toolbox-right">
+                            <div class="toolbox-item toolbox-show select-box">
+                                <select name="count" class="form-control">
+                                    <option value="9">Show 9</option>
+                                    <option value="12" selected="selected">Show 12</option>
+                                    <option value="24">Show 24</option>
+                                    <option value="36">Show 36</option>
+                                </select>
+                            </div>
+                            <div class="toolbox-item toolbox-layout">
+                                <a href="shop-banner-sidebar.html" class="icon-mode-grid btn-layout active">
+                                    <i class="w-icon-grid"></i>
+                                </a>
+                                <a href="shop-list.html" class="icon-mode-list btn-layout">
+                                    <i class="w-icon-list"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                    <div id="gridContainer" Width="100%" ShowHeader="false" ShowFooter="false" class="product-wrapper row cols-md-12 cols-sm-12 cols-12">
+                    
+                        @*  @{
+                            if (@Model.ClassifiedAds != null)
+                            {
+                                foreach (var item in Model.ClassifiedAds)
+                                {
+                                    <div class="product-wrap">
+                                        <div class="product text-center">
+                                            <figure class="product-media">
+                                                <a href="product-default.html">
+
+                                                    <img src="~/images/bmw.png" alt="Product" width="300"
+                                                 height="338" />
+
+                                                </a>
+                                                <div class="product-action-horizontal">
+
+                                                    <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
+                                               title="Wishlist"></a>
+
+                                                    <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                               title="Quick View"></a>
+                                                </div>
+                                            </figure>
+                                            <div class="product-details">
+                                                <div class="product-cat">
+                                                    @{
+                                                        if (BrowserCulture == "en-us")
+                                                        {
+                                                            <a href="shop-banner-sidebar.html">@item.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="shop-banner-sidebar.html">@item.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleAr</a>
+                                                        }
+                                                    }
+                                                </div>
+                                                @{
+                                                    if (BrowserCulture == "en-us")
+                                                    {
+                                                        <h3 class="product-name">
+                                                            <a href="product-default.html">@item.TitleEn</a>
+                                                        </h3>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h3 class="product-name">
+                                                            <a href="product-default.html">@item.TitleAr</a>
+                                                        </h3>
+                                                    }
+                                                }
+
+
+                                                <div class="product-pa-wrapper">
+                                                    <div class="product-price">
+                                                        @item.Price KD
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+*@
+
+
+                    </div>
+
+                    <div class="toolbox toolbox-pagination justify-content-between">
+                        <p class="showing-info mb-2 mb-sm-0">
+                            Showing<span>1-12 of 60</span>Products
+                        </p>
+                        <ul class="pagination">
+                            <li class="prev disabled">
+                                <a href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                    <i class="w-icon-long-arrow-left"></i>Prev
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="next">
+                                <a href="#" aria-label="Next">
+                                    Next<i class="w-icon-long-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End of Shop Main Content -->
+            </div>
+            <!-- End of Shop Content -->
+        </div>
+    </div>
+    <!-- End of Page Content -->
+</main>
+
+
+<!-- End of Main -->
+<script>
+    var count = 0;
+    var row = '';
+    $('#gridContainer').dxDataGrid({
+        dataSource: DevExpress.data.AspNet.createStore({
+            key: 'ClassifiedAdId',
+            loadUrl: '/api/ClassifiedAds/Get',
+            onBeforeSend(method, ajaxOptions) {
+                ajaxOptions.xhrFields = { withCredentials: true };
+            },
+        }),
+        dataRowTemplate(container, item) {
+            count++;
+            const { data } = item;
+            const markup = `
+          <tr class="main-row">
+                <td colspan="5">
+              <div class="product-wrap" style="width: 100%;">
+                <div class="product text-center">
+                  <figure class="product-media">
+                    <a href="product-default.html">
+                      <img src="/images/bmw.png" alt="Product" width="300" height="338" />
+                    </a>
+                    <div class="product-action-horizontal">
+                      <a href="#" class="btn-product-icon btn-wishlist w-icon-heart" title="Wishlist"></a>
+                      <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
+                    </div>
+                  </figure>
+                  <div class="product-details">
+                    <div class="product-cat">
+                      <a href="shop-banner-sidebar.html">${data.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn}</a>
+                    </div>
+                    <h3 class="product-name">
+                      <a href="product-default.html">${data.TitleEn}</a>
+                    </h3>
+                    <div class="product-pa-wrapper">
+                      <div class="product-price">${data.Price} KD</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+                 <td colspan="5">
+                  <div class="product-wrap" style="width: 100%;">
+                    <div class="product text-center">
+                      <figure class="product-media">
+                        <a href="product-default.html">
+                          <img src="/images/bmw.png" alt="Product" width="300" height="338" />
+                        </a>
+                        <div class="product-action-horizontal">
+                          <a href="#" class="btn-product-icon btn-wishlist w-icon-heart" title="Wishlist"></a>
+                          <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
+                        </div>
+                      </figure>
+                      <div class="product-details">
+                        <div class="product-cat">
+                          <a href="shop-banner-sidebar.html">${data.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn}</a>
+                        </div>
+                        <h3 class="product-name">
+                          <a href="product-default.html">${data.TitleEn}</a>
+                        </h3>
+                        <div class="product-pa-wrapper">
+                          <div class="product-price">${data.Price} KD</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                     <td colspan="5">
+                      <div class="product-wrap" style="width: 100%;">
+                        <div class="product text-center">
+                          <figure class="product-media">
+                            <a href="product-default.html">
+                              <img src="/images/bmw.png" alt="Product" width="300" height="338" />
+                            </a>
+                            <div class="product-action-horizontal">
+                              <a href="#" class="btn-product-icon btn-wishlist w-icon-heart" title="Wishlist"></a>
+                              <a href="#" class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
+                            </div>
+                          </figure>
+                          <div class="product-details">
+                            <div class="product-cat">
+                              <a href="shop-banner-sidebar.html">${data.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn}</a>
+                            </div>
+                            <h3 class="product-name">
+                              <a href="product-default.html">${data.TitleEn}</a>
+                            </h3>
+                            <div class="product-pa-wrapper">
+                              <div class="product-price">${data.Price} KD</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+          </tr>`;
+
+            if (count == 1) {
+                row = '<tbody>';
+            }
+            container.append(markup);
+
+            if (count !== 0 && count % 2 == 0) {
+                container.append(row);
+                row = '';
+            }
+        },
+
+        remoteOperations: true,
+
+        filterRow: {
+            visible: false,
+        },
+        headerFilter: {
+            visible: false,
+        },
+        groupPanel: {
+            visible: false,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 'all'],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        showColumnHeaders: false,
+        showSearchPanel: false,
+        height: 4000,
+        width: 1000,
+        showBorders: false,
+    });
+
+
+        //});
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        var CatId = @Model.catId;
+        ControlContent.innerHTML = "";
+        console.log(CatId);
+        CatId = parseInt(CatId);
+        
+        
+       
+        
+
+        if (CatId != 0) {
+            $.ajax({
+                type: "GET",
+                url: "/Ads?handler=InfoList",
+                data: { "CatId": CatId },
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+
+                    console.log(typeof (response))
+                    console.log(response["$values"])
+
+                    for (let i = 0; i < response["$values"].length; i++) {
+                        console.log(response["$values"][i].FieldTypeId)
+                        console.log(response["$values"][i].AdTemplateOptions["$values"])
+                        if (response["$values"][i].FieldTypeId == 1) {
+                            DrawText(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr);
+                        }
+                        if (response["$values"][i].FieldTypeId == 2) {
+                            DrawNumber(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr);
+                        }
+                        if (response["$values"][i].FieldTypeId == 3) {
+                            var Model = {}
+                            Model.AdTemplateConfigId = response["$values"][i].AdTemplateConfigId;
+                            Model.AdTemplateFieldCaptionEn = response["$values"][i].AdTemplateFieldCaptionEn;
+                            Model.AdTemplateFieldCaptionAr = response["$values"][i].AdTemplateFieldCaptionAr;
+                            Model.AdTemplateOptions = response["$values"][i].AdTemplateOptions["$values"];
+                            DrawLookup(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr, response["$values"][i].AdTemplateOptions["$values"]);
+
+                        }
+
+                        if (response["$values"][i].FieldTypeId == 6) {
+
+
+                            DrawCheckBoxGroup(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr, response["$values"][i].AdTemplateOptions["$values"]);
+
+                        }
+
+                        //if (response["$values"][i].FieldTypeId == 13) {
+
+
+                        //    DrawRadioGroup(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr, response["$values"][i].AdTemplateOptions["$values"]);
+
+                        //}
+
+                        if (response["$values"][i].FieldTypeId == 5) {
+                            DrawCheckBox(response["$values"][i].AdTemplateConfigId, response["$values"][i].AdTemplateFieldCaptionEn, response["$values"][i].AdTemplateFieldCaptionAr);
+                        }
+
+                    }
+                },
+
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+       
+    });
+
+    var ControlContent = document.getElementById("ControlContent");
+
+    ControlContent.innerHTML = "";
+    function DrawText(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr) {
+     
+        
+ let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 1
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+    
+     
+        var labelName = AdTemplateFieldCaptionEn;
+        if (localStorage.getItem("lang") == "en") {
+            labelName = AdTemplateFieldCaptionEn
+        } else {
+            labelName = AdTemplateFieldCaptionAr;
+        }
+        console.log(AdTemplateConfigId)
+        ControlContent.innerHTML += ' <div class="form-group"><label for="username">' + labelName + '</label><input type="text" onchange="handleControlChange(event)" id=' + AdTemplateConfigId + ' class="form-control"> </div>';
+        assignValues()
+    }
+    function DrawNumber(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr) {
+
+ 
+   let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 2
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+   
+        var labelName = AdTemplateFieldCaptionEn;
+        if (localStorage.getItem("lang") == "en") {
+            labelName = AdTemplateFieldCaptionEn
+        } else {
+            labelName = AdTemplateFieldCaptionAr;
+        }
+        console.log(AdTemplateConfigId)
+        ControlContent.innerHTML += ' <div class="form-group"><label for="username">' + labelName + '</label><input type="text" onchange="handleControlChange(event)" id=' + AdTemplateConfigId + ' class="form-control"> </div>';
+    assignValues()
+    }
+
+    function DrawCheckBox(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr) {
+
+
+   let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 5
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+      
+        
+        var labelName = AdTemplateFieldCaptionEn;
+        if (localStorage.getItem("lang") == "en") {
+            labelName = AdTemplateFieldCaptionEn
+        } else {
+            labelName = AdTemplateFieldCaptionAr;
+        }
+        console.log(AdTemplateConfigId)
+        ControlContent.innerHTML += '<div class="widget widget-collapsible"><h3 class="widget-title" > <span>' + labelName + '</span></h3><div class="form-group checkbox"><input type="checkbox" onchange="handleControlChange(event)" class="custom-checkbox" id=' + AdTemplateConfigId + '><label for="remember" class= "mb-0 lh-2">' + labelName + '</label></div></div>'
+    }
+    function DrawCheckBoxGroup(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr, options) {
+
+
+  let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 6
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+        
+         
+      var parentDiv = document.createElement("div");
+        parentDiv.classList.add("widget");
+        parentDiv.classList.add("widget-collapsible");
+        var customDiv = document.createElement('div');
+        customDiv.classList.add("widget");
+        customDiv.classList.add("widget-filter");
+        var hElement = document.createElement('h4');
+        hElement.classList.add("widget-title");
+        if (localStorage.getItem("lang") == "en") {
+            hElement.innerHTML = AdTemplateFieldCaptionEn;
+        } else {
+            hElement.innerHTML = AdTemplateFieldCaptionAr;
+
+        }
+        customDiv.appendChild(hElement);
+    for (let i = 0; i < options.length; i++) {
+    var Div = document.createElement("div");
+        Div.classList.add("form-group");
+        var input = document.createElement("input");
+            input.classList.add("custom-checkbox");
+            input.type = "checkbox";
+            input.setAttribute('id', options[i].AdTemplateOptionId);
+            input.setAttribute('name', AdTemplateConfigId);
+            input.setAttribute("onchange", "handleControlChange(event)");
+            var label = document.createElement("label");
+            if (localStorage.getItem("lang") == "en") {
+              label.innerHTML = options[i].OptionEn;
+           } else {
+               label.innerHTML = options[i].OptionAr;
+
+         }
+        Div.appendChild(input);
+        Div.appendChild(label);
+        parentDiv.appendChild(Div);
+
+    }
+     ControlContent.appendChild(parentDiv);
+    }
+    function DrawRadioGroup(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr, options) {
+         let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 13
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+        
+     
+        var parentDiv = document.createElement("div");
+        parentDiv.classList.add("widget");
+        parentDiv.classList.add("widget-collapsible");
+
+
+        // Create the widget title
+        var title = document.createElement("h3");
+        title.classList.add("widget-title");
+        var span = document.createElement("span");
+
+        span.innerHTML = AdTemplateFieldCaptionEn
+        title.appendChild(span);
+        parentDiv.appendChild(title);
+        for (let i = 0; i < options.length; i++) {
+            var div = document.createElement('div');
+            div.classList.add("form-checkbox");
+            div.classList.add("user-checkbox");
+            div.classList.add("mt-0");
+
+            var input = document.createElement('input');
+            input.type = "radio";
+            //input.className = "custom-checkbox checkbox-round active";
+          
+            input.name = "check-customer";
+             input.setAttribute("onchange", "handleControlChange(event)");
+            div.appendChild(input);
+            var customerLabel = document.createElement("label");
+
+            customerLabel.className = "check-customer mb-1";
+            if (localStorage.getItem("lang") == "en") {
+                customerLabel.innerHTML = AdTemplateFieldCaptionEn;
+            }
+            else {
+                customerLabel.innerHTML = AdTemplateFieldCaptionAr;
+            }
+
+            div.appendChild(customerLabel);
+            parentDiv.appendChild(div);
+        }
+
+        ControlContent.appendChild(parentDiv);
+
+    }
+
+     
+    function DrawLookup(AdTemplateConfigId, AdTemplateFieldCaptionEn, AdTemplateFieldCaptionAr, options) {
+      
+        console.log(AdTemplateConfigId + "AdTemplateConfigId")
+        let found = false;
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+   
+        for (let i = 0; i < FilterArray.length; i++) {
+  if (FilterArray[i].AdTemplateConfigId === AdTemplateConfigId) {
+    console.log("Template Config is found");
+    found = true;
+    break; // Exit the loop since the ID is found
+  }
+}
+if (!found) {
+  const FilterObject = {
+    "AdTemplateConfigId": AdTemplateConfigId,
+    "value": [],
+    "FieldTypeId": 3
+  };
+
+  FilterArray.push(FilterObject);
+  localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+}
+        
+     
+        var parentDiv = document.createElement('div');
+        parentDiv.classList.add("widget");
+        parentDiv.classList.add("widget-collapsible");
+        var customDiv = document.createElement('div');
+        customDiv.classList.add("widget");
+        customDiv.classList.add("widget-filter");
+        var hElement = document.createElement('h4');
+        hElement.classList.add("widget-title");
+        if (localStorage.getItem("lang") == "en") {
+            hElement.innerHTML = AdTemplateFieldCaptionEn;
+        } else {
+            hElement.innerHTML = AdTemplateFieldCaptionAr;
+        }
+        customDiv.appendChild(hElement);
+
+        var div = document.createElement('div');
+        div.classList.add("widget-body");
+
+        var select = document.createElement('select');
+        select.classList.add("form-control");
+
+        select.setAttribute('id', AdTemplateConfigId);
+        select.setAttribute("onchange", "handleControlChange(event)");
+      
+        option = document.createElement('option');
+        // Check if a value is stored in localStorage for this dropdown
+     
+             option.value = 0;
+        
+   
+   
+        if (localStorage.getItem("lang") == "en") {
+            option.text = "Select " + AdTemplateFieldCaptionEn;
+        } else {
+            option.text = "إختر " + AdTemplateFieldCaptionAr;
+        }
+        select.appendChild(option);
+   
+        for (let i = 0; i < options.length; i++) {
+            option = document.createElement('option');
+            option.value = options[i].AdTemplateOptionId;
+            option.text = options[i].OptionAr;
+         console.log(option.value + "options")
+
+            select.appendChild(option);
+        }
+       
+        parentDiv.appendChild(customDiv);
+        div.appendChild(select);
+        customDiv.appendChild(div);
+
+        ControlContent.appendChild(parentDiv);
+        assignValues()
+    }
+    
+    //////////////OnChange//////
+    var filterValues= [];
+  //  function handleControlChange(event) {
+        
+  //      console.log(event)
+  //      var control = event.target;
+  //      var controlId = control.id;
+  //      var controlValue = control.value;
+  //      var controlValueID = {
+
+  //          "controlId": controlId,
+  //          "controlValue": controlValue
+
+  //      };
+      
+  //      localStorage.setItem('controlValueID', JSON.stringify(controlValueID));
+  //      localStorage.setItem(controlId, controlValue);
+
+
+  //      var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+  //     for(let i =0 ; i<FilterArray.length;i++){
+  //         console.log(FilterArray[i])
+  //         if(controlId==FilterArray[i].AdTemplateConfigId){
+  //              FilterArray[i].value.push(controlValue)
+  //              localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+  //          }
+
+  //          if (FilterArray[i].value.length > 0) {
+  //               console.log(FilterArray[i].value.length)
+  //               var parseAdTemplateConfigId = parseInt(FilterArray[i].AdTemplateConfigId);
+                
+  //               var NewFilterAds ={}
+  //              NewFilterAds.AdTemplateConfigId = parseAdTemplateConfigId
+  //               NewFilterAds.value=FilterArray[i].value
+               
+  //              //filterValues.push(NewFilterAds)
+  //              //filterValues.push(FilterArray[i].value)
+  //          }
+
+  //          //console.log(filterValues)
+  //          console.log(JSON.stringify(FilterArray))
+  //          //console.log(typeof(JSON.stringify(filterValues)))
+  //          var parseFilterArray = JSON.stringify(FilterArray)
+  //     }
+  //     //filterValues = JSON.stringify(filterValues)
+  //     var catId = @Model.catId;
+  //     console.log(catId)
+  //     $.ajax({
+  //          type: "POST",
+  //          url: "/Ads?handler=FilterAds",
+  //          data: {
+  //              "parseFilterArray": parseFilterArray,
+  //              "catId": catId},
+  //          beforeSend: function (xhr) {
+  //              xhr.setRequestHeader("XSRF-TOKEN",
+  //                  $('input:hidden[name="__RequestVerificationToken"]').val());
+  //          },
+
+  //          headers: {
+  //              RequestVerificationToken:
+  //                  $('input:hidden[name="__RequestVerificationToken"]').val()
+  //          },
+  //      })
+  //          .done(function (result) {
+  //              console.log(result);
+  //  //            "/Ads", new {
+  //  //                catid, selectedValue
+  //  //                        var url = $"/Ads?catid={catid}&selectedValue={selectedValue}";
+
+  //  //            var urlParams = new URLSearchParams(window.location.search);
+  //  //urlParams.set(controlId,controlValue);
+    
+  //  // Reload the page with the updated URL
+  //  //window.location.href = window.location.pathname + "?" + urlParams.toString();
+  //                  var url = window.location.href;
+
+  ////// Reload the page with the new URL
+  //window.location.href = url;
+               
+  //          });
+        
+  //  }
+  function handleControlChange(event) {
+        
+        console.log(event)
+        var control = event.target;
+        var controlId = control.id;
+        var controlValue = control.value;
+        var controlValueID = {
+
+            "controlId": controlId,
+            "controlValue": controlValue
+
+        };
+      
+        localStorage.setItem('controlValueID', JSON.stringify(controlValueID));
+        localStorage.setItem(controlId, controlValue);
+
+
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+       for(let i =0 ; i<FilterArray.length;i++){
+           console.log(FilterArray[i])
+           if(controlId==FilterArray[i].AdTemplateConfigId){
+                FilterArray[i].value.push(controlValue)
+                localStorage.setItem('FilterArray', JSON.stringify(FilterArray));
+            }
+
+            if (FilterArray[i].value.length > 0) {
+                 console.log(FilterArray[i].value.length)
+                 var parseAdTemplateConfigId = parseInt(FilterArray[i].AdTemplateConfigId);
+                
+                 var NewFilterAds ={}
+                NewFilterAds.AdTemplateConfigId = parseAdTemplateConfigId
+                 NewFilterAds.value=FilterArray[i].value
+               
+               
+            }
+
+           
+            console.log(JSON.stringify(FilterArray))
+            var parseFilterArray = JSON.stringify(FilterArray)
+       console.log(parseFilterArray + "filter")
+            console.log(typeof(parseFilterArray))
+        }
+       
+       var catId = @Model.catId;
+       console.log(catId)
+
+        $('#gridContainer').dxDataGrid('dispose');
+
+    // Create the data grid
+    var dataGrid = $('#gridContainer').dxDataGrid({
+        dataSource: DevExpress.data.AspNet.createStore({
+            key: 'ClassifiedAdId',
+            loadUrl: 'https://localhost:44367/api/ClassifiedAds/Get?parseFilterArray='+parseFilterArray,
+                        //loadUrl: 'https://localhost:44367/api/ClassifiedAds/Get',
+//loadParams: function (options) {
+//    return {
+//        "parseFilterArray": parseFilterArray
+//    };
+//},                //loadParams: { 'parseFilterArray': parseFilterArray },
+            onBeforeSend(method, ajaxOptions) {
+                ajaxOptions.xhrFields = { withCredentials: true };
+            },
+        }),
+
+        dataRowTemplate(container, item) {
+            count++;
+            console.log(count);
+            const { data } = item;
+            const markup = `<td> <div class="product-wrap"><div class="product text-center"><figure class="product-media"><a href="product-default.html"><img src="/images/bmw.png" alt="Product" width="300"height="338" /> </a><div class="product-action-horizontal"><a href="#" class="btn-product-icon btn-wishlist w-icon-heart"title="Wishlist"></a><a href="#" class="btn-product-icon btn-quickview w-icon-search"title="Quick View"></a> </div></figure><div class="product-details"><div class="product-cat"><a href="shop-banner-sidebar.html">${data.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn}</a> </div> <h3 class="product-name"><a href="product-default.html">${data.TitleEn}</a> </h3><div class="product-pa-wrapper"> <div class="product-price">${data.Price} KD</div></div> </div> </div></div></td>`;
+
+            if (count == 0) {
+                console.log("Count==0");
+                container.append(row);
+            }
+            container.append(markup);
+
+            if (count !== 0 && count % 2 == 0) {
+                console.log("Count!=0");
+                container.append(endrow);
+                container.append(row);
+            }
+        },
+
+        remoteOperations: true,
+        filterRow: {
+            visible: false,
+        },
+        headerFilter: {
+            visible: false,
+        },
+        groupPanel: {
+            visible: false,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 'all'],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        showColumnHeaders: false,
+        showSearchPanel: false,
+        height: 600,
+        width: 1000,
+        showBorders: false,
+    }).dxDataGrid('instance'); // Get the data grid instance
+
+    // Refresh the data grid
+    dataGrid.refresh();
+   //      $('#gridContainer').dxDataGrid({
+   //   dataSource: DevExpress.data.AspNet.createStore({
+   //         key: 'ClassifiedAdId',
+   //loadUrl: 'https://localhost:44367/api/ClassifiedAds/Get?parseFilterArray=parseFilterArray',
+      
+   //   onBeforeSend(method, ajaxOptions) {
+   //     ajaxOptions.xhrFields = { withCredentials: true };
+   //   },
+   // }),
+
+       
+   // dataRowTemplate(container, item) {
+   //     count++;
+   //     console.log(count)
+   //   const { data } = item;
+   //  const markup = `<td> <div class="product-wrap"><div class="product text-center"><figure class="product-media"><a href="product-default.html"><img src="/images/bmw.png" alt="Product" width="300"height="338" /> </a><div class="product-action-horizontal"><a href="#" class="btn-product-icon btn-wishlist w-icon-heart"title="Wishlist"></a><a href="#" class="btn-product-icon btn-quickview w-icon-search"title="Quick View"></a> </div></figure><div class="product-details"><div class="product-cat"><a href="shop-banner-sidebar.html">${data.ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn}</a> </div> <h3 class="product-name"><a href="product-default.html">${data.TitleEn}</a> </h3><div class="product-pa-wrapper"> <div class="product-price">${data.Price} KD</div></div> </div> </div></div></td>`
+
+       
+   //     //const markup = '<tr class=\'main-row\'>' + `<td rowspan='2'><img src='${data.MainPic}'/></td>` + `<td>${data.TitleEn}</td>` + `<td>${data.Price}</td>` + '</tr>'
+   // if(count==0){
+   //     console.log("Count==0")
+   //     container.append(row);
+   // }
+   //         container.append(markup);
+
+   //     if(count!==0&&count%2==0){
+   //         console.log("Count!=0")
+   //             container.append(endrow);
+   //             container.append(row);
+   //     }
+      
+   // },
+   //     remoteOperations: true,
+
+   //     filterRow: {
+   //         visible: false,
+   //     },
+   //     headerFilter: {
+   //         visible: false,
+   //     },
+   //     groupPanel: {
+   //         visible: false,
+   //     },
+   //     scrolling: {
+   //         mode: 'virtual',
+   //     },
+   //     paging: {
+   //         pageSize: 10,
+   //     },
+   //     pager: {
+   //         visible: true,
+   //         allowedPageSizes: [5, 10, 'all'],
+   //         showPageSizeSelector: true,
+   //         showInfo: true,
+   //         showNavigationButtons: true,
+   //     },
+   //         showColumnHeaders: false,
+   //     showSearchPanel: false,
+   //     height: 600,
+   //      width: 1000,
+   //     showBorders: false,
+   // });
+    
+
+  //     $.ajax({
+  //          type: "POST",
+  //          url: "/Ads?handler=FilterAds",
+  //          data: {
+  //              "parseFilterArray": parseFilterArray,
+  //              "catId": catId},
+  //          beforeSend: function (xhr) {
+  //              xhr.setRequestHeader("XSRF-TOKEN",
+  //                  $('input:hidden[name="__RequestVerificationToken"]').val());
+  //          },
+
+  //          headers: {
+  //              RequestVerificationToken:
+  //                  $('input:hidden[name="__RequestVerificationToken"]').val()
+  //          },
+  //      })
+  //          .done(function (result) {
+  //              console.log(result);
+  //  //            "/Ads", new {
+  //  //                catid, selectedValue
+  //  //                        var url = $"/Ads?catid={catid}&selectedValue={selectedValue}";
+
+  //  //            var urlParams = new URLSearchParams(window.location.search);
+  //  //urlParams.set(controlId,controlValue);
+    
+  //  // Reload the page with the updated URL
+  //  //window.location.href = window.location.pathname + "?" + urlParams.toString();
+  //                  var url = window.location.href;
+
+  ////// Reload the page with the new URL
+  //window.location.href = url;
+               
+  //          });
+        
+    }
+ function assignValues(){
+        var FilterArray = JSON.parse(localStorage.getItem('FilterArray'));
+       console.log(FilterArray.length + "FilterArray length")
+        for(let i =0 ; i<FilterArray.length;i++){
+           console.log(FilterArray[i])
+           //////LOOKUP
+           if(FilterArray[i].FieldTypeId==3){
+               
+                let element = document.getElementById(FilterArray[i].AdTemplateConfigId);
+      
+                console.log(element);
+                if(element!=null){               
+ for (var j = 0; j < element.options.length; j++) {
+          if (element.options[j].value === FilterArray[i].value[0]) {
+            console.log("yes");
+            console.log(element.options[j]);
+            element.options[j].selected = true;
+            break;
+          }
+                }
+        
+
+         
+       }
+ }
+ ////TEXT
+  if(FilterArray[i].FieldTypeId==1){
+               
+                let textElement = document.getElementById(FilterArray[i].AdTemplateConfigId);
+      
+                console.log(textElement + "input");
+               if (textElement != null) {
+    // Check if the stored value is defined before assigning it to the input element
+    if (FilterArray[i].value[0] !== undefined) {
+      textElement.value = FilterArray[i].value[0];
+    } else {
+      textElement.value = ""; // Set an empty string as the default value
+    }
+  }
+ //               if(textElement!=null){
+                    
+                    
+ //                   for (var k = 0; k < FilterArray[i].value.length; k++) {
+ //                       console.log(FilterArray[i].value[k])
+ //                       if (textElement.value === FilterArray[i].value[k]) {
+ //                       textElement.value = FilterArray[i].value[k] ;
+ //       }}
+ //                   //textElement.value= FilterArray[i].value[0]
+ ////for (var j = 0; j < element.options.length; j++) {
+ ////         if (element.options[j].value === FilterArray[i].value[0]) {
+ ////           console.log("yes");
+ ////           console.log(element.options[j]);
+ ////           element.options[j].selected = true;
+ ////           break;
+ ////         }
+ ////               }
+        
+
+         
+ //      }
+ }
+
+            ////Number
+            if (FilterArray[i].FieldTypeId == 2) {
+
+                let textElement = document.getElementById(FilterArray[i].AdTemplateConfigId);
+
+                console.log(textElement + "input");
+                if (textElement != null) {
+                    // Check if the stored value is defined before assigning it to the input element
+                    if (FilterArray[i].value[0] !== undefined) {
+                        textElement.value = FilterArray[i].value[0];
+                    } else {
+                        textElement.value = ""; // Set an empty string as the default value
+                    }
+                }
+                
+            }
+
+             ////Checckbox
+            if (FilterArray[i].FieldTypeId == 5) {
+
+                let checkboxElement = document.getElementById(FilterArray[i].AdTemplateConfigId);
+
+                console.log(checkboxElement + "checkboxElement");
+               if (checkboxElement != null) {
+        // Check if the stored value is defined before assigning it to the input element
+        if (FilterArray[i].value[0] !== undefined) {
+          checkboxElement.checked = FilterArray[i].value[0];
+        } else {
+          checkboxElement.checked = false; // Set unchecked as the default value
+        }
+      }
+                
+            }
+
+              //////Checkboxgroup
+           if(FilterArray[i].FieldTypeId==6){
+               
+                let checkboxGroup = document.getElementsByName(FilterArray[i].AdTemplateConfigId);
+      
+                console.log(checkboxGroup);
+                if (checkboxGroup.length > 0) {
+        for (let j = 0; j < checkboxGroup.length; j++) {
+          // Check if the stored value exists in the FilterArray
+          if (FilterArray[i].value.includes(checkboxGroup[j].getAttribute('id'))) {
+            checkboxGroup[j].checked = true; // Set the checkbox as checked
+          }
+        }
+      }
+ }
+  //////////////////////////
+        }
+    }
+
+
+
+    function ShowCategries() {
+        document.getElementById("showCatID").classList.add("show")
+    }
+    let data = [];
+
+    function changeFunc() {
+
+        var selectBox = document.getElementById("selectBox");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        console.log(selectedValue);
+        console.log(typeof (selectedValue));
+        var parseselectedValue = parseInt(selectedValue);
+        console.log(typeof (parseselectedValue));
+        jQuery.ajax({
+            type: "GET",
+            url: "/Ads?handler=Area",
+            data: { "parseselectedValue": parseselectedValue },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                let dataVewItemDetails = "";
+
+                data = [...response.$values];
+                console.log(data)
+                document.getElementById("FilterByAreaID").style.display = "Block"
+
+
+                // Get the select element
+                var selectElement = document.getElementById("pages");
+
+                // Clear any existing options
+                selectElement.innerHTML = "";
+
+                // Create the default option
+                var defaultOption = document.createElement("option");
+                defaultOption.value = "choose";
+                defaultOption.text = "Choose Area ...";
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                response.$values.forEach(function (category) {
+                    var option = document.createElement("option");
+                    option.value = category.AreaId;
+                    option.text = category.AreaTlEn;
+                    selectElement.appendChild(option);
+                });
+
+               
+                //   dataVewItemDetails += data.map((e) =>
+                //       //var categoryName = e.CategoryName
+                //       //console.log(categoryName)
+                //       //viewPagesName.classList.add (`" ${e.CategoryName}"`)
+
+
+                //       `
+
+                //<option value="${e.BusinessCategoryId}">${e.BusinessCategoryTitleEn}</option>
+
+
+
+                //                           </select>
+                //                       </form>
+                //                   </div>
+
+                //                                   `
+
+                //   ).join("")
+                //   viewPagesName.innerHTML = dataVewItemDetails;
+
+                //document.getElementById("DeleteCategoryId").value = response.SiteCategoryId
+                //$('#deleteRecordModal').modal('show');
+                
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
+    ////ASSIGN ASSIGN FUNCTION IN ONLOAD
+    window.addEventListener('load', assignValues);
+
+</script>

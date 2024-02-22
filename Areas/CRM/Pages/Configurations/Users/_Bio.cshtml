@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Vision.ViewModels.UserProfileMainInfoVM
+@{
+    if(Model.webSite!=null || Model.Bio != null)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3">About</h5>
+                <p>
+                    @Model.Bio
+                </p>
+
+                <div class="row">
+
+                    <!--end col-->
+                    <div class="col-6 col-md-4">
+                        <div class="d-flex mt-4">
+                            <div class="flex-shrink-0 avatar-xs align-self-center me-3">
+                                <div class="avatar-title bg-light rounded-circle fs-16 text-primary">
+                                    <i class="ri-global-line"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <p class="mb-1">Website :</p>
+                                <a href="@Model.webSite" target="_blank"
+                               class="fw-semibold">@Model.webSite</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!--end card-body-->
+        </div>
+
+        <!-- end card -->
+    }
+}

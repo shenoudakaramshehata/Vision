@@ -1,0 +1,131 @@
+﻿@using Vision.Data
+@inject CRMDBContext _context
+@model Vision.Models.ClassifiedAdsCategory
+@{
+    //var EditVideoCategories = _context.videoCategories.Select(e => new { e.Id, e.ENTitle });
+}
+
+<div class="modal fade" id="showEditModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">@sharedResource["Edit Video Material"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" id="close-modal"></button>
+            </div>
+
+            <form asp-area="CRM" asp-page="/Configurations/AdsCategories/Index" enctype="multipart/form-data" asp-page-handler="EditAdsCategory">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        @*<div class="col-lg-12">
+                            <div class="text-center">
+                                <div class="position-relative d-inline-block">
+
+                                    <iframe src="" class="itemImgCla" width="300" frameborder="0"> </iframe>
+
+
+                                </div>
+                            </div>
+
+                        </div>*@
+                        <br />
+                        <div class="col-lg-12">
+                            <div class="text-center col-lg-12">
+                                <div class="position-relative d-inline-block">
+                                    <div class="position-absolute bottom-0 end-0">
+                                        <label for="Editfile" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
+                                            <div class="avatar-xs cursor-pointer">
+                                                <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                    <i class="ri-image-fill"></i>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <input class="form-control d-none" name="Editfile" id="Editfile" type="file"
+                                               accept="image/*">
+                                    </div>
+                                    <div class="avatar-lg p-1">
+                                        <div class="avatar-title bg-light rounded-circle">
+                                            <img src="~/assets/images/users/user-dummy-img.jpg" id="img" class="avatar-md rounded-circle object-cover" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5 class="fs-13  mt-3">@(sharedResource["Logo"])</h5>
+                            </div>
+                        </div>
+                         <br />
+
+                           
+
+
+                        <input asp-for="@Model.ClassifiedAdsCategoryId" id="HiddenId" value="@Model.ClassifiedAdsCategoryId" hidden>
+                        <input asp-for="@Model.ClassifiedAdsCategoryPic " id="hidefromHere" hidden>
+                        
+                       
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.ClassifiedAdsCategoryTitleAr" class="form-label">@sharedResource["ArTitle"]</label>
+                                <input data-val-required="@sharedResource["Enter ArTitle"]" id="ArEditTitle" type="text" asp-for="@Model.ClassifiedAdsCategoryTitleAr" class="form-control" placeholder="@sharedResource["Enter ArTitle"]" required />
+                                <span asp-validation-for="@Model.ClassifiedAdsCategoryTitleAr" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.ClassifiedAdsCategoryTitleEn" class="form-label">@sharedResource["ENTitle"]</label>
+                                <input data-val-required="@sharedResource["Enter ENTitle"]" id="ENEditTitle" type="text" asp-for="@Model.ClassifiedAdsCategoryTitleEn" class="form-control" placeholder="@sharedResource["Enter ENTitle"]" required />
+                                <span asp-validation-for="@Model.ClassifiedAdsCategoryTitleEn" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.ClassifiedAdsCategorySortOrder" class="form-label">@sharedResource["ENTitle"]</label>
+                                <input type="number" min="1" data-val-required="@sharedResource["Enter Sort Order"]" id="ClassifiedAdsCategorySortOrder" type="text" asp-for="@Model.ClassifiedAdsCategorySortOrder" class="form-control" placeholder="@sharedResource["Enter ENTitle"]" required />
+                                <span asp-validation-for="@Model.ClassifiedAdsCategorySortOrder" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                         <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.ClassifiedAdsCategoryDescAr" class="form-label">@(sharedResource["Description"])</label>
+                                <textarea asp-for="@Model.ClassifiedAdsCategoryDescAr" id="ClassifiedAdsCategoryDescAr" class="form-control" cols="2" placeholder="@sharedResource["Enter Ar Description"]"></textarea>
+                                <span asp-validation-for="@Model.ClassifiedAdsCategoryDescAr" class="text-danger"></span>
+                            </div>
+                        </div>
+                         <div class="col-lg-12">
+                            <div>
+                                <label for="@Model.ClassifiedAdsCategoryDescEn" class="form-label">@(sharedResource["Description"])</label>
+                                <textarea asp-for="@Model.ClassifiedAdsCategoryDescEn" id="ClassifiedAdsCategoryDescEn" class="form-control" cols="2" placeholder="@sharedResource["Enter EN Description"]"></textarea>
+                                <span asp-validation-for="@Model.ClassifiedAdsCategoryDescEn" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-check" style="padding-top: 2rem;">
+                                <input asp-for="@Model.ClassifiedAdsCategoryIsActive" class="form-check-input" type="checkbox" id="EditIsActive">
+                                <label for="@Model.ClassifiedAdsCategoryIsActive" class="form-check-label">@sharedResource["Active"]</label>
+                                <span asp-validation-for="@Model.ClassifiedAdsCategoryIsActive" class="text-danger"></span>
+                            </div>
+                        </div>
+                       
+
+                        
+                       
+                    </div>
+                    <!--end row-->
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light"
+                                data-bs-dismiss="modal">
+                            @sharedResource["Close"]
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                                id="add-btn">
+                            @sharedResource["Edit"]
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

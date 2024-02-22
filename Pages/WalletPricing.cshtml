@@ -1,0 +1,176 @@
+﻿@page
+@model Vision.Pages.WalletPricingModel
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    Layout = "FrontSite/_TemplateLayout";
+}
+<style>
+    /*--------------------------------------------------------------
+# Wallet Pricing
+--------------------------------------------------------------*/
+.pricingTable {
+    padding: 30px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.pricingTable:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+.price-value {
+    margin-top: 20px;
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+}
+
+.currency {
+    font-size: 20px;
+}
+
+.amount {
+    font-size: 48px;
+}
+
+.month {
+    font-size: 16px;
+}
+
+.pricing-content {
+    margin-top: 30px;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    color: #666;
+}
+
+.pricing-content li {
+    margin-bottom: 10px;
+}
+
+.pricing-content li b {
+    font-weight: 700;
+}
+
+.pricingTable-signup {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+.pricingTable-signup:hover {
+    background-color: #111;
+    width: 130px;
+    color: white;
+}
+
+/* Add dividers */
+.title-divider {
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+
+
+
+/* Responsive Styles */
+/*media (max-width: 767px) {
+    .pricingTable {
+        padding: 20px;
+    }
+
+    .price-value {
+        font-size: 28px;
+    }
+
+    .amount {
+        font-size: 38px;
+    }
+
+    .month {
+        font-size: 14px;
+    }
+
+    .pricing-content li {
+        font-size: 14px;
+    }
+
+    .pricingTable-signup {
+        font-size: 16px;
+    }
+}*/
+
+</style>
+<div class="container" style=" padding-top: 300px; padding-bottom: 100px;">
+    <div class="row">
+        <div class="col-md-4 col-sm-6">
+            <div class="pricingTable">
+                <h3 class="title">STANDARD</h3>
+                <div class="price-value">
+                    <span class="currency">$</span>
+                    <span class="amount">10.00</span>
+                    <span class="month">/month</span>
+                </div>
+                <ul class="pricing-content">
+                    <li><b>50GB</b>Choose Plan for feature</li>
+                    <li><b>50</b>Choose Plan for feature</li>
+                    <li><b>50GB</b>Choose Plan for feature</li>
+                    <li><b>10</b>Choose Plan for feature</li>
+                    <li><b>15</b>Choose Plan for feature</li>
+                </ul>
+                <a href="#" class="pricingTable-signup">Choose Plan</a>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="pricingTable pink">
+                <h3 class="title">BUSINESS</h3>
+                <div class="price-value">
+                    <span class="currency">$</span>
+                    <span class="amount">20.00</span>
+                    <span class="month">/month</span>
+                </div>
+                <ul class="pricing-content">
+                    <li><b>60GB</b>Choose Plan for feature</li>
+                    <li><b>60</b>Choose Plan for feature</li>
+                    <li><b>60GB</b>Choose Plan for feature</li>
+                    <li><b>15</b>Choose Plan for feature</li>
+                    <li><b>20</b>Choose Plan for feature</li>
+                </ul>
+                <a href="#" class="pricingTable-signup">Choose Plan</a>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="pricingTable blue">
+                <h3 class="title">PREMIUM</h3>
+                <div class="price-value">
+                    <span class="currency">$</span>
+                    <span class="amount">30.00</span>
+                    <span class="month">/month</span>
+                </div>
+                <ul class="pricing-content">
+                    <li><b>70GB</b>Choose Plan for feature</li>
+                    <li><b>70</b>Choose Plan for feature</li>
+                    <li><b>70GB</b>Choose Plan for feature</li>
+                    <li><b>20</b>Choose Plan for feature</li>
+                    <li><b>25</b>Choose Plan for feature</li>
+                </ul>
+                <a href="#" class="pricingTable-signup">Choose Plan</a>
+            </div>
+        </div>
+    </div>
+</div>

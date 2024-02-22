@@ -1,0 +1,116 @@
+﻿@page
+@using Microsoft.AspNetCore.Localization;
+@using Vision.Data;
+@model Vision.Pages.postBusinessModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+       
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+       
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+<script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+          "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+    </script>
+    <style>
+        #map {
+            height: 100%;
+        }
+   
+#block-wrp {
+  width: 784px;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+#block-wrp .block-item {
+  height: 400px;
+  width: 48%;
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column
+}
+#block-wrp .block-item .map-item {
+  height: 90%
+}
+#block-wrp .block-item span.city-name {
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #a2ccff;
+  height: 10%;
+  line-height: 2em;
+}
+
+    </style>
+
+
+
+
+
+    <form method="post" enctype="multipart/form-data">
+    <div class="col-md-9">
+        <div class="row">
+
+            <div class="col-md-12">
+                <label for="bussinessPlans">BusinessPlans</label>
+
+                <div class="listsearch-input-item">
+                    <select data-placeholder="City" class="chosen-select no-search-select" name="bussinessPlans" id="bussinessPlans" required>
+                        <option value="" selected>Please Select a Business Plan</option>
+                        @{
+                            foreach (var item in Model.bussinessPlans)
+                            {
+                                <option value="@item.PlanTlEn">@item.PlanTlEn</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
+        @Html.Raw(Model.FormTemplate);
+        <input type="text" hidden name="LatId" id="LatId" />
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+
+                <button type="submit" class="btn float-btn color2-bg" id="submit">Add<i class="fal fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    </form>
+
+
+
+

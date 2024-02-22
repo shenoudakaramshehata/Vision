@@ -1,0 +1,51 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageAdzTemplate.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>AdTemplateConfig</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AdTemplateConfig.AdTemplateConfigId" />
+            <div class="form-group">
+                <label asp-for="AdTemplateConfig.FieldTypeId" class="control-label"></label>
+                <select asp-for="AdTemplateConfig.FieldTypeId" class="form-control" asp-items="ViewBag.FieldTypeId"></select>
+                <span asp-validation-for="AdTemplateConfig.FieldTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdTemplateConfig.AdTemplateFieldCaptionAr" class="control-label"></label>
+                <input asp-for="AdTemplateConfig.AdTemplateFieldCaptionAr" class="form-control" />
+                <span asp-validation-for="AdTemplateConfig.AdTemplateFieldCaptionAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdTemplateConfig.AdTemplateFieldCaptionEn" class="control-label"></label>
+                <input asp-for="AdTemplateConfig.AdTemplateFieldCaptionEn" class="form-control" />
+                <span asp-validation-for="AdTemplateConfig.AdTemplateFieldCaptionEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdTemplateConfig.ClassifiedAdsCategoryId" class="control-label"></label>
+                <select asp-for="AdTemplateConfig.ClassifiedAdsCategoryId" class="form-control" asp-items="ViewBag.ClassifiedAdsCategoryId"></select>
+                <span asp-validation-for="AdTemplateConfig.ClassifiedAdsCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

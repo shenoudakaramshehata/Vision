@@ -1,0 +1,118 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.BusinessOrdersCurrentModel
+@inject CRMDBContext _context
+@inject ApplicationDbContext _DbContext
+@{
+    Layout = "_DashBoard";
+
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+
+                <div class="col-md-9">
+                    <div class="dashboard-title   fl-wrap">
+                        <h3>All Order</h3>
+                    </div>
+                    <!-- profile-edit-container-->
+                    <div class="profile-edit-container fl-wrap block_box">
+                        <!-- booking-list-->
+                        @{
+                            if(Model.orders != null)
+                            {
+                                foreach (var item in Model.orders)
+                                {
+                                    <div class="booking-list">
+                                        <div class="booking-list-message">
+
+                                            
+                                            <div class="booking-list-message-avatar">
+                                                <img src="@item.ClassifiedBusiness?.Mainpic" alt="">
+                                            </div>
+                                            @{
+                                                if (item.IsPaid == false)
+                                                {
+                                                    <span class="booking-list-new green-bg">Not paid</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span class="booking-list-new green-bg">Paid order</span>
+
+                                                }
+                                            }
+                                            <div class="booking-list-message-text">
+                                                <h4>Order Date - <span>@item.OrderDate</span></h4>
+                                                <div class="booking-details fl-wrap">
+                                                    <span class="booking-title">Order Items :</span> :
+                                                    @{
+                                                        var orderItems = _context.OrderItems.Where(a => a.OrderId == item.OrderId).ToList();
+                                                        foreach (var product in orderItems)
+                                                        {
+                                            <span class="booking-text"><a asp-page="ProductsDetails" asp-route-id="@product.Product.ProductId">@product.Product.TitleEn</a></span>
+
+                                                        }
+
+                                                    }
+                                                </div>
+                                                <div class="booking-details fl-wrap">
+                                                    <span class="booking-title">Order User Name:</span>
+                                                    @{
+                                                        var UserInfo = _DbContext.Users.Where(a => a.Id == item.UserId).FirstOrDefault();
+                                                        <span class="booking-text"><p>@UserInfo.UserName</p></span>
+                                                    }
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                        <div class="booking-list">
+                                                <div class="booking-list-message">
+                                <p>There is no orders for this business</p>
+                                </div>
+                                </div>
+                            }
+
+                        }
+                        
+                        <!-- dashboard-list end-->
+                    </div>
+                    <!-- profile-edit-container end-->
+                    
+                </div>
+                <!-- dashboard content end-->
+@{
+    
+         //English
+    if (BrowserCulture == "en-US")
+    {
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/reset.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/plugins.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/color.css")">
+<script src="~/Template/js/jquery.min.js"></script>
+<script src="~/Template/js/plugins.js"></script>
+<script src="~/Template/js/scripts.js"></script>
+
+    }
+    //Arabic
+    else
+    {
+
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+<script src="~/TemplateRTL/js/jquery.min.js"></script>
+<script src="~/TemplateRTL/js/plugins.js"></script>
+<script src="~/TemplateRTL/js/scripts.js"></script>
+    }
+
+}

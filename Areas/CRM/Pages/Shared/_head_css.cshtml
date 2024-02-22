@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Localization
+
+@{
+    var locale = Context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <script>
+            document.getElementById("htmlRoot").dir = "ltr";
+        </script>
+
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/assets/js/layout.js"></script>
+
+
+    }
+    //Arabic
+    else
+    {
+        <script>
+            document.getElementById("htmlRoot").dir = "rtl";
+        </script>
+
+        <link href="~/assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/app-rtl.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/custom-rtl.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/assets/js/layout.js"></script>
+
+    }
+
+}
+
+
+

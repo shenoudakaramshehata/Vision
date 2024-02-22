@@ -1,0 +1,69 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageCategory.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>ClassifiedAdsCategory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleAr" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleAr" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryTitleEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategorySortOrder" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategorySortOrder" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategorySortOrder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryPic" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryPic" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryPic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryIsActive" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryIsActive" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryIsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescAr" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescAr" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescAr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescEn" class="control-label"></label>
+                <input asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescEn" class="form-control" />
+                <span asp-validation-for="ClassifiedAdsCategory.ClassifiedAdsCategoryDescEn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryParentId" class="control-label"></label>
+                <select asp-for="ClassifiedAdsCategory.ClassifiedAdsCategoryParentId" class ="form-control" asp-items="ViewBag.ClassifiedAdsCategoryParentId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

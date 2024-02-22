@@ -1,0 +1,71 @@
+﻿@{
+}
+
+@*@model CRM.Areas.Admin.Pages.Configurations.ManageCategory.IndexModel*@
+@model Vision.Models.BussinessPlan
+
+<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="AddModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">@(sharedResource["Add New Plan"])</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+
+            <form method="post" asp-area="CRM" asp-page="/Configurations/ManageBusinessPlan/Index" asp-page-handler="AddPlan">
+                <div class="modal-body">
+                    <input type="hidden" id="id-field" />
+                    <div class="row g-3">
+                       
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="@Model.PlanTlAr" class="form-label">@sharedResource["Arabic Title"]</label>
+                                <input type="text" asp-for="@Model.PlanTlAr" class="form-control" placeholder="@sharedResource["Enter Arabic Title"]" required />
+                                <span asp-validation-for="@Model.PlanTlAr" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="@Model.PlanTlEn" class="form-label">@sharedResource["English Title"]</label>
+                                <input type="text" asp-for="@Model.PlanTlEn" class="form-control" placeholder="@sharedResource["Enter English Title"]" required />
+                                <span asp-validation-for="@Model.PlanTlEn" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="@Model.Price" class="form-label">@sharedResource["Price"]</label>
+                                <input type="number" min="1" value="" asp-for="@Model.Price" class="form-control" placeholder="@sharedResource["Price"]" required />
+                                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <label for="@Model.DurationInMonth" class="form-label">@sharedResource["Duration In Month"]</label>
+                                <input type="number" min="1" value="" asp-for="@Model.DurationInMonth" class="form-control" placeholder="@sharedResource["Number of Ads"]" required />
+                                <span asp-validation-for="@Model.DurationInMonth" class="text-danger"></span>
+                            </div>
+                        </div>
+                      
+                        <div class="col-lg-6">
+                            <div class="form-check" style="top: 2.5rem;">
+                                <label for="@Model.IsActive" class="form-check-label">@sharedResource["Active"]</label>
+
+                                <input asp-for="@Model.IsActive" class="form-check-input" type="checkbox" id="default">
+                                <span asp-validation-for="@Model.IsActive" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end row-->
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">@sharedResource["Close"]</button>
+                        <button type="submit"  class="btn btn-success" id="add-btn">@sharedResource["Add"]</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

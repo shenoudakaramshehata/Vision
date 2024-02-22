@@ -1,0 +1,112 @@
+﻿
+@inject CRMDBContext _context
+@model Vision.Models.Area
+
+                    <div class="modal fade" id="showEditModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-3">
+                                <div class="modal-header bg-light p-3">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal"></button>
+                                </div>
+                                 <form method="post" enctype="multipart/form-data" asp-area="CRM" asp-page="/Configurations/ManageArea/Index" asp-page-handler="EditArea">
+                                      <input type="text" hidden  id="AreaHiddenId" />
+                                
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="col-lg-12">
+                                  
+                                </div>
+                                <div class="row col-12">
+                                    <div class="form-group col-6">
+                                        <label asp-for="@Model.AreaTlAr" class="control-label">@sharedResource["TitleAr"]</label>
+                                        <input id="AreaTlAr" asp-for="@Model.AreaTlAr" class="form-control" />
+                                        <span asp-validation-for="@Model.AreaTlAr" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label asp-for="@Model.AreaTlEn" class="control-label">@sharedResource["TitleEn"]</label>
+                                        <input id="AreaTlEn" asp-for="@Model.AreaTlEn" class="form-control" />
+                                        <span asp-validation-for="@Model.AreaTlEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+                                    <input asp-for="@Model.AreaId" id="BannerHiddenId" hidden>
+                                    
+                                    <div class="form-group col-12">
+                                        <label asp-for="@Model.CityId" for="car-rental-name">@sharedResource["City"] <small class="text-danger">*</small></label>
+
+                                        <select id="CityId" data-val="true" data-val-required="@sharedResource["City"]" asp-for="@Model.CityId" class="form-select required" aria-label="Default select example" required >
+                                            
+
+                                            @{
+                                                if (_context.Cities.ToList() != null)
+                                                {
+                                                    foreach (var item in _context.Cities.ToList())
+
+                                                    {
+
+                                                        
+                                                            <option value="@item.CityId">@item.CityTlEn</option>
+
+
+                                                      
+
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                        @{
+                                            
+
+
+                                        }
+
+
+                                    </div>
+                                   
+                                </div>
+
+                               
+
+                                <div class="row col-12">
+                                     <div class="form-group col-6">
+                                        <label asp-for="@Model.AreaOrderIndex"  class="control-label">@sharedResource["Order Index"]</label>
+                                        <input asp-for="@Model.AreaOrderIndex" id="AreaOrderIndex" class="form-control" />
+                                        <span asp-validation-for="@Model.AreaOrderIndex" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6" style="padding-top: 2rem">
+                                        <div class="form-check">
+                                            
+                                            <input asp-for="@Model.AreaIsActive" id="AreaIsActive" class="form-check-input" type="checkbox">
+                                            <label for="@Model.AreaIsActive" class="form-check-label">@sharedResource["Is Active"]</label>
+                                            <span asp-validation-for="@Model.AreaIsActive" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group mt-2">
+                                    <input type="submit" value="@sharedResource["Edit"]" class="btn btn-primary" />
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                

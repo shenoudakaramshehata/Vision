@@ -1,0 +1,87 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.ProductCategoryIndexModel
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+
+<div class="col-md-9">
+    <div class="dashboard-title" style="
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+">
+        <h3>@sharedResource["Product Categories"]</h3>
+        <div class="scroll-nav-wrapper-opt" style="margin-bottom: 2rem;">
+            <a asp-page="ProductCategoryCreate" asp-area="TemplatePages" asp-route-BusinessId="@Model.classifiedBusinessId" class="btn float-btn color2-bg"> <i class="fal fa-add"></i> @sharedResource["Add"] </a>
+        </div>
+    </div>
+
+    <!-- dashboard-list-box-->
+    <div id="paginated-list" class="dashboard-list-box  fl-wrap">
+        <!-- dashboard-list -->
+        
+        @{
+            if (Model.ProductCategory != null)
+            {
+                
+            
+        @foreach (var item in Model.ProductCategory)
+        {
+            <div class="dashboard-list fl-wrap">
+                <div class="dashboard-message">
+                    <div class="booking-list-contr">
+                                <a asp-page="ProductCategoryEdit" asp-area="TemplatePages" asp-route-ProductCategoryId="@item.ProductCategoryId" class="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i class="fal fa-edit"></i></a>
+                                <a asp-page="ProductCategoryDelete" asp-area="TemplatePages" asp-route-ProductCategoryId="@item.ProductCategoryId" class="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i class="fal fa-trash"></i></a>
+                    </div>
+                    <div class="dashboard-message-text">
+                        <img src="/@item.Pic" alt="">
+                                <h4><a asp-page="ProductCategoryDetails" asp-area="TemplatePages" asp-route-ProductCategoryId="@item.ProductCategoryId">@item.TitleEn</a></h4>
+                                @{
+                                    if (item.Isactive == true)
+                                    {
+                                        <p>Active</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Not Active</p>
+                                    }
+                                }
+                    </div>
+                </div>
+            </div>
+        }
+
+        }
+            else {
+                <h1>@sharedResource["There no product category for this business directory"]</h1>
+        }
+        }
+    </div>
+    
+
+</div>

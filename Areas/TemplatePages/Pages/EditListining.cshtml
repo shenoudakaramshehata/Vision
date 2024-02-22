@@ -1,0 +1,666 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.EditListiningModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+<script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+          "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+    </script>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+
+    </style>
+@{
+    Layout = "_DashBoard";
+    var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
+    var Counties = _context.Countries.Select(e => new { e.CountryId, e.CountryTlEn });
+
+}
+<div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+        <input asp-for="@Model.AddListing.AddListingId" hidden />
+        <div class="dashboard-title   fl-wrap">
+            <h3>@sharedResource["Edit Listing"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <label>@sharedResource["Listing Title"]<i class="fal fa-briefcase"></i></label>
+                <input asp-for="@Model.AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]"  />
+                 <span asp-validation-for="@Model.AddListing.Title" style="color:red;"></span>
+                <div class="row">
+                    <div class="col-md-6" id="HrefCat">
+                        <label>@sharedResource["Type / Category"]</label>
+                        <div class="listsearch-input-item">
+                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="@sharedResource["Select Category"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Categories"]</option>
+                                @foreach (var item in Categories)
+                                {
+                                    <option value="@item.CategoryId">@item.CategoryTitleEn</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                       <div class="col-md-12">
+                           <span id="SpanCatId" style="color:red;display:none">@sharedResource["Select Category"]</span>
+                           </div>
+                   </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
+                        <input asp-for="@Model.AddListing.Tags" type="text" placeholder="Enter Tags" />
+                        <span asp-validation-for="@Model.AddListing.Tags" style="color:red;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>Location / Contacts</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+              
+                    <div class="row">
+                   
+                    <div >
+                        <input asp-for="@Model.AddListing.MainLocataion" type="text"  id="LatId" value="@Model.AddListing.MainLocataion" hidden />
+
+                    </div>
+
+                </div>
+                <div class="map-container">
+                    <div id="map" style="height:400px;"></div>
+                                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+                                        
+                </div>
+               
+                <div class="row">
+                   
+                     <div class="col-md-6" id="HrefCou">
+                        <label>@sharedResource["Country"]</label>
+                        <div class="listsearch-input-item">
+                            <select id="CouId" asp-for="AddListing.CountryId" data-placeholder="@sharedResource["Select Country"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Countries"]</option>
+                                @foreach (var item in Counties)
+                                {
+                                    <option value="@item.CountryId">@item.CountryTlEn</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCouId" style="color:red;display:none">@sharedResource["Select Country"]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="@Model.AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat"  />
+                        <span asp-validation-for="AddListing.ContactPeroson" style="color:red;"></span>
+                   
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="@Model.AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" />
+                        <span asp-validation-for="AddListing.Address" style="color:red;"></span>
+
+                        
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" />
+                            <span asp-validation-for="AddListing.Phone1" style="color:red;"></span>
+                        
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="@Model.AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" />
+                         <span asp-validation-for="AddListing.Phone2" style="color:red;"></span>
+                    
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Website"]  <i class="far fa-globe"></i>  </label>
+                        <input asp-for="@Model.AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" />
+                          <span asp-validation-for="AddListing.Website" style="color:red;"></span>
+                        
+                    </div>
+                    <div class="col-sm-6">
+                        <label> @sharedResource["Fax"] <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="@Model.AddListing.Fax" type="text" placeholder="@sharedResource["Enter Fax"]" />
+                     <span asp-validation-for="AddListing.Email" style="color:red;"></span>
+                    
+                    </div>
+                    <div class="col-sm-12">
+                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="@Model.AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Header Media"]</h3>
+        </div>
+        <div class="custom-form">
+            <div class="row">
+                <!--col -->
+                <div class="col-md-4">
+                   
+                    <div class="add-list-media-wrap">
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Edits Logo"]</span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="image/*" name="Listinglogo" class="upload">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--col end-->
+                <!--col -->
+                <div class="col-md-4">
+                   
+                    <div class="add-list-media-wrap">
+                        <div class="listsearch-input-item fl-wrap">
+                            <div class="fuzone">
+                                <div class="fu-text">
+                                    <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Banner"] </span>
+                                    <div class="photoUpload-files fl-wrap"></div>
+                                </div>
+                                <input type="file" accept="image/*" name="listingbanner" class="upload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    
+                    <div class="add-list-media-wrap">
+                        <div class="listsearch-input-item fl-wrap">
+                            <div class="fuzone">
+                                <div class="fu-text">
+                                    <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Promo Video"] </span>
+                                    <div class="photoUpload-files fl-wrap"></div>
+                                </div>
+                                <input type="file" accept="video/*" name="PromoVideo" class="upload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+               
+            </div>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="listing-item-grid_container fl-wrap">
+            <div class="row">
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        <div class="bg" data-bg="/@Model.AddListing.ListingLogo"></div>
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">@sharedResource["Logo"]</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <!--  listing-item-grid end  -->
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        <div class="bg" data-bg="/@Model.AddListing.ListingBanner"></div>
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">@sharedResource["Banner"]</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <!--  listing-item-grid end  -->
+                <!--  listing-item-grid  -->
+                <div class="col-sm-4">
+                    <div class="listing-item-grid">
+                        @if (Model.AddListing.PromoVideo == null)
+                        {
+                            <div class="bg" data-bg=""></div>
+                        }
+                        else
+                        {
+                            <div class="bg">
+                                <iframe src="@Url.Content("/"+Model.AddListing.PromoVideo)?autoplay=1&loop=1&autopause=1&mute=1" allow="autoplay;" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+                        }
+
+                        <div class="d-gr-sec"></div>
+                        <div class="listing-item-grid_title">
+                            <h3><a href="listing.html">@sharedResource["Promo Video"]</a></h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>@sharedResource["Listing Photos"]</h3>
+            </div>
+            <div class="custom-form">
+                <div class="row">
+                    <div class="col-md-12">
+                      
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here To Edit Photos"] </span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="image/*" name="Photos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="listing-item-grid_container fl-wrap">
+                <div class="row">
+                    @foreach (var item in Model.AddListing.ListingPhotos)
+                    {
+
+                        <div id="@item.Id" class="col-sm-4">
+                            <div class="listing-item-grid">
+                                <div class="bg" data-bg="/@item.PhotoUrl"></div>
+                                <div class="d-gr-sec" id=""></div>
+                                <div class="listing-item-grid_title">
+                                    <h3><a onclick="deletePhoto(@item.Id)">@sharedResource["Delete"]</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+
+
+
+            <div class="custom-form">
+                <div class="row">
+                    <div class="col-md-12">
+                       
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or Edit Videos"] </span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="video/*" name="Videos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="dashboard-title  dt-inbox fl-wrap">
+                <h3>@sharedResource["Listing Videos"]</h3>
+            </div>
+            @foreach (var item in Model.AddListing.ListingVideos)
+            {
+
+                <div id="@item.Id" class="col-sm-4">
+                    <div class="list-single-main-item_content fl-wrap">
+                        <div class="iframe-holder fl-wrap">
+                            <div class="resp-video">
+
+                                <iframe src="@Url.Content("/"+item.VideoUrl)?background=0" width="200" height="200" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+                            </div>
+                            <h3><a class="btn" style="background-color: #c03434" onclick="deleteVideo(@item.Id)">@sharedResource["Delete"]</a></h3>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Details"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="@Model.AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Branches"]</h3>
+          
+        </div>
+       
+        <div class="profile-edit-container fl-wrap  block_box">
+            <div class="custom-form add_room-item-wrap">
+                <div class="add_room-container fl-wrap">
+                    @if (Model.BranchesList.Count() == 0)
+                    {
+                        <div class="add_room-item fl-wrap">
+                            <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>@sharedResource["Branch Title"] <i class="fal fa-briefcase"></i></label>
+                                    <input class="titleinput" type="text" placeholder="Enter Branch Title" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.BranchesList)
+                        {
+                            <div class="add_room-item fl-wrap">
+                                <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>@sharedResource["Branch Title"] <i class="fal fa-briefcase"></i></label>
+                                        <input class="titleinput" type="text" placeholder="Enter Branch Title" value="@item.Title" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
+
+            </div>
+            <div class="row">
+                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
+            </div>
+        </div>
+        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Save Listing"]<i class="fal fa-paper-plane"></i></button>
+
+    </form>
+    <!-- profile-edit-container end-->
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    //Arabic
+    else
+    {
+        
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+
+    }
+}
+
+<script>
+    
+     function initMap() {
+         var markers = [];
+         var uniqueId = 1;
+         var mainLocation=document.getElementById("LatId").value;
+         const myArray = mainLocation.split(",");
+          var latOb=myArray[0];
+          var NlatOb=Number(latOb)
+          console.log("latOb = "+typeof(NlatOb));
+          var lngOb=myArray[1];
+          var NlngOb=Number(lngOb)
+         console.log("lngOb = "+lngOb);
+        var myLatlng = { lat:NlatOb,lng:NlngOb };
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 4,
+            center: myLatlng,
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: "Select Location",
+            position: myLatlng,
+        });
+
+        infoWindow.open(map);
+ 
+            var MarkerObj={lat: NlatOb, lng: NlngOb};
+            var marker = new google.maps.Marker({
+                position: MarkerObj,
+                map: map
+            });
+            marker.id = uniqueId;
+            uniqueId++;
+            markers.push(marker);
+               for (var i = 0; i < markers.length; i++) {
+            if (markers[i].id == marker.id-1) {
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+                return;
+            }
+        }
+            infoWindow.open(map, marker);
+            infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+                position: myLatlng,
+            });
+          
+        map.addListener("click", function (mapsMouseEvent) {
+         ///////////////////////////
+
+          var jsonobj=JSON.stringify(mapsMouseEvent.latLng.toJSON());
+          var myObj = JSON.parse(jsonobj);
+            sendReq(myObj);
+            var MarkerObj={lat: myObj.lat, lng: myObj.lng};
+            var marker = new google.maps.Marker({
+                position: MarkerObj,
+                map: map
+            });
+            marker.id = uniqueId;
+            uniqueId++;
+            markers.push(marker);
+               for (var i = 0; i < markers.length; i++) {
+            if (markers[i].id == marker.id-1) {
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+                return;
+            }
+        }
+            infoWindow.open(map, marker);
+            infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            //infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+            //infoWindow.open(map);
+                });
+
+    }
+    window.initMap = initMap;
+  function sendReq(obj){
+        console.log(obj);
+        document.getElementById("LatId").value=obj.lat+","+obj.lng;
+        }
+
+
+    function changeStylebutton(id) {
+
+        if (localStorage.getItem("lang") == "en") {
+            document.getElementById(id).textContent = "Save All";
+        } else {
+            document.getElementById(id).textContent = "حفظ الكل";
+        }
+
+        document.getElementById(id).style.backgroundColor = "#384f95";
+
+    }
+
+    var counter = 0;
+
+    function branchtitle() {
+        var myList = new Array();
+        var inputvalue = document.getElementsByClassName("titleinput");
+        for (var i = 0; i < inputvalue.length; i++) {
+            if (document.getElementsByClassName("titleinput")[i].value != "") {
+                myList.push(document.getElementsByClassName("titleinput")[i].value)
+            }
+        }
+        if (myList.length > 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/EditListining?handler=FillBranchesList",
+                async: false,
+                data: JSON.stringify(myList),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                    counter += 1;
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+
+
+    function deletePhoto(id) {
+        //console.log(typeof(id))
+        //var List = new Array();
+        //List.push(id);
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/EditListining?handler=DeletePhotoById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                    if (localStorage.getItem("lang") == "en") {
+                        document.getElementById("Branchbtnstyle").textContent = "Saved";
+                    } else {
+                        document.getElementById("Branchbtnstyle").textContent = "تم الحفظ";
+                    }
+                    document.getElementById("Branchbtnstyle").style.backgroundColor = "#257260";
+                    document.getElementById(id).style.display = 'none';
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+    function deleteVideo(id) {
+     
+        if (id != 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/TemplatePages/EditListining?handler=DeleteVideoById",
+                async: false,
+                data: JSON.stringify(id),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+                    document.getElementById(id).style.display = 'none';
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
+            console.log("Nobody has been selected")
+        }
+    }
+    function validateMyForm() {
+        var CatId = document.getElementById("CatId");
+        var CouId = document.getElementById("CouId");
+        console.log(CatId.value);
+        var SpanCatId = document.getElementById("SpanCatId")
+        var SpanCouId = document.getElementById("SpanCouId")
+        console.log(SpanCatId);
+        if (CatId.value == "All Categories") {
+            console.log("entered");
+            SpanCatId.style.display = "flex";
+            window.location.href = "#HrefCat";
+
+            return false;
+        }else if(CouId.value == "All Countries"){
+            console.log("entered");
+            SpanCouId.style.display = "flex";
+            window.location.href = "#HrefCou";
+
+            return false;
+        }
+        else {
+            console.log("Not entered");
+            SpanCatId.style.display = "none";
+            SpanCouId.style.display = "none";
+            return true;
+        }
+
+    }
+
+</script>
+ @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+   }

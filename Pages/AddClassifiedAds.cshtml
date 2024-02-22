@@ -1,0 +1,226 @@
+﻿@page
+@model Vision.Pages.AddClassifiedAdsModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "FrontSite/_TemplateLayout";
+    var Categories = _context.ClassifiedAdsCategories.Select(e => new { e.ClassifiedAdsCategoryTitleAr, e.ClassifiedAdsCategoryTitleEn, e.ClassifiedAdsCategoryId });
+
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    .form-group .form-control {
+        background-color: #f4f4f4;
+        border: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-group .form-control:hover {
+            border-color: #000;
+            color: #000;
+        }
+
+        .form-group .form-control:focus {
+            outline: none;
+            border-color: #000;
+            color: #000;
+        }
+
+    .file-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+        .file-upload input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .file-upload label:hover {
+                background-color: #2980b9;
+            }
+
+        .file-upload .file-name {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .file-upload .file-names {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+
+</style>
+<!-- Start of Main -->
+<main class="main checkout" style="padding-top: 250px; padding-bottom: 50px;">
+    <!-- Start of PageContent -->
+    <div class="page-content d-flex align-items-center justify-content-center">
+        <div class="container">
+            <form class="form checkout-form" action="#" method="post">
+                <div class="row mb-9">
+                    <div class="col-lg-9 pr-lg-4 mb-4">
+                        <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
+                            Add Ad details
+                        </h3>
+                        <div class="row mb-9">
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-shopify mr-1"></i> Category *</label>
+                                <div class="select-box">
+                                    <select name="category" class="form-control form-control-md" onchange="showFields(this.value)">
+                                        <option value="">Select a category</option>
+                                        <option value="beauty_health">Beauty and Fashion</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-check mr-1"></i> Active</label>
+                                <div class="checkbox">
+                                    <input type="checkbox" name="active">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="beauty_healthFields" style="display: none;">
+                           
+                            <div class="form-group">
+                                <label><i class="w-icon-withdraw mr-1"></i> Multiple Pictures</label>
+                                <div class="file-upload">
+                                    <input type="file" id="image-files" name="image-files" multiple>
+                                    <label for="image-files">Choose Files</label>
+                                    <span class="file-names"></span>
+                                </div>
+                            </div>
+                            <div class=" form-group">
+                                <label><i class="w-icon-wallet2 mr-1"></i> Price Type</label>
+                                <select class="form-control form-control-md" name="city">
+                                    <option value="">Select a method</option>
+                                    <option value="city1">Cash</option>
+                                    <option value="city2">Online</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <i class="w-icon-truck mr-1"></i> Price
+                                </label>
+                                <input type="number" class="form-control form-control-md" name="delivery_cost">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="w-icon-wallet2 mr-1"></i> Payment Mothod</label>
+                                <select class="form-control form-control-md" name="city">
+                                    <option value="">Select a method</option>
+                                    <option value="city1">Cash</option>
+                                    <option value="city2">Online</option>
+                                </select>
+                            </div>
+                            <div class=" form-group">
+                                <label><i class="w-icon-wallet2 mr-1"></i> Condition</label>
+                                <select class="form-control form-control-md" name="city">
+                                    <option value="">Select a method</option>
+                                    <option value="city1">Cash</option>
+                                    <option value="city2">Online</option>
+                                </select>
+                            </div>
+                            <div class=" form-group">
+                                <label><i class="w-icon-map-marker mr-1"></i> Location Map</label>
+                            </div>
+                            <div id="map" style="height: 400px;"></div>
+
+
+
+
+                            <div class=" form-group">
+                                <label><i class="w-icon-electronics mr-1"></i> Ad Title</label>
+                                <input type="text" class="form-control form-control-md" name="website">
+                            </div>
+
+
+                            <div class="form-group mt-3">
+                                <label for="order-notes">Ad Description</label>
+                                <textarea class="form-control mb-0" id="order-notes" name="order-notes" cols="30"
+                                          rows="4"
+                                          placeholder="Enter Ad Description"></textarea>
+                            </div>
+                                
+                            </div>
+                        
+                        </div>
+                        
+                    </div>
+                    <div class="form-group place-order pt-6 row mb-9">
+                        <button type="submit" class="btn btn-dark btn-block btn-rounded" style="width: 930px;">
+                            Add Ad
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    <!-- End of PageContent -->
+</main>
+<!-- End of Main -->
+
+<script>
+    function showFields(category) {
+        // Hide all category fields
+        document.getElementById('beauty_healthFields').style.display = 'none';
+        // Hide fields for other categories
+
+        // Show fields based on selected category
+        if (category === 'beauty_health') {
+            document.getElementById('beauty_healthFields').style.display = 'block';
+        }
+    }
+
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(map);
+
+    var marker = L.marker([51.5, -0.09], {
+        draggable: true
+    }).addTo(map);
+
+    marker.on('dragend', function (event) {
+        var position = marker.getLatLng();
+    });
+
+    var videoFileInput = document.getElementById('video-file');
+    var videoFileNameSpan = document.querySelector('.form-group .file-name');
+    videoFileInput.addEventListener('change', function () {
+        videoFileNameSpan.textContent = this.files[0].name;
+    });
+
+    var imageFilesInput = document.getElementById('image-files');
+    var imageFileNamesSpan = document.querySelector('.form-group .file-names');
+    imageFilesInput.addEventListener('change', function () {
+        var fileNames = Array.from(this.files).map(function (file) {
+            return file.name;
+        });
+        imageFileNamesSpan.textContent = fileNames.join(', ');
+    });
+
+</script>
+

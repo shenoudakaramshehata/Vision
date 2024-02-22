@@ -1,0 +1,10 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model BusinessTemplateConfig
+
+<label>@Model.BusinessTemplateFieldCaptionEn  <i class="fal fa-briefcase"></i></label>
+<input type="text" name="@Model.BusinessTemplateConfigId" id="@Model.BusinessTemplateConfigId" required="@Model.IsRequired.ToString()">

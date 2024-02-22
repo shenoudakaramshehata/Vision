@@ -1,0 +1,48 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.SystemConfiguration.ManagePageContent.IndexModel
+@{
+	ViewBag.Title = @sharedResource["Page Content"];
+	ViewBag.pTitle = @sharedResource["Page Content"];
+}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card" id="List">
+
+			<div class="card-body">
+				<div>
+					<div class="table-responsive table-card">
+						<table id="myTable" class="table  dt-responsive nowrap  align-middle" style="width:100%">
+							<thead class="table-light ">
+								<tr>
+
+									<th class=" text-center fs-5 bolder" data-ordering="false">@sharedResource["Page Arabic Title"]</th>
+									<th class=" text-center fs-5 bolder" data-ordering="false">@sharedResource["Page English Title"]</th>
+									<th class=" text-center fs-5 bolder" data-ordering="false">@sharedResource["Edit"]</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model.pageContents)
+								{
+									<tr>
+										<td class=" text-center fw-bold">@item.PageTitleAr </td>
+										<td class=" text-center fw-bold">@item.PageTitleEn</td>
+										<td class="text-center">  <a asp-route-id="@item.PageContentId" asp-page="./edit" class="btn btn-success ">@sharedResource["Edit"]</a></td>
+
+									</tr>
+
+
+								}
+							</tbody>
+						</table>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<!--end modal-->
+		</div>
+	</div>
+	<!--end col-->
+</div>

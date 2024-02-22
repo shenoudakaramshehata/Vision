@@ -1,0 +1,83 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model AdTemplateConfig
+
+
+
+<label>@Model.AdTemplateFieldCaptionEn <i class="fal fa-briefcase"></i></label>
+@*<input type="text" placeholder="Name of your business">*@
+
+@*<div id="googleMap" style="width:100%;height:400px;"></div>*@
+    <div class="map-container">
+       <div id="map" style="height:400px;"></div>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+       
+   </div>                                      
+
+
+<script>
+    //$(function () {
+    //      var mapProp = {
+    //        center: new google.maps.LatLng(51.508742, -0.120850),
+    //        zoom: 5,
+    //    };
+    //    var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    //});
+    function initMap() {
+     console.log("initMapStarted");
+     var markers = [];
+     var uniqueId = 1;
+            var myLatlng = { lat: 29.378586, lng: 47.990341 };
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: myLatlng,
+            });
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: "Select Location",
+                position: myLatlng,
+            });
+
+            infoWindow.open(map);
+            map.addListener("click", function (mapsMouseEvent) {
+              var jsonobj=JSON.stringify(mapsMouseEvent.latLng.toJSON());
+              var myObj = JSON.parse(jsonobj);
+                sendReq(myObj);
+                var MarkerObj={lat: myObj.lat, lng: myObj.lng};
+                var marker = new google.maps.Marker({
+                    position: MarkerObj,
+                    map: map
+                });
+                marker.id = uniqueId;
+                uniqueId++;
+                markers.push(marker);
+                   for (var i = 0; i < markers.length; i++) {
+                if (markers[i].id == marker.id-1) {
+                    markers[i].setMap(null);
+                    markers.splice(i, 1);
+                    return;
+                }
+            }
+                infoWindow.open(map, marker);
+                infoWindow.close();
+            infoWindow = new google.maps.InfoWindow({
+                    position: mapsMouseEvent.latLng,
+                });
+        });
+         console.log("initMapStarted");
+
+        }
+        function sendReq(obj){
+            console.log(obj);
+            document.getElementById("LatId").value=obj.lat+","+obj.lng;
+            }
+</script>
+
+
+
+
+@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>*@

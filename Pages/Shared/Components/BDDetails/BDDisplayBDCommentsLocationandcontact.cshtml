@@ -1,0 +1,37 @@
+﻿@using Vision.Models;
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SingleBussinessDetailsModel
+
+<div class="box-widget-item fl-wrap block_box">
+    <div class="box-widget-item-header">
+        <h3>Location / Contacts  </h3>
+    </div>
+    <div class="box-widget">
+        <div class="map-container">
+            <div id="singleMap" data-latitude="40.7427837" data-longitude="-73.11445617675781" data-mapTitle="Our Location"></div>
+        </div>
+        <div class="box-widget-content bwc-nopad">
+            <div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+                <ul class="no-list-style">
+                    <li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#">USA 27TH Brooklyn NY</a></li>
+                    <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="#">+7(123)987654</a></li>
+                    <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="#">AlisaNoory@domain.com</a></li>
+                    <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#">themeforest.net</a></li>
+                </ul>
+            </div>
+            <div class="list-widget-social bottom-bcw-box  fl-wrap">
+                <ul class="no-list-style">
+                    <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+                <div class="bottom-bcw-box_link"><a href="#" class="show-single-contactform tolt" data-microtip-position="top" data-tooltip="Write Message"><i class="fal fa-envelope"></i></a></div>
+            </div>
+        </div>
+    </div>
+</div>

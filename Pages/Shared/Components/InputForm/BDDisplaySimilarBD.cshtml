@@ -1,0 +1,42 @@
+﻿@using Vision.Models;
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<ClassifiedBusiness>
+
+ <!--box-widget-item -->
+                                    <!--box-widget-item -->
+                                    <div class="box-widget-item fl-wrap block_box">
+                                        <div class="box-widget-item-header">
+                                            <h3>Similar BD :</h3>
+                                        </div>
+                                        <div class="box-widget  fl-wrap">
+                                            <div class="box-widget-content">
+                                                <!--widget-posts-->
+                                                <div class="widget-posts  fl-wrap">
+                                                    <ul class="no-list-style">
+                    @{
+                        foreach(var val in Model)
+                        {
+                            <li>
+                                <div class="widget-posts-img">
+                                    <a href="listing-single.html"><img src="/@val.Mainpic" alt=""></a>
+                                </div>
+                                <div class="widget-posts-descr">
+                                    <h4><a href="listing-single.html">@val.Title</a></h4>
+                                    <div class="widget-posts-descr-link"><a href="listing.html">@val.BusinessCategory.BusinessCategoryTitleEn </a>  </div>
+                                    <div class="widget-posts-descr-score">@val.Rating</div>
+                                </div>
+                            </li>
+                        }
+                    }
+                                                      
+                                                    </ul>
+                                                </div>
+                                                <!-- widget-posts end-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--box-widget-item end -->

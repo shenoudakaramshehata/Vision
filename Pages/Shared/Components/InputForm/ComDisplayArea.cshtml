@@ -1,0 +1,13 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model AdTemplateConfig
+@{
+}
+<label for="@Model.AdTemplateConfigId">Area<i class="fal fa-map-marker"></i></label>
+<input type="number" placeholder="Area" value="" ame="@Model.AdTemplateConfigId" id="@Model.AdTemplateConfigId" required="@Model.IsRequired.ToString()">
+
+

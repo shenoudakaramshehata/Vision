@@ -1,0 +1,43 @@
+﻿@inject CRMDBContext _context
+@using Vision.Models;
+@using Vision.Data;
+
+@model AdContent
+
+@{
+    <li>
+       
+
+            <span>@Model.AdTemplateConfig.AdTemplateFieldCaptionEn :</span>
+
+        @{
+
+            var LocupValue = _context.AdTemplateOptions.Where(e => e.AdTemplateOptionId == Convert.ToInt32(@Model.AdContentValues.FirstOrDefault().ContentValue)).FirstOrDefault().OptionEn;
+
+        }
+
+
+        @LocupValue
+    </li>
+}
+
+@*<li><a href="#">@Model.AdTemplateConfig.AdTemplateFieldCaptionEn</a>
+    @{
+    var LocupValue = _context.AdTemplateOptions.Where(e => e.AdTemplateOptionId == Convert.ToInt32(@Model.AdContentValues.FirstOrDefault().ContentValue)).FirstOrDefault().OptionEn;
+
+    <span>@LocupValue</span>
+
+    }
+    </li>*@
+@*<div>
+    <label for="exampleInputEmail1">@Model.AdTemplateConfig.AdTemplateFieldCaptionEn</label>
+    <br />
+    @{
+    var LocupValue = _context.AdTemplateOptions.Where(e => e.AdTemplateOptionId == Convert.ToInt32(@Model.AdContentValues.FirstOrDefault().ContentValue)).FirstOrDefault().OptionEn;
+
+
+    <p > @LocupValue</p>
+
+    }
+
+    </div>*@

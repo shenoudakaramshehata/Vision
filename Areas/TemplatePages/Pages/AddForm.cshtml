@@ -1,0 +1,199 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.AddFormModel
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+
+    <script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+            "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+    </script>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        #block-wrp {
+            width: 784px;
+            display: flex;
+            display: -webkit-flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+            #block-wrp .block-item {
+                height: 400px;
+                width: 48%;
+                position: relative;
+                display: flex;
+                display: -webkit-flex;
+                flex-direction: column;
+                -webkit-flex-direction: column
+            }
+
+                #block-wrp .block-item .map-item {
+                    height: 90%
+                }
+
+                #block-wrp .block-item span.city-name {
+                    text-align: center;
+                    color: #000;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    background: #a2ccff;
+                    height: 10%;
+                    line-height: 2em;
+                }
+
+    </style>
+   
+  
+                      
+
+                      
+                           
+                         <form method="post" enctype="multipart/form-data">
+                             <div class="col-md-9">
+                            <div class="dashboard-title   fl-wrap">
+                                <h3>Add Listing</h3>
+                            </div>
+                            <!-- profile-edit-container-->
+                            ///Title & TextArea
+                            <div class="profile-edit-container fl-wrap block_box">
+                                <div class="custom-form">
+                                    <label>Listing Title <i class="fal fa-briefcase"></i></label>
+                                    <input type="text" placeholder="Name of your business" value="" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Type / Category</label>
+                                            <div class="listsearch-input-item">
+                                                <select data-placeholder="Apartments" class="chosen-select no-search-select">
+                                                    <option>All Categories</option>
+                                                    <option>Shops</option>
+                                                    <option>Hotels</option>
+                                                    <option>Restaurants</option>
+                                                    <option>Fitness</option>
+                                                    <option>Events</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Keywords <i class="fal fa-key"></i></label>
+                                            <input type="text" placeholder="Maximum 15 , should be separated by commas" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- profile-edit-container end-->
+                            ////Location
+
+                            <div class="dashboard-title  dt-inbox fl-wrap">
+                                <h3>Location / Contacts</h3>
+                            </div>
+                            <!-- profile-edit-container-->
+                            <div class="profile-edit-container fl-wrap block_box">
+                                <div class="custom-form">
+                                   @* <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Longitude (Drag marker on the map)<i class="fal fa-long-arrow-alt-right"></i>  </label>
+                                            <input type="text" placeholder="Map Longitude" id="long" value="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Latitude (Drag marker on the map) <i class="fal fa-long-arrow-alt-down"></i> </label>
+                                            <input type="text" placeholder="Map Latitude" id="lat" value="" />
+                                        </div>
+                                    </div>*@
+                                    <div class="map-container">
+                                        <div id="singleMap" class="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                            <!-- profile-edit-container end-->
+                            /////Media 
+                            <div class="dashboard-title  dt-inbox fl-wrap">
+                                <h3>Header Media</h3>
+                            </div>
+                            <!-- profile-edit-container-->
+                            <div class="profile-edit-container fl-wrap block_box">
+                                <div class="custom-form">
+                                    <div class="row">
+                                        <!--col -->
+                                        <div class="col-md-4">
+                                           ////Image
+                                           
+                                        </div>
+                                        <!--col end-->
+                                        <!--col -->
+                                        <div class="col-md-8">
+                                           ////Images
+                                           
+                                        </div>
+                                        <!--col end-->
+                                        <!--col -->
+                                 
+                                        <!--col end-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- profile-edit-container end-->
+                            <!-- profile-edit-container-->
+                            <!-- profile-edit-container end-->
+                            <!-- profile-edit-container-->
+                            <!-- profile-edit-container end-->
+                            <!-- profile-edit-container-->
+                            <!-- profile-edit-container end-->
+                            <!-- profile-edit-container-->
+                            <!-- profile-edit-container end-->
+                           
+                            <!-- profile-edit-container-->
+                            <div class="profile-edit-container fl-wrap block_box">
+                                <div class="custom-form">
+                                   
+                                    <button class="btn    color2-bg  float-btn">Send Listing<i class="fal fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                            <!-- profile-edit-container end-->
+                        </div>
+
+                               @* @Html.Raw(Model.FormTemplate);
+                     <input type="text" hidden name="LatId" id="LatId" />
+
+                            <!-- profile-edit-container-->
+                            <div class="profile-edit-container fl-wrap block_box">
+                                <div class="custom-form">
+                                    
+                                    <button type="submit" class="btn color2-bg  float-btn">Send Listing<i class="fal fa-paper-plane"></i></button>
+                                </div>
+                            </div>*@
+                            </form>
+                            <!-- profile-edit-container end-->
+                      
+                        <!-- dashboard content end-->
+

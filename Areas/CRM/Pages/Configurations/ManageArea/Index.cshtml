@@ -1,0 +1,468 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageArea.IndexModel
+@{
+}
+@section styles{
+<!-- Sweet Alert css-->
+<link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="leadsList">
+            <div class="card-header border-0">
+
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm-3">
+                        <div class="search-box">
+                            <input type="text" class="form-control search"
+                                   placeholder="@sharedResource["Search for..."]">
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto ms-auto">
+                        <div class="hstack gap-2">
+
+                            <button type="button" class="btn btn-success add-btn"
+                                    data-bs-toggle="modal" id="create-btn"
+                                    data-bs-target="#showModal">
+                                <i class="ri-add-line align-bottom me-1"></i> @sharedResource["Add Area"]
+                            </button>
+                            <span class="dropdown">
+                                <button class="btn btn-soft-info btn-icon fs-14" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <i class="ri-settings-4-line"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Copy</a></li>
+                                    <li><a class="dropdown-item" href="#">Move to pipline</a></li>
+                                    <li><a class="dropdown-item" href="#">Add to exceptions</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Switch to common form
+                                            view
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Reset form view to
+                                            default
+                                        </a>
+                                    </li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="table-responsive table-card">
+                        <table class="table align-middle" id="customerTable">
+                            <thead class="table-light">
+                                <tr>
+                                    
+                                    <th class="sort" data-sort="company_name">@sharedResource["Title"]</th>
+                                    <th class="sort" data-sort="leads_score">@sharedResource["Sort Order"]</th>
+                                    <th class="sort" data-sort="phone">@sharedResource["Is Active"]</th>
+                                    <th class="sort" data-sort="phone">@sharedResource["Actions"]</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="list form-check-all">
+                                @{
+                                    foreach (var item in Model.Areas)
+                                    {
+                                                        <tr>
+
+
+                                            @{
+                                                if (Model.BrowserCulture == "en-US")
+                                                {
+                                                                                    <td class="company_name">@item.AreaTlEn</td>
+                                                }
+                                                else
+                                                {
+
+                                                                                    <td class="company_name">@item.AreaTlAr</td>
+
+                                                }
+                                            }
+
+                                                            <td class="leads_score">@item.AreaOrderIndex</td>
+                                                            <td class="leads_score">@item.AreaIsActive</td>
+
+                                                            <td>
+                                                                <ul class="list-inline hstack gap-2 mb-0">
+
+
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            data-bs-trigger="hover" data-bs-placement="top"
+                                                            title="View">
+                                                                        <a href="javascript:void(0)" data-bs-toggle="modal">
+                                                                            <i class="ri-eye-fill align-bottom text-muted" onclick="ShowViewPopUp(@item.AreaId)"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            data-bs-trigger="hover" data-bs-placement="top"
+                                                            title="Edit">
+                                                                        <a class="edit-item-btn" href="javascript:void(0)"
+                                                               data-bs-toggle="modal">
+                                                                            <i class="ri-pencil-fill align-bottom text-muted" onclick="editButtonClick(@item.AreaId)"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                            data-bs-trigger="hover" data-bs-placement="top"
+                                                            title="Delete">
+                                                                        <a class="remove-item-btn" data-bs-toggle="modal"
+                                                               href="javascript:void(0)">
+                                                                            <i class="ri-delete-bin-fill align-bottom text-muted" onclick="deleteArea(@item.AreaId)"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+
+
+                                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                        <div class="noresult" style="display: none">
+                            <div class="text-center">
+                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json"
+                                           trigger="loop" colors="primary:#121331,secondary:#08a88a"
+                                           style="width:75px;height:75px">
+                                </lord-icon>
+                                <h5 class="mt-2">Sorry! No Result Found</h5>
+                                <p class="text-muted mb-0">
+                                    We've searched more than 150+ leads We
+                                    did not find any
+                                    leads for you search.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <div class="pagination-wrap hstack gap-2">
+                            <a class="page-item pagination-prev disabled" href="#">
+                                Previous
+                            </a>
+                            <ul class="pagination listjs-pagination mb-0"></ul>
+                            <a class="page-item pagination-next" href="#">
+                                Next
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="showModal" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content p-3">
+                            <div class="modal-header bg-light p-3">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="close-modal"></button>
+                            </div>
+
+                            <form method="post" enctype="multipart/form-data" asp-area="CRM" asp-page="/Configurations/ManageArea/Index" asp-page-handler="AddArea" onsubmit="return validateForm();">
+                                
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                 <div class="row col-12">
+                                    <div class="form-group col-6">
+                                        <label asp-for="AddArea.AreaTlAr" class="control-label">@sharedResource["TitleAr"]</label>
+                                        <input asp-for="AddArea.AreaTlAr" class="form-control" />
+                                        <span asp-validation-for="AddArea.AreaTlAr" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label asp-for="AddArea.AreaTlEn" class="control-label">@sharedResource["TitleEn"]</label>
+                                        <input asp-for="AddArea.AreaTlEn" class="form-control" />
+                                        <span asp-validation-for="AddArea.AreaTlEn" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row col-12">
+
+                                    <div class="form-group col-12">
+                                        <label asp-for="AddArea.CityId" for="car-rental-name">@sharedResource["City"] <small class="text-danger">*</small></label>
+
+                                        <select id="CatId" data-val="true" data-val-required="@sharedResource["City"]" asp-for="AddArea.CityId" class="form-select required" aria-label="Default select example" required >
+                                            <option selected value=0>@sharedResource["Select City"]</option>
+
+                                            @{
+                                                if (@Model.Cities != null)
+                                                {
+                                                    foreach (var item in @Model.Cities)
+
+                                                    {
+
+                                                        if (Model.BrowserCulture == "en-US")
+                                                        {
+                                                                                            <option value="@item.CityId">@item.CityTlEn</option>
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                                                            <option value="@item.CityId">@item.CityTlEn</option>
+
+
+
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                        @{
+                                            if (Model.BrowserCulture == "en-US")
+                                            {
+                                                                <span id="CatSpanId" style="display:none" class="text-danger">City Is Required</span>
+
+
+                                            }
+                                            else
+                                            {
+
+                                                                <span id="CatSpanId" style="display:none" class="text-danger">المدينة مطلوبة</span>
+
+
+
+                                            }
+
+
+                                        }
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="row col-12">
+                                    <div class="form-group col-6">
+                                        <label asp-for="AddArea.AreaOrderIndex" class="control-label">@sharedResource["Order Index"]</label>
+                                        <input asp-for="AddArea.AreaOrderIndex" class="form-control" />
+                                        <span asp-validation-for="AddArea.AreaOrderIndex" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6" style="padding-top: 2rem">
+                                        <div class="form-check">
+                                            <input asp-for="AddArea.AreaIsActive" class="form-check-input" type="checkbox">
+                                            <label for="AddArea.AreaIsActive" class="form-check-label">@sharedResource["Is Active"]</label>
+                                            <span asp-validation-for="AddArea.AreaIsActive" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group mt-2">
+                                    <input type="submit" value="@sharedResource["Create"]" class="btn btn-primary" />
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!--end modal-->
+                <!-- Modal -->
+                <!--end modal -->
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <!--end col-->
+</div>
+<!--end row-->
+<partial name="_ViewPop" model="@Model.AddArea" view-data=" ViewData" />
+<partial name="_EditPopup" model="@Model.AddArea" view-data=" ViewData" />
+<partial name="_DatchDelete" model="@Model.AddArea" view-data=" ViewData" />
+
+
+@section scripts{
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- list.js min js -->
+<script src="~/assets/libs/list.js/list.min.js"></script>
+<script src="~/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+<!-- crm leads init -->
+<script src="~/assets/js/pages/crm-leads.init.js"></script>
+}
+
+<script>
+
+    
+    function validateForm() {
+         
+         var CatId = document.getElementById("CatId").value
+         console.log(CatId)
+         var CatSpanId = document.getElementById("CatSpanId")
+
+         if (CatId == 0) {
+            CatSpanId.style.display = "flex";
+             return false;
+         }
+         
+
+         return true;
+     }
+
+    // function validateEditForm() {
+
+
+    //     var EditSelectedVal=document.getElementById("EditbannerSelectId").value;
+    //     if(EditSelectedVal==0){
+    //          alert("You Must Select Banner Target");
+    //          return false;
+    //     }
+    //     document.getElementById("EditSelValueId").value=EditSelectedVal;
+
+    //     return true;
+    // }
+    //     function editButtonClick(BannerId) {
+
+
+    //         console.log(BannerId);
+    //$.ajax({
+    //     type: "GET",
+    //             beforeSend: function (xhr) {
+    //                 xhr.setRequestHeader("XSRF-TOKEN",
+    //                     $('input:hidden[name="__RequestVerificationToken"]').val());
+    //             }
+    //             ,
+    //     url: "/CRM/Configurations/ManageArea/Index?handler=SingleBannerForEdit",
+
+    //     data: { "BannerId": BannerId },
+    //     contentType: "application/json",
+    //     dataType: "json",
+    //     success: function (response) {
+
+    //         document.getElementsByClassName('bannerImgCla')[0].src= "/"+response.BannerPic
+
+    //                 document.getElementById("BannerHiddenId").value = response.BannerId
+    //                 document.getElementById("BannerPicHiddenId").value = response.BannerPic
+    //                 document.getElementById("EditCatId").value = response.EntityTypeId
+    //                 document.getElementById("BannerIsActive").value = response.BannerIsActive
+    //                 document.getElementById("BannerOrderIndex").value = response.BannerOrderIndex
+    //                 EditFillTypes(response.EntityTypeId,response.EntityId)
+
+
+    //            $('#showEditModal').modal('show');
+
+
+    //     },
+
+    //     failure: function (response) {
+    //         alert(response);
+    //     }
+    // });
+    // }
+
+
+    function ShowViewPopUp(AreaId)
+             {
+
+     $.ajax({
+         type: "GET",
+         url: "/CRM/Configurations/ManageArea/Index?handler=SingleAreaForView",
+         data: { "AreaId": AreaId},
+         contentType: "application/json",
+         dataType: "json",
+         success: function (response) {
+                     document.getElementById("DCityTlEn").innerHTML = response.CityTlEn
+                     document.getElementById("DAreaTlAr").innerHTML = response.AreaTlAr
+                     document.getElementById("DAreaTlEn").innerHTML = response.AreaTlEn
+                     document.getElementById("DCityTlAr").innerHTML = response.CityTlAr
+                     document.getElementById("DAreaOrderIndex").innerHTML = response.AreaOrderIndex
+                     document.getElementById("DAreaIsActive").innerHTML = response.AreaIsActive
+                     if (response.AreaIsActive == true) {
+                    document.getElementById("DAreaIsActive").innerHTML = "Active"
+
+                     }
+                     else{
+                          document.getElementById("DAreaIsActive").innerHTML = "Not Active"
+                     }
+
+                     $('#QuickViewPoup').modal('show');
+
+         },
+         failure: function (response) {
+             alert(response);
+         }
+     });
+
+     }
+     function deleteArea(AreaId){
+
+
+             $.ajax({
+                 type: "GET",
+                 url: "/CRM/Configurations/ManageArea/Index?handler=SingleAreaForDelete",
+                 data: { "AreaId": AreaId },
+                 contentType: "application/json",
+                 dataType: "json",
+                 success: function (response) {
+                     console.log("Enter Delete");
+                     document.getElementById("DeleteAreaId").value = response.AreaId
+                     $('#deleteRecordModal').modal('show');
+
+
+                 },
+                 failure: function (response) {
+                     alert(response);
+                 }
+             });
+     }
+       function editButtonClick(AreaId) {
+
+
+             console.log(AreaId);
+    $.ajax({
+         type: "GET",
+                 beforeSend: function (xhr) {
+                     xhr.setRequestHeader("XSRF-TOKEN",
+                         $('input:hidden[name="__RequestVerificationToken"]').val());
+                 }
+                 ,
+         url: "/CRM/Configurations/ManageArea/Index?handler=SingleAreaForEdit",
+
+         data: { "AreaId": AreaId },
+         contentType: "application/json",
+         dataType: "json",
+         success: function (response) {
+
+            
+
+                     document.getElementById("AreaHiddenId").value = response.AreaId
+                    
+                     document.getElementById("CityId").value = response.CityId
+                     document.getElementById("AreaTlAr").value = response.AreaTlAr
+                     document.getElementById("AreaTlEn").value = response.AreaTlEn
+                     if(response.AreaIsActive){
+                         document.getElementById("AreaIsActive").checked=true;
+                     }else{
+                                 document.getElementById("AreaIsActive").checked=false;
+                            
+                     }
+                     document.getElementById("AreaOrderIndex").value = response.AreaOrderIndex
+                     
+                     
+                $('#showEditModal').modal('show');
+               
+
+         },
+
+         failure: function (response) {
+             alert(response);
+         }
+     });
+     }
+
+
+</script>

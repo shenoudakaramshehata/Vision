@@ -1,0 +1,444 @@
+﻿@page
+
+@model Vision.Areas.CRM.Pages.Bussiness.ManageCategory.IndexModel
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+     ViewBag.Title = @sharedResource["Manage Bussiness Category"];
+	ViewBag.pTitle = @sharedResource["Manage Bussiness Category"];
+}
+
+
+
+
+<!--datatable css-->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+<!--datatable responsive css-->
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" id="List">
+            <div class="card-header border-0">
+                  <input type="text" asp-for="@Model.url" value="@Model.url" hidden id="UrlId" />
+
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm-3">
+                        <div class="search-box">
+                            <input type="text" class="form-control search" id="txtSearch"
+                                   @sharedResource["Search for..."]>
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-auto ms-auto">
+                        <div class="hstack gap-2">
+                            @* <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>*@
+                            @*      <button type="button" class="btn btn-info" data-bs-toggle="offcanvas"
+                                href="#offcanvasExample">
+                                <i class="ri-filter-3-line align-bottom me-1"></i> Fliters
+                                </button>*@
+                            <button type="button" class="btn btn-success add-btn"
+                                    data-bs-toggle="modal" id="create-btn"
+                                    data-bs-target="#showModal">
+                                <i class="ri-add-line align-bottom me-1"></i> @sharedResource["Add Category"]
+                            </button>
+                            <span class="dropdown">
+                                <button class="btn btn-soft-info btn-icon fs-14" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <i class="ri-settings-4-line"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Copy</a></li>
+                                    <li><a class="dropdown-item" href="#">Move to pipline</a></li>
+                                    <li><a class="dropdown-item" href="#">Add to exceptions</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Switch to common form
+                                            view
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Reset form view to
+                                            default
+                                        </a>
+                                    </li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="table-responsive table-card">
+                        <table id="myTable" class="table  dt-responsive nowrap  align-middle" style="width:100%">
+                            <thead class="table-light">
+                                <tr>
+
+
+                                    <th data-ordering="false">@sharedResource["Image"]</th>
+                                    <th data-ordering="false">@sharedResource["TitleAr"]</th>
+                                    <th data-ordering="false">@sharedResource["TitleEn"]</th>
+                                    <th data-ordering="false">@sharedResource["Sort Order"]</th>
+                                    <th data-ordering="false">@sharedResource["Tags"]</th>
+                                    <th data-ordering="false">@sharedResource["Actions"]</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal fade" id="showModal" tabindex="-1"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light p-3">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close" id="close-modal"></button>
+                        </div>
+
+                                            <form asp-area="CRM" asp-page="/Bussiness/ManageCategory/Index" asp-page-handler="AddCategory" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" id="id-field" />
+                                                        <div class="row g-3">
+                                                            <div class="col-lg-12">
+                                                                <div class="text-center">
+                                                                    <div class="position-relative d-inline-block">
+                                                                        <div class="position-absolute bottom-0 end-0">
+                                                                           <label for="file" class="mb-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Select Image">
+                                                        <div class="avatar-xs cursor-pointer">
+                                                            <div class="avatar-title bg-light border rounded-circle text-muted">
+                                                                <i class="ri-image-fill"></i>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                    <input class="form-control d-none hidefromHere" name="file" id="file" type="file"
+                                                           accept="image/*" required>
+                                                                        </div>
+                                                                        <div class="avatar-lg p-1">
+                                                                            <div class="avatar-title bg-light rounded-circle">
+                                                                                <img src="~/assets/images/users/user-dummy-img.jpg" id="lead-img" class="avatar-md rounded-circle object-cover removeFromHere" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h5 class="fs-13 mt-3">@sharedResource["Image"] </h5>
+                                                                </div>
+                                                               <div class="row col-12">
+                                                                       <div class="form-group col-lg-6">
+                                                                                <div>
+                                                                                    <label for="@Model.category.CategoryTitleAr"
+                                                                                           class="form-label">@(sharedResource["TlAr"])</label>
+                                                                                    <input type="text" asp-for="@Model.category.CategoryTitleAr"
+                                                                                           class="form-control" placeholder="@sharedResource["Enter TlAr"]"
+                                                                                           required />
+                                                                            <span asp-validation-for="@Model.category.CategoryTitleAr" class="text-danger"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--end col-->
+                                                                            <div class="form-group col-lg-6">
+                                                                                <div>
+                                                                                    <label for="@Model.category.CategoryTitleEn"
+                                                                                           class="form-label">@sharedResource["TlEn"]</label>
+                                                                                    <input type="text" asp-for="@Model.category.CategoryTitleEn"
+                                                                                           class="form-control"
+                                                                                           placeholder="@sharedResource["Enter TlEn"]" required />
+                                                                             <span asp-validation-for="@Model.category.CategoryTitleEn" class="text-danger"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>
+                                                                     <div class="row col-12">
+                                                                          <div class="form-group col-lg-6">
+                                                                                <div>
+                                                                                    <label for="@Model.category.Tags"
+                                                                                           class="form-label">@sharedResource["Tags"]</label>
+                                                                                    <input type="text" asp-for="@Model.category.Tags"
+                                                                                           class="form-control"
+                                                                                           placeholder="@sharedResource["Enter Tags"]" required />
+                                                                             <span asp-validation-for="@Model.category.Tags" class="text-danger"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--end col-->
+                                                                      <div class="form-group col-lg-6">
+                                                                                <div>
+                                                                                    <label for="@Model.category.SortOrder"
+                                                                                           class="form-label">@sharedResource["Sort"]</label>
+                                                                                    <input type="number" asp-for="@Model.category.SortOrder" id="company_name-field"
+                                                                                           class="form-control"
+                                                                                           placeholder="@sharedResource["Enter Category Sort"]" required />
+                                                                             <span asp-validation-for="@Model.category.SortOrder" class="text-danger"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>
+
+
+                                              <!--end col-->
+                                                                <div class="col-lg-12">
+                                                                    <div>
+                                                <label for="@Model.category.Description"
+                                                                               class="form-label">@sharedResource["Description"]</label>
+                                                                        <textarea asp-for="@Model.category.Description"
+                                                                                  class="form-control" cols="2"
+                                                                                  placeholder="@sharedResource["Enter Description"]"></textarea>
+                                                             <span asp-validation-for="@Model.category.Description" class="text-danger"></span>
+                                                                    </div>
+                                           </div></div>
+
+
+
+
+                                        <!--end col-->
+                                                      </div>
+                                                    </div>
+                                                    <!--end row-->
+
+
+                                <div class="modal-footer">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button type="button" class="btn btn-light"
+                                                                        data-bs-dismiss="modal">
+                                        @sharedResource["Close"]
+                                                                </button>
+                                                                <button type="submit" class="btn btn-success"
+                                                                        id="add-btn">
+                                        @sharedResource["Add Category"]
+                                                                </button>
+
+
+                                    </div>
+                                </div>
+                        </form>
+
+
+                    </div>
+                </div>
+      </div>
+              </div>
+            </div>
+            <!--end modal-->
+        </div>
+    </div>
+    <!--end col-->
+</div>
+<partial name="_ViewPop" model="@Model.category" view-data=" ViewData" />
+<partial name="_EditPopup" model="@Model.category" view-data=" ViewData" />
+<partial name="_DatchDelete" model="@Model.category" view-data=" ViewData" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!--datatable js-->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!-- list.js min js -->
+<script src="~/assets/libs/list.js/list.min.js"></script>
+<script src="~/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+<!-- crm leads init -->
+<script src="~/assets/js/pages/crm-leads.init.js"></script>
+
+
+<script>
+
+            $(document).ready(function () {
+                var domainUrl=document.getElementById("UrlId").value;
+                console.log("domainUrl: "+domainUrl);
+                $('#myTable').DataTable({
+                    "dom": 'rt<"bottom"ip><"clear">',
+                    ajax: { url: domainUrl+'/api/Lists/GetCategoryList' },
+                    columns: [
+
+
+
+
+                    {
+                        "data": "CategoryPic",
+                            "render": function (data, row) {
+                                return "<img src='/" + data + "' alt='' class='avatar-xxs rounded-circle image_src object-cover'>";
+                        }
+                        },
+                        { data: 'CategoryTitleAr' },
+                        { data: 'CategoryTitleEn' },
+                        { data: 'SortOrder'},
+
+                         { data: 'Tags' },
+                    {
+                        data: "CategoryId",
+                            render: function (data, type, row) {
+
+
+                                return '<ul class="list-inline hstack gap-2 mb-0"> <li class="list-inline-item" data-bs-toggle="tooltip"data-bs-trigger="hover" data-bs-placement="top"title="View"><a href="javascript:void(0)" data-bs-toggle="modal"><i class="ri-eye-fill align-bottom text-muted" onclick="ShowViewPopUp('+data+')" ></i></a></li> <li class="list-inline-item" data-bs-toggle="tooltip"data-bs-trigger="hover" data-bs-placement="top"title="Edit" ><a class="edit-item-btn" href="javascript:void(0)"data-bs-toggle="modal" > <i class="ri-pencil-fill align-bottom text-muted" onclick="editButtonClick('+data+')"></i> </a> </li>    <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top"title="Delete"> <a class="remove-item-btn" data-bs-toggle="modal"href="javascript:void(0)" > <i class="ri-delete-bin-fill align-bottom text-muted" onclick="deleteCategory('+data+')"></i> </a></li></ul>';
+
+
+                        }, 
+                        className: "dt-body-center"
+                        },
+
+
+                    ],
+
+
+
+                });
+            });
+
+
+
+
+
+
+            $('#txtSearch').keyup(function () {
+                var table = $('#myTable').DataTable();
+                //alert(table);
+                table.search($(this).val()).draw();
+            });
+
+        function validateMyForm() {
+
+
+                       if( document.getElementById("file").files.length == 0 ){
+                               alert("You Must Select Image");
+                                return false;
+                            }
+                            return true;
+                            }
+//  function editButtonClick(CategoryId) {
+//     console.log(CategoryId);
+//           $.ajax({
+//                type: "GET",
+//                        beforeSend: function (xhr) {
+//                            xhr.setRequestHeader("XSRF-TOKEN",
+//                                $('input:hidden[name="__RequestVerificationToken"]').val());
+//                    }
+//}
+//                    ,
+
+//            url: "/CRM/Bussiness/ManageCategory/Index?handler=SingleCategoryForEdit",
+
+//            data: { "CategoryId": CategoryId },
+//                contentType: "application/json",
+//                dataType: "json",
+//                success: function (response) {
+//                    //console.log(response);
+//                    //console.log(document.getElementsByClassName('categoryImgCla'));
+//                    //console.log(document.getElementsByClassName(document.getElementsByClassName('categoryImgCla')[0]));
+//                    //document.getElementsByClassName('categoryImgCla')[0].src= "/"+response.CategoryPic
+//                    //        //document.getElementById("CategoryPicId").src = "/"+response.CategoryPic
+//                    //        document.getElementById("CategoryHiddenId").value = response.CategoryId
+//                    //        document.getElementById("CategoryPicHiddenId").value = response.CategoryPic
+//                    //        document.getElementById("CategoryTLARId").value = response.CategoryTitleAr
+//                    //        document.getElementById("CategoryTLENId").value = response.CategoryTitleEn
+//                    //        //$("#IsActiveId").dxCheckBox("instance").option("value", response.IsActive);
+//                    //        document.getElementById("DescriptionTLARId").value = response.Description
+//                    //        //document.getElementById("DescriptionTLENId").value = response.DescriptionTLEN
+//                    //        document.getElementById("SortOrderId").value = response.SortOrder
+
+
+//                   $('#showEditModal').modal('show');
+//            },
+
+//            failure: function (response) {
+//                    alert(response);
+//               }
+//            });
+
+//            }
+
+             function editButtonClick(CategoryId) {
+                   
+
+            $.ajax({
+                type: "GET",
+                url: "/CRM/Bussiness/ManageCategory/Index?handler=SingleCategoryForEdit",
+                data: { "CategoryId": CategoryId},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                            console.log(response);
+                    console.log(document.getElementsByClassName('categoryImgCla'));
+                    console.log(document.getElementsByClassName(document.getElementsByClassName('categoryImgCla')[0]));
+                    document.getElementsByClassName('categoryImgCla')[0].src= "/"+response.CategoryPic
+                            document.getElementById("CategoryHiddenId").value = response.CategoryId
+                            document.getElementById("CategoryPicHiddenId").value = response.CategoryPic
+                            document.getElementById("CategoryTLARId").value = response.CategoryTitleAr
+                            document.getElementById("CategoryTLENId").value = response.CategoryTitleEn
+                            document.getElementById("DescriptionTLARId").value = response.Description
+                            document.getElementById("SortOrderId").value = response.SortOrder
+                            document.getElementById("TagsId").value = response.Tags
+
+
+                   $('#showEditModal').modal('show');
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+            }
+           function ShowViewPopUp(CategoryId)
+                    {
+
+            $.ajax({
+                type: "GET",
+                url: "/CRM/Bussiness/ManageCategory/Index?handler=SingleCategoryForView",
+                data: { "CategoryId": CategoryId},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                            document.getElementById("DCategoryPicId").src = "/"+response.CategoryPic
+                            document.getElementById("DCategoryTLARId").innerHTML = response.CategoryTitleAr
+                            document.getElementById("DCategoryTLENId").innerHTML = response.CategoryTitleEn
+                            document.getElementById("DDescriptionTLARId").innerHTML = response.Description
+                            document.getElementById("DSortOrderId").innerHTML = response.SortOrder
+                            document.getElementById("DTags").innerHTML = response.Tags
+                           
+                            $('#QuickViewPoup').modal('show');
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+            }
+            function deleteCategory(CategoryId){
+
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/CRM/Bussiness/ManageCategory/Index?handler=SingleCategoryForDelete",
+                        data: { "CategoryId": CategoryId },
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (response) {
+                            document.getElementById("DeleteCategoryId").value = response.CategoryId
+                            $('#deleteRecordModal').modal('show');
+
+
+
+                    },
+                    failure: function (response) {
+                            alert(response);
+                        }
+                    });
+            }
+
+
+
+</script>

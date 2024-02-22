@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@*@{
+    if (!(User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("Delivery"))))
+    {
+
+        Context.Response.Redirect(Url.Content("~/identity/account/login?returnUrl=" + Context.Request.Path));
+    }
+
+
+}*@
+@{
+    var locale = Context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+
+        <style>
+            html {
+                direction: ltr !important;
+            }
+        </style>
+        <link href="@Url.Content("~/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/assets/css/app.min.css")" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+
+    }
+    //Arabic
+    else
+    {
+        <style>
+            html {
+                direction: rtl !important;
+            }
+
+            th {
+                text-align: start !important;
+            }
+
+            td {
+                padding-right: 2rem !important;
+            }
+
+            input[type=number] {
+                text-align: right !important;
+            }
+        </style>
+        <link href="~/assets/css/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/app-rtl.min.css" rel="stylesheet" type="text/css" />
+        //<link href="~/assets/css/custom-rtl.min.css" rel="stylesheet" type="text/css" />
+
+    }
+
+}

@@ -1,0 +1,789 @@
+﻿@page
+@model Vision.Pages.Store_ProductModel
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    Layout = "FrontSite/_TemplateLayout";
+
+}
+
+ <!-- Start of Main -->
+<main class="main" style="padding-top: 23rem;">
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav">
+                <div class="container">
+                    <ul class="breadcrumb bb-no">
+                        <li><a href="demo1.html">Home</a></li>
+                        <li><a href="#">Vendor</a></li>
+                        <li><a href="#">WCFM</a></li>
+                        <li>Store</li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- End of Breadcrumb -->
+
+            <!-- Start of Pgae Contetn -->
+            <div class="page-content mb-8" >
+                <div class="container">
+                    <div class="store store-wcfm-banner">
+                        <figure class="store-media">
+                            <img src="~/@Model.classifiedBuiness.Mainpic" alt="Vendor" width="1240" height="460"
+                                style="background-color: #40475e;" />
+                        </figure>
+                        <div class="store-content">
+                            <div class="store-content-left mr-auto">
+                                <div class="personal-info">
+                                    <figure class="seller-brand">
+                                        <img src="~/@Model.classifiedBuiness.Logo" alt="Brand" width="100"
+                                            height="100" />
+                                    </figure>
+                                    <div class="ratings-container">
+                                        @*<div class="ratings-full">*@
+                                            @{
+    var fullStarCount = @Model.classifiedBuiness.Rating;
+     var emptyStarCount = 5 - @Model.classifiedBuiness.Rating;
+
+
+<span>
+    @for (int i = 0; i < fullStarCount; i++)
+    {
+        <i style="color:#FF9D2E!important" class="fas fa-star"></i>
+    }
+
+    @for (int i = 0; i < emptyStarCount; i++)
+    {
+        <i class="far fa-star"></i>
+    }
+</span>
+                                    }                                       @*<span class="ratings" style="width: 100%;"></span>
+                                            <span class="tooltiptext tooltip-top"></span>*@
+                                       @* </div>*@
+                                    </div>
+                                </div>
+                                <div class="address-info">
+                                    <h4 class="store-title">@Model.classifiedBuiness.Title</h4>
+                                    <ul class="seller-info-list list-style-none">
+                                        <li class="store-address">
+                                            <i class="w-icon-map-marker"></i>
+                                            @Model.classifiedBuiness.Address
+                                        </li>
+                                        <li class="store-phone">
+                                            <a href="tel:123456789">
+                                                <i class="w-icon-phone"></i>
+                                                @Model.classifiedBuiness.phone
+                                            </a>
+                                        </li>
+                                        <li class="store-email">
+                                            <a href="email:#">
+                                                <i class="far fa-envelope"></i>
+                                        <span class="__cf_email__" data-cfemail="562135162033383239247835393b">@Model.classifiedBuiness.Email</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="store-content-right">
+                                <div class="btn btn-white btn-rounded btn-icon-left btn-inquiry"><i
+                                        class="far fa-question-circle"></i>Inquiry</div>
+                                <div class="social-icons social-icons-colored border-thin">
+                                    <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
+                                    <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
+                                    <a href="#" class="social-icon social-linkedin fab fa-linkedin"></a>
+                                    <a href="#" class="social-icon social-youtube w-icon-youtube"></a>
+                                    <a href="#" class="social-icon social-instagram w-icon-instagram"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Store WCMP Banner -->
+
+                    <div class="row gutter-lg">
+                        <aside class="sidebar left-sidebar vendor-sidebar sticky-sidebar-wrapper sidebar-fixed">
+                            <!-- Start of Sidebar Overlay -->
+                            <div class="sidebar-overlay"></div>
+                            <a class="sidebar-close" href="#"><i class="close-icon"></i></a>
+                            <a href="#" class="sidebar-toggle"><i class="w-icon-angle-right"></i></a>
+                            <div class="sidebar-content">
+                                <div class="sticky-sidebar">
+                                    <div class="widget widget-collapsible widget-categories">
+                                        <h3 class="widget-title"><span>Menu</span></h3>
+                                        <ul class="widget-body filter-items search-ul">
+                                           @{
+                                               foreach (var item in Model.productCategories)
+                                        {
+                                             <li>
+                                                <a onclick="ProductByCategoryID(@item.ProductCategoryId)">@item.TitleAr</a>
+                                                
+                                            </li>
+                                        }
+                                           }
+                                           
+                                           
+                                        </ul>
+                                    </div>
+                                    <!-- End of Widget -->
+                                    <div class="widget widget-collapsible widget-coupons">
+                                        <h3 class="widget-title"><span>Store Coupons</span></h3>
+                                        <div class="widget-body">
+                                            <div class="coupon">
+                                                First Shopping Coupon
+                                                <div class="coupon-tip">
+                                                    <div class="coupon-info-title">FREE Shipping Coupon</div>
+                                                    <div class="coupon-info-date">April 30, 2021</div>
+                                                    <div>Test coupon for vendor page</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End of Widget -->
+                                    <div class="widget widget-collapsible widget-time">
+                                        <h3 class="widget-title"><span><i class="far fa-clock"></i>Store Time</span>
+                                        </h3>
+                                        <ul class="widget-body">
+                                            @{
+                                                foreach (var item in Model.businessHours)
+                                        {
+                                            <li>
+                                                <span>@item.Day:</span>@item.StartTime1 - @item.EndTime1
+                                            </li>
+                                        }
+                                            }
+                                            
+                                           
+                                        </ul>
+                                    </div>
+                                    <!-- End of Widget -->
+                                    <div class="widget widget-collapsible">
+                                        <h3 class="widget-title"><span><i class="w-icon-truck"></i>Shipping Rules</span>
+                                        </h3>
+                                        <div class="widget-body">
+                                            <p class="mb-0">Delivery Time: 1-2 business days</p>
+                                        </div>
+                                    </div>
+                                    <!-- End of Widget -->
+                                    <div class="widget widget-collapsible widget-location">
+                                        <h3 class="widget-title"><span>Store Location</span></h3>
+                                        <div class="widget-body">
+                                            <div class="google-map" id="googlemaps"></div>
+                                        </div>
+                                    </div>
+                                    <!-- End of Widget -->
+                                    <div class="widget widget-collapsible widget-products">
+                                        <h3 class="widget-title"><span>Best Selling</span></h3>
+                                        <div class="widget-body">
+                                            @{
+                                                foreach (var item in Model.bestSellerProducts)
+                                        {
+                                            <div class="product product-widget">
+                                                <figure class="product-media">
+                                                    <a href="product-default.html">
+                                                        <img src="~/@item.MainPic" alt="Product" width="100"
+                                                     height="106" />
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h4 class="product-name">
+                                                        @*<a href="product-default.html">@item.ProductName</a>*@
+                                                        <a href="product-default.html">@item.TitleEn</a>
+                                                    </h4>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                            <span class="tooltiptext tooltip-top"></span>
+                                                        </div>
+                                                    </div>
+                                                    @{
+                                                        if (item.IsFixedPrice == true)
+                                                        {
+                                                            <div class="product-price">@item.Price</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="product-price">
+                                                                PRICE ON SELECTION
+                                                            </div>
+                                                        }
+                                                    }
+                                                   
+                                                </div>
+                                            </div>
+                                        }
+                                            }
+                                           
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- End of Widget -->
+                                </div>
+                            </div>
+                        </aside>
+                        <!-- End of Sidebar -->
+
+                        <div class="main-content">
+                            <div class="tab tab-nav-underline tab-nav-boxed tab-vendor-wcfm">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a href="#tab-1" class="nav-link active">Products</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#tab-2" class="nav-link">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#tab-3" class="nav-link">Policies</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#tab-4" class="nav-link">Reviews(1)</a>
+                                    </li>
+                            <li class="nav-item" style="
+    padding-left: 51rem;
+">
+                                <div class="dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2">
+                                    <div class="cart-overlay"></div>
+                                    <a href="#" class="cart-toggle label-down link">
+                                        <i class="w-icon-cart">
+                                            <span class="cart-count">2</span>
+                                        </i>
+
+                                    </a>
+                                    <div class="dropdown-box">
+                                        <div class="cart-header">
+                                            <span>Shopping Cart</span>
+                                            <a href="#" class="btn-close">Close<i class="w-icon-long-arrow-right"></i></a>
+                                        </div>
+
+                                        <div class="products">
+                                            <div class="product product-cart">
+                                                <div class="product-detail">
+                                                    <a href="product-default.html" class="product-name">
+                                                        Beige knitted
+                                                        elas<br>tic
+                                                        runner shoes
+                                                    </a>
+                                                    <div class="price-box">
+                                                        <span class="product-quantity">1</span>
+                                                        <span class="product-price">$25.68</span>
+                                                    </div>
+                                                </div>
+                                                <figure class="product-media">
+                                                    <a href="product-default.html">
+                                                        <img src="/FrontSite/assets/images/cart/product-1.jpg" alt="product" height="84" width="94">
+                                                    </a>
+                                                </figure>
+                                                <button class="btn btn-link btn-close" aria-label="button">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="product product-cart">
+                                                <div class="product-detail">
+                                                    <a href="product-default.html" class="product-name">
+                                                        Blue utility
+                                                        pina<br>fore
+                                                        denim dress
+                                                    </a>
+                                                    <div class="price-box">
+                                                        <span class="product-quantity">1</span>
+                                                        <span class="product-price">$32.99</span>
+                                                    </div>
+                                                </div>
+                                                <figure class="product-media">
+                                                    <a href="product-default.html">
+                                                        <img src="/FrontSite/assets/images/cart/product-2.jpg" alt="product" width="84" height="94">
+                                                    </a>
+                                                </figure>
+                                                <button class="btn btn-link btn-close" aria-label="button">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="cart-total">
+                                            <label>Subtotal:</label>
+                                            <span class="price">$58.67</span>
+                                        </div>
+
+                                        <div class="cart-action">
+                                            <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                                            <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
+                                        </div>
+                                    </div>
+                                    <!-- End of Dropdown Box -->
+                                </div>
+                            </li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab-1">
+                                        <nav class="toolbox sticky-toolbox sticky-content fix-top">
+                                            <div class="toolbox-left">
+                                                <div class="toolbox-item toolbox-sort select-box text-dark">
+                                                    <label>Sort By :</label>
+                                                    <select id="selectBox" onchange="changeFunc();" name="orderby" class="form-control">
+                                                        <option value="default" selected="selected">Default sorting
+                                                        </option>
+                                                        @*<option value="popularity">Sort by popularity</option>
+                                                        <option value="rating">Sort by average rating</option>
+                                                        <option value="date">Sort by latest</option>*@
+                                                        <option value="price-low">Sort by price: low to high</option>
+                                                        <option value="price-high">Sort by price: high to low</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="toolbox-right">
+                                                <div class="toolbox-item toolbox-show select-box">
+                                                    <select name="count" class="form-control">
+                                                        <option value="9">Show 9</option>
+                                                        <option value="12" selected="selected">Show 12</option>
+                                                        <option value="24">Show 24</option>
+                                                        <option value="36">Show 36</option>
+                                                    </select>
+                                                </div>
+                                                <div class="toolbox-item toolbox-layout">
+                                                    <a href="vendor-wcfm-store-product-grid.html"
+                                                        class="icon-mode-grid btn-layout active">
+                                                        <i class="w-icon-grid"></i>
+                                                    </a>
+                                                    <a href="vendor-wcfm-store-product-list.html"
+                                                        class="icon-mode-list btn-layout">
+                                                        <i class="w-icon-list"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                        <div class="product-wrapper row cols-md-3 cols-sm-2 cols-2" id="pages">
+                                            @{
+                                                foreach (var item in Model.products)
+                                        {
+                                            <div class="product-wrap">
+                                                <div class="product product-simple text-center">
+                                                    <figure class="product-media">
+                                                        <a href="product-default.html">
+                                                            <img src="~/@item.MainPic" alt="Product"
+                                                         width="300" height="338" />
+                                                        </a>
+                                                        <div class="product-action-vertical">
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-wishlist w-icon-heart"
+                                                           title="Add to wishlist"></a>
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-compare w-icon-compare"
+                                                           title="Add to Compare"></a>
+                                                        </div>
+                                                        <div class="product-action">
+                                                            <a href="#" class="btn-product btn-quickview"
+                                                           title="Quick View">
+                                                                Quick
+                                                                View
+                                                            </a>
+                                                        </div>
+                                                    </figure>
+                                                    <div class="product-details">
+                                                        <h4 class="product-name">
+                                                            <a href="product-default.html">
+                                                                @*item.ProductName*@
+                                                                @item.TitleEn
+                                                            </a>
+                                                        </h4>
+                                                        <div class="ratings-container">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings" style="width: 100%;"></span>
+                                                                <span class="tooltiptext tooltip-top"></span>
+                                                            </div>
+                                                            <a href="product-default.html" class="rating-reviews">
+                                                                (3
+                                                                reviews)
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-pa-wrapper">
+                                                            @{
+                                                                if (item.IsFixedPrice == true)
+                                                                {
+                                                                    <div class="product-price">@item.Price</div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="product-price">PRICE ON SELECTION
+                                                                       </div>
+                                                                }
+                                                            }
+                                                            
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                            }
+                                           
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab-2">
+                                        <p class="mb-4"><strong>L</strong>orem ipsum dolor sit amet, consectetur
+                                            adipiscing elit,
+                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Venenatis tellus in metus vulputate eu scelerisque felis. Vel
+                                            pretium lectus quam id leo in vitae turpis massa. Nunc id cursus
+                                            metus aliquam. Libero id faucibus nisl tincidunt eget. Aliquam
+                                            id diam maecenas ultricies mi eget mauris.</p>
+                                        <p><strong>L</strong>orem ipsum dolor sit amet, consectetur adipiscing elit,
+                                            sed do eiusmod tempor incididunt tellus in metus vulputate eu scelerisque
+                                            felis. Vel pretium lectus quam id leo. id faucibus nisl tincidunt eget.
+                                            Aliquam id diam maecenas ultricies mi eget mauris. ut labore et dolore magna
+                                            aliqua. Venenatis.</p>
+                                    </div>
+                                    <div class="tab-pane" id="tab-3">
+                                        <div class="policies-area">
+                                            <h3 class="title">Shipping Policy</h3>
+                                            <p><strong>L</strong>orem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt arcu cursus. Sagittis id consectetur
+                                                purus
+                                                ut. Tellus rutrum tellus pelle.</p>
+                                        </div>
+                                        <div class="policies-area">
+                                            <h3 class="title">Refund Policy</h3>
+                                            <p><strong>L</strong>orem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt arcu cursus. Sagittis id consectetur
+                                                purus ut. Tellus rutrum tellus pelle.</p>
+                                        </div>
+                                        <div class="policies-area">
+                                            <h3 class="title text-left">Cancellation / Return / Exchange Policy</h3>
+                                            <p><strong>L</strong>orem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt arcu cursus. Sagittis id consectetur
+                                                purus ut. Tellus rutrum tellus pelle.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab-4">
+                                        <div class="review-area">
+                                            <h3 class="title font-weight-bold mb-5">Write A Review</h3>
+                                            <input name="review" type="text" class="form-control"
+                                                placeholder="your review">
+                                            <button class="btn btn-rounded">Add Your Review</button>
+                                        </div>
+                                        <!-- End of Reveiw Area -->
+                                        <div class="review-area">
+                                            <h3 class="title font-weight-bold mb-5">Reviews</h3>
+                                            <div class="reviewers d-flex align-items-center flex-wrap mb-7">
+                                                <div class="reviewers-picture d-flex mr-2">
+                                                    <figure>
+                                                <img src="~/FrontSite/assets/images/vendor/wcfm/avatar.png" alt="Avatar"
+                                                            width="113" height="112" />
+                                                    </figure>
+                                                    <figure>
+                                                        <img src="~/FrontSite/assets/images/vendor/wcfm/avatar.png" alt="Avatar"
+                                                            width="113" height="112" />
+                                                    </figure>
+                                                    <figure>
+                                                        <img src="~/FrontSite/assets/images/vendor/wcfm/avatar.png" alt="Avatar"
+                                                            width="113" height="112" />
+                                                    </figure>
+                                                </div>
+                                                <div class="reviewer-name">
+                                                    <a href="#" class="font-weight-bold mr-1">John Doe</a>has reviewed
+                                                    this store
+                                                </div>
+                                            </div>
+                                            <!-- End of Reviewers -->
+                                            <div class="review-ratings">
+                                                <div class="review-ratings-left mr-auto">
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Feature</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Varity</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Flexibility</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Delivery</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Support</label>
+                                                    </div>
+                                                </div>
+                                                <!-- End of Review Ratings Left -->
+                                                <div class="review-ratings-right">
+                                                    <div class="average-rating">5.0<sub>/5</sub></div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full mr-0">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End of Review Ratings Right -->
+                                            </div>
+                                            <!-- End of Review Ratings -->
+                                            <div class="user-wrap">
+                                                <div class="user-photo">
+                                                    <figure>
+                                                <img src="~/FrontSite/assets/images/vendor/wcfm/avatar.png" alt="Avatar"
+                                                            width="113" height="112" />
+                                                    </figure>
+                                                    <div class="rated text-center">
+                                                        <label>Rated</label>
+                                                        <span class="score">5.0</span>
+                                                    </div>
+                                                </div>
+                                                <!-- End of User Photo -->
+                                                <div class="user-info">
+                                                    <h4 class="user-name">John Doe</h4>
+                                                    <div class="user-date mb-7">
+                                                        <span>1 Reviews</span>
+                                                        <span>April 1, 2021 12:12 Pm</span>
+                                                    </div>
+                                                    <p>Diam in arcu cursus euismod quis. Eget sit amet tellusvitae
+                                                        sapien pellentesque habitant morbi tristique senectus et.
+                                                        Cras adipiscing enim ermentum et sollicitudin ac orci phasellus.
+                                                    </p>
+                                                </div>
+                                                <!-- End of User Info -->
+                                                <div class="review-ratings">
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Feature</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Varity</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Flexibility</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Delivery</label>
+                                                    </div>
+                                                    <div class="ratings-container">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width: 100%;"></span>
+                                                        </div>
+                                                        <label>5.0 Support</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of User Wrap -->
+                                        </div>
+                                        <!-- End of Reveiw Area -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Main Content -->
+                    </div>
+                </div>
+            </div>
+            <!-- End of Page Content -->
+        </main>
+        <!-- End of Main -->
+        <script>
+             let data = [];
+    const viewPagesName = document.querySelector("#pages");
+            function ProductByCategoryID(ProductCategoryId) {
+       console.log("product")
+                jQuery.ajax({
+            type: "GET",
+            url: "/Store-Product?handler=Productbycategoryid",
+            data: { "ProductCategoryId": ProductCategoryId },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                let dataVewItemDetails = "";
+
+                data = [...response.$values];
+                console.log(data)
+                dataVewItemDetails += data.map((e) =>
+                    //var categoryName = e.CategoryName
+                    //console.log(categoryName)
+                    //viewPagesName.classList.add (`" ${e.CategoryName}"`)
+
+
+                    `
+                    <div class="product-wrap">
+                                                <div class="product product-simple text-center">
+                                                    <figure class="product-media">
+                                                        <a href="product-default.html">
+                                                                <img src="${'/' + e.MainPic}" alt="Product"
+                                                         width="300" height="338" />
+                                                        </a>
+                                                        <div class="product-action-vertical">
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-wishlist w-icon-heart"
+                                                           title="Add to wishlist"></a>
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-compare w-icon-compare"
+                                                           title="Add to Compare"></a>
+                                                        </div>
+                                                        <div class="product-action">
+                                                            <a href="#" class="btn-product btn-quickview"
+                                                           title="Quick View">
+                                                                Quick
+                                                                View
+                                                            </a>
+                                                        </div>
+                                                    </figure>
+                                                    <div class="product-details">
+                                                        <h4 class="product-name">
+                                                            <a href="product-default.html">
+                                                                    ${e.ProductName}
+                                                            </a>
+                                                        </h4>
+                                                        <div class="ratings-container">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings" style="width: 100%;"></span>
+                                                                <span class="tooltiptext tooltip-top"></span>
+                                                            </div>
+                                                            <a href="product-default.html" class="rating-reviews">
+                                                                (3
+                                                                reviews)
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-pa-wrapper">
+                                                                    ${e.IsFixedPrice == true ? ` <div class="product-price">${e.Price}</div>`
+                        : `  <div class="product-price">PRICE ON SELECTION
+                                                                       </div>`}
+                                                           
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                    
+                                            `
+
+                ).join("")
+                viewPagesName.innerHTML = dataVewItemDetails;
+
+                ////document.getElementById("DeleteCategoryId").value = response.SiteCategoryId
+                ////$('#deleteRecordModal').modal('show');
+
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+    function changeFunc() {
+        var ClassifiedBusinessId = @Model.ClassifiedBusinessId;
+        console.log(ClassifiedBusinessId)
+        var selectBox = document.getElementById("selectBox");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        console.log(selectedValue);
+        console.log(typeof(selectedValue));
+         jQuery.ajax({
+            type: "GET",
+            url: "/Store-Product?handler=SortProducts",
+            data: { "selectedValue": selectedValue, "ClassifiedBusinessId": ClassifiedBusinessId },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                let dataVewItemDetails = "";
+
+                data = [...response.$values];
+                console.log(data)
+                dataVewItemDetails += data.map((e) =>
+                    //var categoryName = e.CategoryName
+                    //console.log(categoryName)
+                    //viewPagesName.classList.add (`" ${e.CategoryName}"`)
+
+
+                    `
+                    <div class="product-wrap">
+                                                <div class="product product-simple text-center">
+                                                    <figure class="product-media">
+                                                        <a href="product-default.html">
+                                                                <img src="${'/' + e.MainPic}" alt="Product"
+                                                         width="300" height="338" />
+                                                        </a>
+                                                        <div class="product-action-vertical">
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-wishlist w-icon-heart"
+                                                           title="Add to wishlist"></a>
+                                                            <a href="#"
+                                                           class="btn-product-icon btn-compare w-icon-compare"
+                                                           title="Add to Compare"></a>
+                                                        </div>
+                                                        <div class="product-action">
+                                                            <a href="#" class="btn-product btn-quickview"
+                                                           title="Quick View">
+                                                                Quick
+                                                                View
+                                                            </a>
+                                                        </div>
+                                                    </figure>
+                                                    <div class="product-details">
+                                                        <h4 class="product-name">
+                                                            <a href="product-default.html">
+                                                                    ${e.ProductName}
+                                                            </a>
+                                                        </h4>
+                                                        <div class="ratings-container">
+                                                            <div class="ratings-full">
+                                                                <span class="ratings" style="width: 100%;"></span>
+                                                                <span class="tooltiptext tooltip-top"></span>
+                                                            </div>
+                                                            <a href="product-default.html" class="rating-reviews">
+                                                                (3
+                                                                reviews)
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-pa-wrapper">
+                                                                    ${e.IsFixedPrice == true ? ` <div class="product-price">${e.Price}</div>`
+                        : `  <div class="product-price">PRICE ON SELECTION
+                                                                       </div>`}
+                                                           
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                    
+                                            `
+
+                ).join("")
+                viewPagesName.innerHTML = dataVewItemDetails;
+
+                ////document.getElementById("DeleteCategoryId").value = response.SiteCategoryId
+                ////$('#deleteRecordModal').modal('show');
+
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
+                                            
+                    </script>

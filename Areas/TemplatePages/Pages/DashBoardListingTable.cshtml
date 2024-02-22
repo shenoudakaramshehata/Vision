@@ -1,0 +1,142 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.DashBoardListingTableModel
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+}
+<div class="col-md-9">
+    <div class="dashboard-title   fl-wrap">
+        <h3>@sharedResource["Your Listings"]</h3>
+    </div>
+
+    <!-- dashboard-list-box-->
+    <div id="paginated-list" class="dashboard-list-box  fl-wrap">
+        <!-- dashboard-list -->
+        @foreach (var item in Model.Listings)
+        {
+            <div class="dashboard-list fl-wrap">
+                <div class="dashboard-message">
+                    <div class="booking-list-contr">
+                        <a asp-page="EditListining" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i class="fal fa-edit"></i></a>
+                        <a asp-page="DeleteListinig" asp-area="TemplatePages" asp-route-id="@item.AddListingId" class="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i class="fal fa-trash"></i></a>
+                    </div>
+                    <div class="dashboard-message-text">
+                        <img src="/@item.ListingLogo" alt="">
+                        <h4><a asp-page="ListingDetails" asp-area="TemplatePages" asp-route-id="@item.AddListingId">@item.Title</a></h4>
+                        <div class="geodir-category-location clearfix"><a href="#"> @item.Address</a></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <!-- dashboard-list-box end-->
+    <div class="pagination">
+        @*<a id="prev-button" class="prevposts-link"><i class="fas fa-caret-left"></i><span>Prev</span></a>*@
+        @foreach (var item in Model.Pagenumbers)
+        {
+            var divid = item.ToString();
+
+            <a onclick="nextlist(this.id)" class="" id="@divid">@item</a>
+        }
+
+
+        @*<a id="next-button" class="nextposts-link"><span>Next</span><i class="fas fa-caret-right"></i></a>*@
+    </div>
+
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        @*<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/reset.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/plugins.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/color.css")">
+            <script src="~/Template/js/jquery.min.js"></script>
+            <script src="~/Template/js/plugins.js"></script>
+            <script src="~/Template/js/scripts.js"></script>*@
+
+    }
+    //Arabic
+    else
+    {
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+        <script src="~/TemplateRTL/js/jquery.min.js"></script>
+        <script src="~/TemplateRTL/js/plugins.js"></script>
+        <script src="~/TemplateRTL/js/scripts.js"></script>
+
+    }
+}
+
+
+
+<script>
+    document.getElementById('1').classList.add("current-page");
+    //document.getElementById('1').classList.remove("current-page");
+    function nextlist(item) {
+        console.log("item" + item);
+        console.log(typeof (item))
+        var num = Number(item);
+        console.log(typeof (num))
+
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DashBoardListingTable?handler=BranchesList",
+            async: false,
+            data: JSON.stringify(num),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+
+            success: function (response) {
+                sessionStorage.setItem("reloading", "true");
+                sessionStorage.setItem("anchorid", item);
+                location.reload();
+                //changestyle(item);
+
+
+
+            },
+            failure: function (response) {
+            }
+        });
+
+    }
+    function changestyle(hrefid) {
+        console.log("item in changestyle function");
+        console.log(hrefid);
+        console.log(typeof (hrefid));
+
+        document.getElementById(hrefid).classList.add("current-page");
+
+    }
+    window.onload = function () {
+        var reloading = sessionStorage.getItem("reloading");
+        var hrefid = sessionStorage.getItem("anchorid");
+        if (reloading) {
+            document.getElementById('1').classList.remove("current-page");
+
+            sessionStorage.removeItem("reloading");
+            changestyle(hrefid);
+        }
+    }
+
+</script>

@@ -1,0 +1,22 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model AdTemplateConfig
+
+<label>@Model.AdTemplateFieldCaptionEn</label>
+
+<ul class="fl-wrap filter-tags no-list-style ds-tg">
+    @{
+        foreach (var item in Model.AdTemplateOptions)
+        {
+            <li>
+                <input type="checkbox" name="@item.AdTemplateConfigId" id="@item.AdTemplateOptionId" value="@item.AdTemplateOptionId">
+                <label for="check-aaa5">@item.OptionEn</label>
+            </li>
+        }
+    }
+</ul>

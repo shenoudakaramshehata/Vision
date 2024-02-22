@@ -1,0 +1,120 @@
+﻿<div class="content">
+                <!--section-->
+                <section class="gray-bg small-padding no-top-padding-sec" id="sec1">
+                    <div class="container">
+                        <div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
+                            <a href="#">Home</a><a href="#">Pages</a> <a href="#">Shop</a><span>Product Single</span> 
+                            <div  class="showshare brd-show-share color2-bg"> <i class="fas fa-share"></i> Share </div>
+                        </div>
+                        <div class="share-holder hid-share sing-page-share top_sing-page-share">
+                            <div class="share-container  isShare"></div>
+                        </div>
+                        <div class="mob-nav-content-btn  color2-bg show-list-wrap-search ntm fl-wrap"><i class="fal fa-filter"></i>  Filters</div>
+                        <div class="fl-wrap">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class=" fl-wrap lws_mobile">
+                                       ##487##
+                                        <!-- ##1264##  -->
+                                      
+                                          
+                                                                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="fl-wrap block_box product-header">
+                                        <div class="product-header-details">
+                                           
+                                            <div class="row">
+                                                ##489##
+                                                <div class="col-md-6">
+                                                ##483##
+                                                ##484##
+                                               
+
+                                                    
+                                                    <span class="fw-separator"></span>
+                                                    <div class="clearfix"></div>
+                                                    ##490##
+                                                    <span class="fw-separator"></span>
+                                               
+                                                        <div class="shop-tab-container">
+                                                            <ul class="no-list-style shop-list fl-wrap">
+                                                              
+                                                            ##485##
+                                                            ##486##
+                                                            ##491##
+                                                             ##492##
+                                                             ##494##
+                                                             ##495##
+                                                             ##496##
+                                                             ##497##
+                                                             ##498##
+                                                             
+                                                            </ul>
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                      
+                                                                        
+                                </div>
+                            </div>
+                        </div>
+                </section>
+                <!--section end-->
+                <div class="limit-box fl-wrap"></div>
+                </div>
+                <!--content end-->
+                <!--cart  --> 
+                <div class="cart-overlay"></div>
+                <div class="cart-modal">
+                    <div class="cart-modal-wrap fl-wrap">
+                        <span class="close-cart color2-bg">Close <i class="fal fa-times"></i> </span>
+                        <h3>Your cart</h3>
+                        <div class="clear-cart"> <span class="tolt" data-microtip-position="left" data-tooltip="Remove All"><i class="fal fa-trash-alt"></i></span></div>
+                        <ul class="cart-modal-list no-list-style fl-wrap">
+                            <li>
+                                <a class="cart-modal-image" href="product-single.html">
+                                <img src="images/shop/1.jpg" alt="">
+                                </a>
+                                <div class="cart-modal-det">
+                                    <a href="product-single.html">Grilled Filet of Cod</a>
+                                    <div class="quantity"><span>1</span> x <span class="woocommerce-Price-amount">$56.15</span></div>
+                                </div>
+                                <a href="#" class="remove"><i class="fal fa-times-circle"></i></a>
+                            </li>
+                            <li>
+                                <a class="cart-modal-image" href="product-single.html">
+                                <img src="images/shop/1.jpg" alt="">
+                                </a>
+                                <div class="cart-modal-det">
+                                    <a href="product-single.html">Saute Crispy Goats</a>
+                                    <div class="quantity"><span>1</span> x <span class="woocommerce-Price-amount">$17.00</span></div>
+                                </div>
+                                <a href="#" class="remove"><i class="fal fa-times-circle"></i></a>
+                            </li>
+                            <li>
+                                <a class="cart-modal-image" href="product-single.html">
+                                <img src="images/shop/1.jpg" alt="">
+                                </a>
+                                <div class="cart-modal-det">
+                                    <a href="product-single.html">Warm Chocolate Pudding</a>
+                                    <div class="quantity"><span>2</span> x <span class="woocommerce-Price-amount">$90.20</span></div>
+                                </div>
+                                <a href="#" class="remove"><i class="fal fa-times-circle"></i></a>
+                            </li>
+                        </ul>
+                        <div class="cart-modal-total fl-wrap">
+                            <span  class="cart-modal-total-title">SUBTOTAL:</span> <span class="woocommerce-Price-amount"> $253.55</span>
+                        </div>
+                        <div class="cart-sb_footer fl-wrap">
+                            <a href="cart.html" class="cart_btn  color2-bg">View Cart</a>
+                            <a href="#" class="cart_btn  color-bg">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+                <!--cart end-->               

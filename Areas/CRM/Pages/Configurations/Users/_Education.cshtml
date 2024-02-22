@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Vision.Models.Education>
+
+@{
+    if (Model.Count >0)
+    {
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1">Educations</h4>
+
+            </div><!-- end card header -->
+            <div class="card-body pt-0">
+                <ul class="list-group list-group-flush border-dashed">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <li class="list-group-item ps-0">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-auto">
+                                        <div class="avatar-sm p-1 py-2 h-auto bg-light rounded-3">
+                                            <div class="text-center">
+                                                <h5 class="mb-0">@item.Year</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="text-muted mt-0 mb-1 fs-13">@item.Provider</h5>
+                                        <a href="#" class="text-reset fs-14 mb-0">@item.Description</a>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                            </li>
+
+                            <!-- end -->
+                        }
+                    }
+
+                </ul><!-- end -->
+            </div><!-- end card body -->
+        </div>
+
+        <!-- end card -->
+    }
+}

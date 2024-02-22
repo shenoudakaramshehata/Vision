@@ -1,0 +1,69 @@
+﻿@inject CRMDBContext _context
+@using Vision.Models;
+@using Vision.Data;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model AdContent
+<!-- list-single-main-item-->
+<div class="list-single-main-item fl-wrap block_box" id="sec3">
+    <div class="list-single-main-item-title">
+        <h3>@Model.AdTemplateConfig.AdTemplateFieldCaptionEn</h3>
+    </div>
+    <div class="list-single-main-item_content fl-wrap">
+        <div class="single-carousel-wrap fl-wrap lightgallery">
+            <div class="sc-next sc-btn color2-bg"><i class="fas fa-caret-right"></i></div>
+            <div class="sc-prev sc-btn color2-bg"><i class="fas fa-caret-left"></i></div>
+            <div class="single-carousel fl-wrap full-height">
+                <div class="swiper-container" dir="rtl">
+                    <div class="swiper-wrapper">
+                        @{
+                            foreach (var item in @Model.AdContentValues)
+                            {
+                                <!-- swiper-slide-->
+                                <div >
+                                    <div >
+                                        <video width="320" height="240" controls muted>
+                                            <source src="/@item.ContentValue" >
+                                        </video>
+                                        
+                                        <a href="/@item.ContentValue" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                    </div>
+                                </div>
+                                <!-- swiper-slide end-->
+                            }
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- list-single-main-item end -->
+@*<div class="col-md-6">
+    <div class="single-slider-wrap shop-media-img">
+    <div class="single-slider fl-wrap">
+    <div class="swiper-container" dir="rtl">
+    <div class="swiper-wrapper lightgallery">
+    @{
+    foreach (var item in @Model.AdContentValues)
+    {
+    <div class="swiper-slide hov_zoom"><img src="/@item.ContentValue" alt=""><a href="/@item.ContentValue" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+    }
+    }
+    </div>
+    <div class="listing-carousel_pagination">
+    <div class="listing-carousel_pagination-wrap">
+    <div class="ss-slider-pagination"></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="ss-slider-cont ss-slider-cont-prev color2-bg"><i class="fal fa-long-arrow-left"></i></div>
+    <div class="ss-slider-cont ss-slider-cont-next color2-bg"><i class="fal fa-long-arrow-right"></i></div>
+    </div>
+    </div>*@

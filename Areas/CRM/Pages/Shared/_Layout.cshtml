@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> sharedResource
+
+
+<!doctype html>
+<html lang="en" id="htmlRoot" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg">
+
+<head>
+
+    @Html.Partial("_title_meta.cshtml")
+    @{
+        var locale = Context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+        var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+        //English
+        if (BrowserCulture == "en-US")
+        {
+
+                <style>
+                    html {
+                        direction: ltr !important;
+                    }
+   
+                </style>
+            
+
+
+        }
+        //Arabic
+        else
+        {
+                <style>
+                    html {
+                        direction: rtl !important;
+                    }
+
+                table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+                    text-align: right !important;
+                }
+
+                table.dataTable thead > tr > th.sorting:before, table.dataTable thead > tr > th.sorting:after, table.dataTable thead > tr > th.sorting_asc:before, table.dataTable thead > tr > th.sorting_asc:after, table.dataTable thead > tr > th.sorting_desc:before, table.dataTable thead > tr > th.sorting_desc:after, table.dataTable thead > tr > th.sorting_asc_disabled:before, table.dataTable thead > tr > th.sorting_asc_disabled:after, table.dataTable thead > tr > th.sorting_desc_disabled:before, table.dataTable thead > tr > th.sorting_desc_disabled:after, table.dataTable thead > tr > td.sorting:before, table.dataTable thead > tr > td.sorting:after, table.dataTable thead > tr > td.sorting_asc:before, table.dataTable thead > tr > td.sorting_asc:after, table.dataTable thead > tr > td.sorting_desc:before, table.dataTable thead > tr > td.sorting_desc:after, table.dataTable thead > tr > td.sorting_asc_disabled:before, table.dataTable thead > tr > td.sorting_asc_disabled:after, table.dataTable thead > tr > td.sorting_desc_disabled:before, table.dataTable thead > tr > td.sorting_desc_disabled:after {
+                    right: auto !important;
+                }
+                    input[type=number] {
+                        text-align: right !important;
+                      }
+                    
+                </style>
+           
+
+        }
+
+    }
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @RenderSection("styles", required: false)
+    @Html.Partial("_head_css.cshtml")
+    }
+</head>
+<body id="masterbodyid">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        @Html.Partial("_menu.cshtml")
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    @Html.Partial("_page_title.cshtml")
+                    @RenderBody()
+                </div>
+            </div>
+            @Html.Partial("_footer.cshtml")
+        </div>
+
+    </div>
+    <!-- END layout-wrapper -->
+    @*@Html.Partial("_customizer.cshtml")*@
+
+    @Html.Partial("_vendor_scripts.cshtml")
+
+    @RenderSection("scripts", required: false)
+   
+   
+        <!-- crm leads init -->
+        @*<script src="~/assets/js/pages/crm-leads.init.js"></script>*@
+
+        <!-- App js -->
+        <script src="~/assets/js/app.js"></script>
+         <partial name="_ValidationScriptsPartial" />
+         @await Component.InvokeAsync("NToastNotify")
+   
+</body>
+</html>

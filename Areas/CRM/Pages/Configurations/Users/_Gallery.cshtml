@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Vision.Models.Photo>
+
+<div class="col-xl-4 col-lg-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title mb-0">Pagination Dynamic Swiper</h4>
+        </div><!-- end card header -->
+        <div class="card-body">
+            <p class="text-muted">Use <code>pagination-dynamic-swiper</code> class to set a dynamic swiper with pagination.</p>
+
+            <!-- Swiper -->
+            <div class="swiper pagination-dynamic-swiper rounded">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="~/assets/images/small/img-7.jpg" alt="" class="img-fluid" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="~/assets/images/small/img-8.jpg" alt="" class="img-fluid" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="~/assets/images/small/img-9.jpg" alt="" class="img-fluid" />
+                    </div>
+                </div>
+                <div class="swiper-pagination dynamic-pagination"></div>
+            </div>
+        </div><!-- end card-body -->
+    </div><!-- end card -->
+</div><!--end col-->
+@*@{
+    if (Model != null)
+    {
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Gallery</h4>
+                    </div><!-- end card header -->
+                    <div class="card-body">
+
+                        <!-- Swiper -->
+                        <div class="swiper pagination-dynamic-swiper rounded swiper-initialized swiper-horizontal swiper-backface-hidden">
+                            <div class="swiper-wrapper" id="swiper-wrapper-74417a108f6381fc7" aria-live="off" style="transition-duration: 300ms; transform: translate3d(-604px, 0px, 0px);">
+
+
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <div class="swiper-slide swiper-slide-next" style="width: 302px;" role="group" aria-label="2 / 3" data-swiper-slide-index="1">
+                                            <img src="~/@item.Image" alt="" class="img-fluid">
+                                        </div>
+                                    }
+                                }
+
+
+                            </div>
+                            <div class="swiper-pagination dynamic-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal swiper-pagination-bullets-dynamic" style="width: 80px;"><span class="swiper-pagination-bullet swiper-pagination-bullet-active swiper-pagination-bullet-active-main" tabindex="0" role="button" aria-label="Go to slide 1" style="left: 16px;" aria-current="true"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active-next" tabindex="0" role="button" aria-label="Go to slide 2" style="left: 16px;"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active-next-next" tabindex="0" role="button" aria-label="Go to slide 3" style="left: 16px;"></span></div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div>
+
+        </div>
+
+        <!-- end row -->
+    }
+}
+*@

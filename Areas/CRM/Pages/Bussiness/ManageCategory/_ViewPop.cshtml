@@ -1,0 +1,83 @@
+﻿
+@{
+}
+
+
+@model Vision.Models.Category
+
+<div class="modal fade" id="QuickViewPoup" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close" id="close-modal"></button>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <div class="position-relative d-inline-block">
+                              
+                                <div class="avatar-lg p-1">
+                                    <div class="avatar-title bg-light rounded-circle">
+                                        <img src="~/assets/images/users/multi-user.jpg" id="DCategoryPicId" class="avatar-md rounded-circle object-cover" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div class="table-card">
+                        <table class="table mb-0">
+                            <tbody>
+                            
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["TlAr"]</td>
+                                    <td id="DCategoryTLARId"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["TlEn"]</td>
+                                    <td id="DCategoryTLENId"></td>
+                                </tr>
+                                 <tr>
+                                    <td class="fw-medium">@sharedResource["Sort"]</td>
+                                    <td id="DSortOrderId"></td>
+                                </tr>
+                                 <tr>
+                                    <td class="fw-medium">@sharedResource["Tags"]</td>
+                                    <td id="DTags"></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">@sharedResource["Description"]</td>
+                                    
+                                    <td id="DDescriptionTLARId"></td>
+
+                                </tr>
+                              
+                                 
+                                  @* <tr>
+                                    <td class="fw-medium">@sharedResource["Active"]</td>
+                                    <td id="DIsActiveId"></td>
+                                </tr>*@
+                                
+                            </tbody>
+                        </table><!--end table-->
+                    </div>
+                </div>
+            </div><!--end card-->
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">
+                       @sharedResource["Close"] 
+                    </button>
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

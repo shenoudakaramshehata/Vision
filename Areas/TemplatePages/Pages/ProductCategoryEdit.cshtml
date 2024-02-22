@@ -1,0 +1,125 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.ProductCategoryEditModel
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+<div class="col-md-9">
+
+    <div class="dashboard-title   fl-wrap">
+        <h3>@sharedResource["Edit Product Categories"]</h3>
+
+    </div>
+    <form asp-page-handler="EditProductCategory" enctype="multipart/form-data">
+        <input asp-for="@Model.ProductCategory.ProductCategoryId" hidden />
+        <input asp-for="@Model.ProductCategory.ClassifiedBusinessId" hidden />
+        <div class="col-md-12">
+            <div class="profile-edit-container fl-wrap block_box">
+                <div class="custom-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>@sharedResource["Title Arabic"]  <i class="fal fa-briefcase"></i></label>
+                            <input type="text" asp-for="@Model.ProductCategory.TitleEn" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>@sharedResource["Title English"] <i class="fal fa-briefcase"></i></label>
+                            <input type="text" asp-for="@Model.ProductCategory.TitleAr" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-edit-container fl-wrap block_box">
+                    <div class="custom-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-list-media-wrap">
+                                    <div class="listsearch-input-item fl-wrap">
+                                        <div class="fuzone">
+                                            <div class="fu-text">
+                                                <div class="fu-text">
+                                                    <span><i class="fal fa-images"></i>@sharedResource["Click here or drop photo"]</span>
+                                                    <div class="photoUpload-files fl-wrap"></div>
+                                                </div>
+                                                <input class="form-control" type="file" accept="image/*" name="file">
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="dropdown">@sharedResource["Sort Order"]</label>
+
+                                    <div class="listsearch-input-item">
+                                        <select data-placeholder="Sortorder" class="chosen-select no-search-select" asp-for="@Model.ProductCategory.SortOrder" id="dropdown" required>
+                                            <option value="0" selected>@sharedResource["Please Select Product Category Order"]</option>
+                                            @{
+                                                for (var num = 1; num <= Model.CategoriesCount + 1; num++)
+                                                {
+                                                    <option value="@num">@num</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="check">
+                                        
+                                        <span>@sharedResource["Active Product Category"]</span>
+                                        @{
+                                            if (Model.IsActive == true)
+                                            {
+                                                <input type="checkbox" asp-for="@Model.IsActive" checked>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" asp-for="@Model.IsActive">
+
+                                            }
+
+                                        }
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="profile-edit-container fl-wrap block_box">
+                    <div class="custom-form">
+
+                        <button type="submit" class="btn float-btn color2-bg">@sharedResource["Edit"]<i class="fal fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

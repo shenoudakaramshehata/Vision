@@ -1,0 +1,39 @@
+﻿@using Vision.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BusinessContent
+
+@{
+    if (@Model != null)
+    {
+<div class="list-single-main-media fl-wrap">
+    <div class="single-slider-wrap">
+        <div class="single-slider fl-wrap">
+            <div class="swiper-container">
+                <div class="swiper-wrapper lightgallery">
+                    @{
+                                foreach (var item in @Model.BusinessContentValues)
+                                {
+
+                            <div class="swiper-slide hov_zoom"><img src="/@item.ContentValue" alt=""><a href="/@item.ContentValue" class="box-media-zoom   popup-image"><i class="fal fa-search"></i></a></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="listing-carousel_pagination">
+            <div class="listing-carousel_pagination-wrap">
+                <div class="ss-slider-pagination"></div>
+            </div>
+        </div>
+        <div class="ss-slider-cont ss-slider-cont-prev color2-bg"><i class="fal fa-long-arrow-left"></i></div>
+        <div class="ss-slider-cont ss-slider-cont-next color2-bg"><i class="fal fa-long-arrow-right"></i></div>
+    </div>
+</div>
+    }
+}
+
+
+
+

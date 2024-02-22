@@ -1,0 +1,81 @@
+﻿@using Vision.Models;
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SingleBussinessDetailsModel
+
+  <!-- list-single-main-item -->
+<div class="list-single-main-item fl-wrap block_box" id="sec6">
+    <div class="list-single-main-item-title fl-wrap">
+        <h3>Add Review</h3>
+    </div>
+    <!-- Add Review Box -->
+    <div id="add-review" class="add-review-box">
+        <!-- Review Comment -->
+        <form id="add-comment" class="add-comment  custom-form" name="rangeCalc">
+            <fieldset>
+                <div class="review-score-form fl-wrap">
+                    <div class="review-range-container">
+                        <!-- review-range-item-->
+                        <div class="review-range-item">
+                            <div class="range-slider-title">Location</div>
+                            <div class="range-slider-wrap ">
+                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="4">
+                            </div>
+                        </div>
+                        <!-- review-range-item end -->
+                        <!-- review-range-item-->
+                        <div class="review-range-item">
+                            <div class="range-slider-title">Service</div>
+                            <div class="range-slider-wrap ">
+                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="1">
+                            </div>
+                        </div>
+                        <!-- review-range-item end -->
+                        <!-- review-range-item-->
+                        <div class="review-range-item">
+                            <div class="range-slider-title">Quality</div>
+                            <div class="range-slider-wrap ">
+                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="5">
+                            </div>
+                        </div>
+                        <!-- review-range-item end -->
+                        <!-- review-range-item-->
+                        <div class="review-range-item">
+                            <div class="range-slider-title">Price</div>
+                            <div class="range-slider-wrap">
+                                <input type="text" class="rate-range" data-min="0" data-max="5" name="rgcl" data-step="1" value="3">
+                            </div>
+                        </div>
+                        <!-- review-range-item end -->
+                    </div>
+                    <div class="review-total">
+                        <span><input type="text" name="rg_total" data-form="AVG({rgcl})" value="0"></span>
+                        <strong>Your Score</strong>
+                    </div>
+                </div>
+                <div class="list-single-main-item_content fl-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label><i class="fal fa-user"></i></label>
+                            <input type="text" placeholder="Your Name *" value="" />
+                        </div>
+                        <div class="col-md-6">
+                            <label><i class="fal fa-envelope"></i>  </label>
+                            <input type="text" placeholder="Email Address*" value="" />
+                        </div>
+                    </div>
+                    <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
+                    <div class="clearfix"></div>
+
+                    <div class="clearfix"></div>
+                    <button class="btn color2-bg  float-btn">Submit Review <i class="fal fa-paper-plane"></i></button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <!-- Add Review Box / End -->
+</div>
+<!-- list-single-main-item end -->

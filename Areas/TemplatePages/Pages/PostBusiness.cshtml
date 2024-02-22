@@ -1,0 +1,494 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.PostBusinessModel
+
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+       
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+       
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+<script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+          "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+    </script>
+    <style>
+        #map {
+            height: 100%;
+        }
+   
+#block-wrp {
+  width: 784px;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+#block-wrp .block-item {
+  height: 400px;
+  width: 48%;
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column
+}
+#block-wrp .block-item .map-item {
+  height: 90%
+}
+#block-wrp .block-item span.city-name {
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #a2ccff;
+  height: 10%;
+  line-height: 2em;
+}
+
+    </style>
+
+
+
+
+
+    <form method="post" enctype="multipart/form-data">
+    <input type="text" hidden name="LatId" id="LatId" />
+    <div class="col-md-9">
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <label for="bussinessPlans">BusinessPlans <i class="fal fa-briefcase"></i></label>
+
+                        <div class="listsearch-input-item">
+                            <select data-placeholder="City" class="chosen-select no-search-select" name="bussinessPlans" id="bussinessPlans" required>
+                                <option value="" selected>Please Select a Business Plan</option>
+                                @{
+                                    foreach (var item in Model.bussinessPlans)
+                                    {
+                                        <option name="bussinessPlans" value="@item.BussinessPlanId">@item.PlanTlEn</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @*title*@
+                        <label>Title <i class="fal fa-briefcase"></i></label>
+                        <input type="text" asp-for="@Model.ClassifiedBusinessobj.Title" id="@Model.ClassifiedBusinessobj.Title" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Description</label>
+                        <textarea rows="4" asp-for="@Model.ClassifiedBusinessobj.Description"  required></textarea>
+                    </div>
+                </div>
+            
+       
+
+        @Html.Raw(Model.FormTemplate);
+    <div class="dashboard-title">
+        <h3>Working Hours</h3>
+    </div>
+    <!-- profile-edit-container-->
+    <div class="profile-edit-container fl-wrap block_box">
+        <div class="custom-form">
+                        <div class="row">
+                <div class="col-sm-2" >
+                    <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Sat" name="SatDay" type="text" readonly /> 
+                </div>
+                            <div class="col-sm-2" id="ValidationId">
+                    <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" title="Please Enter Valid Format" name="SatFromTime1" placeholder="12:05AM|PM" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId2">
+                    <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" title="Please Enter Valid Format" name="SatEndTime1" placeholder="12:05AM|PM" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId3">
+                    <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SatFromTime2" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId4">
+                    <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SatEndTime2" />
+                </div>
+
+                <div class="col-sm-2">
+                    <label>Closed</label>
+                                <input type="checkbox" id="chk" onclick="Required()" style="margin-right: 2.5rem;margin-top: 1rem;" name="SatClosed" />
+                </div>
+
+            </div>
+            @*day 2*@
+            <div class="row">
+                <div class="col-sm-2">
+                    <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Sun" name="SunDay" type="text" readonly />
+                </div>
+                <div class="col-sm-2" id="ValidationId5">
+                    <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SunFromTime1" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId6">
+                    <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SunEndTime1" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId7">
+                    <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SunFromTime2" />
+                </div>
+                            <div class="col-sm-2" id="ValidationId8">
+                    <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="SunEndTime2" />
+                </div>
+
+                <div class="col-sm-2">
+                    <label>Closed</label>
+                                <input type="checkbox"  id="chk2" onclick="Required2()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="SunClosed" />
+                </div>
+
+            </div>
+                        @*day 3*@
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Mon" name="MonDay" type="text" readonly />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId9">
+                                <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="MonFromTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId10">
+                                <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="MonEndTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId11">
+                                <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="MonFromTime2" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId12">
+                                <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="MonEndTime2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Closed</label>
+                                <input type="checkbox" id="chk3" onclick="Required3()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="MonClosed" />
+                            </div>
+
+                        </div>
+                        @*day 4 tue*@
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Tue" name="TueDay" type="text" readonly />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId13">
+                                <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="TueFromTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId14">
+                                <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="TueEndTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId15">
+                                <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <inputtype="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="TueFromTime2" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId16">
+                                <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="TueEndTime2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Closed</label>
+                                <input type="checkbox" id="chk4" onclick="Required4()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="TueClosed" />
+                            </div>
+
+                        </div>
+                        @*day 5 wed*@
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Wed" name="WedDay" type="text" readonly />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId17">
+                                <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="WedFromTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId18">
+                                <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="WedEndTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId19">
+                                <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="WedFromTime2" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId20">
+                                <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="WedEndTime2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Closed</label>
+                                <input type="checkbox"  id="chk5" onclick="Required5()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="WedClosed" />
+                            </div>
+
+                        </div>
+                        @*day 6 Thu*@
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Thu" name="ThuDay" type="text" readonly />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId21">
+                                <label>FromTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="ThuFromTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId22">
+                                <label>EndTime1 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="ThuEndTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId23">
+                                <label>FromTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="ThuFromTime2" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId24">
+                                <label>EndTime2 <i class="fal fa-clock"></i></label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="ThuEndTime2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Closed</label>
+                                <input type="checkbox"  id="chk6" onclick="Required6()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="ThuClosed" />
+                            </div>
+
+                        </div>
+                        @*day 6 Fri*@
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Day <i class="fal fa-clock"></i></label>
+                                <input value="Fri" name="FriDay" type="text" readonly />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId25">
+                                <label>FromTime1</label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="FriFromTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId26">
+                                <label>EndTime1</label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="FriEndTime1" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId27">
+                                <label>FromTime2</label>
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="FriFromTime2" />
+                            </div>
+                            <div class="col-sm-2" id="ValidationId28">
+                                <input type="text" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9](\\s)?(am|pm|AM|PM)?$" placeholder="9 AM - 5 PM" name="FriEndTime2" />
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label>Closed</label>
+                                <input type="checkbox" id="chk7" onclick="Required7()" style="margin-right: 2.5rem;margin-top: 1rem;" placeholder="9 AM - 5 PM" name="FriClosed" />
+                            </div>
+
+                        </div>
+        </div>
+    </div>
+
+
+        <input type="text" hidden name="LatId" id="LatId" />
+        
+            <div class="custom-form">
+
+                <button type="submit" class="btn float-btn color2-bg" id="submit">Add<i class="fal fa-paper-plane"></i></button>
+            </div>
+       
+    </div>
+    </form>
+
+
+<!-- profile-edit-container end-->
+
+
+<script>
+    function Required() {
+        const ckeckvalue = document.getElementById("chk")
+        const requiredInputs = document.getElementById("ValidationId")
+        const requiredInputs2 = document.getElementById("ValidationId2")
+        const requiredInputs3 = document.getElementById("ValidationId3")
+        const requiredInputs4 = document.getElementById("ValidationId4")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs.style.display = 'none';
+            requiredInputs2.style.display = 'none';
+            requiredInputs3.style.display = 'none';
+            requiredInputs4.style.display = 'none';
+        }
+        else {
+            requiredInputs.style.display = 'block';
+            requiredInputs2.style.display = 'block';
+            requiredInputs3.style.display = 'block';
+            requiredInputs4.style.display = 'block';
+        }
+    }
+    function Required2() {
+        const ckeckvalue = document.getElementById("chk2")
+        const requiredInputs5 = document.getElementById("ValidationId5")
+        const requiredInputs6 = document.getElementById("ValidationId6")
+        const requiredInputs7 = document.getElementById("ValidationId7")
+        const requiredInputs8 = document.getElementById("ValidationId8")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs5.style.display = 'none';
+            requiredInputs6.style.display = 'none';
+            requiredInputs7.style.display = 'none';
+            requiredInputs8.style.display = 'none';
+        }
+        else {
+            requiredInputs5.style.display = 'block';
+            requiredInputs6.style.display = 'block';
+            requiredInputs7.style.display = 'block';
+            requiredInputs8.style.display = 'block';
+        }
+    }
+    function Required3() {
+        const ckeckvalue = document.getElementById("chk3")
+        const requiredInputs9 = document.getElementById("ValidationId9")
+        const requiredInputs10 = document.getElementById("ValidationId10")
+        const requiredInputs11 = document.getElementById("ValidationId11")
+        const requiredInputs12 = document.getElementById("ValidationId12")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs9.style.display = 'none';
+            requiredInputs10.style.display = 'none';
+            requiredInputs11.style.display = 'none';
+            requiredInputs12.style.display = 'none';
+        }
+        else {
+            requiredInputs9.style.display = 'block';
+            requiredInputs10.style.display = 'block';
+            requiredInputs11.style.display = 'block';
+            requiredInputs12.style.display = 'block';
+        }
+    }
+    function Required4() {
+        const ckeckvalue = document.getElementById("chk4")
+        const requiredInputs13 = document.getElementById("ValidationId13")
+        const requiredInputs14 = document.getElementById("ValidationId14")
+        const requiredInputs15 = document.getElementById("ValidationId15")
+        const requiredInputs16 = document.getElementById("ValidationId16")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs13.style.display = 'none';
+            requiredInputs14.style.display = 'none';
+            requiredInputs15.style.display = 'none';
+            requiredInputs16.style.display = 'none';
+        }
+        else {
+            requiredInputs13.style.display = 'block';
+            requiredInputs14.style.display = 'block';
+            requiredInputs15.style.display = 'block';
+            requiredInputs16.style.display = 'block';
+        }
+    }
+    function Required5() {
+        const ckeckvalue = document.getElementById("chk5")
+        const requiredInputs17 = document.getElementById("ValidationId17")
+        const requiredInputs18 = document.getElementById("ValidationId18")
+        const requiredInputs19 = document.getElementById("ValidationId19")
+        const requiredInputs20 = document.getElementById("ValidationId20")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs17.style.display = 'none';
+            requiredInputs18.style.display = 'none';
+            requiredInputs19.style.display = 'none';
+            requiredInputs20.style.display = 'none';
+        }
+        else {
+            requiredInputs17.style.display = 'block';
+            requiredInputs18.style.display = 'block';
+            requiredInputs19.style.display = 'block';
+            requiredInputs20.style.display = 'block';
+        }
+    }
+    function Required6() {
+        const ckeckvalue = document.getElementById("chk6")
+        const requiredInputs21 = document.getElementById("ValidationId21")
+        const requiredInputs22 = document.getElementById("ValidationId22")
+        const requiredInputs23 = document.getElementById("ValidationId23")
+        const requiredInputs24 = document.getElementById("ValidationId24")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs21.style.display = 'none';
+            requiredInputs22.style.display = 'none';
+            requiredInputs23.style.display = 'none';
+            requiredInputs24.style.display = 'none';
+        }
+        else {
+            requiredInputs21.style.display = 'block';
+            requiredInputs22.style.display = 'block';
+            requiredInputs23.style.display = 'block';
+            requiredInputs24.style.display = 'block';
+        }
+    }
+    function Required7() {
+        const ckeckvalue = document.getElementById("chk7")
+        const requiredInputs25 = document.getElementById("ValidationId25")
+        const requiredInputs26 = document.getElementById("ValidationId26")
+        const requiredInputs27 = document.getElementById("ValidationId27")
+        const requiredInputs28 = document.getElementById("ValidationId28")
+        console.log("ckeckvalue")
+        if (ckeckvalue.checked == true) {
+            // 👇 this SHOWS the requiredInputs
+            requiredInputs25.style.display = 'none';
+            requiredInputs26.style.display = 'none';
+            requiredInputs27.style.display = 'none';
+            requiredInputs28.style.display = 'none';
+        }
+        else {
+            requiredInputs25.style.display = 'block';
+            requiredInputs26.style.display = 'block';
+            requiredInputs27.style.display = 'block';
+            requiredInputs28.style.display = 'block';
+        }
+    }
+</script>

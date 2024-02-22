@@ -1,0 +1,38 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageAdTemplateOption.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    //Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AdTemplateOption</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateOption.OptionAr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateOption.OptionAr)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateOption.OptionEn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateOption.OptionEn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdTemplateOption.AdTemplateConfig)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdTemplateOption.AdTemplateConfig.AdTemplateConfigId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.AdTemplateOption?.AdTemplateOptionId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

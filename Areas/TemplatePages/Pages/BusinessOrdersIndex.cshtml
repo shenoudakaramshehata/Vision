@@ -1,0 +1,154 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.BusinessOrdersIndexModel
+@{
+}
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+}
+
+<div id="wrapper">
+    <!-- content-->
+    <div class="content">
+        <!--  section  -->
+        <section class="gray-bg small-padding no-top-padding-sec" id="sec1">
+            <div class="container">
+                <div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
+                    <a href="#">Home</a><a href="#">Pages</a><a href="#">Shop</a><span>Cart</span>
+                </div>
+                <div class="clearfix"></div>
+                @{
+                    if (Model.orders != null || Model.orders.Count > 0)
+                    {
+                        <!-- CHECKOUT TABLE -->
+                        <div class=" fl-wrap">
+                            <h4 class="cart-ttitle ">Your Customer Orders</h4>
+                            <table class="table table-border checkout-table">
+                                <tbody>
+
+                                    <tr>
+                                        <th>Order Date</th>
+
+                                        <th>Order Serial</th>
+                                        <th>Order Net</th>
+                                        <th>Order Total</th>
+                                        <th>Is Paid</th>
+                                        <th>Is Cancelled</th>
+                                        <th>Is Delivered</th>
+                                    </tr>
+                                    @{
+                                        foreach (var item in Model.orders)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @item.OrderDate.ToString("MMM")
+                                                </td>
+                                                <td>
+                                                    <a asp-page="BusinessOrderDetails" asp-route-id="@item.OrderId">
+                                                        <h5 class="product-name">
+                                                            @item.OrderSerial
+                                                            
+                                                        </h5>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td>
+                                                    @item.OrderNet
+                                                </td>
+                                                <td>
+                                                    @item.OrderTotal
+                                                </td>
+                                                <td>
+                                                   
+                                                    @{
+                                                        if (@item.IsPaid == true)
+                                                        {
+                                                            <i class="fal fa-check"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fal fal fa-times"></i>
+                                                        }
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        if (@item.IsCancelled == true)
+                                                        {
+                                                            <i class="fal fa-check"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fal fal fa-times"></i>
+                                                        }
+                                                       
+                                                        }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        if (@item.IsCancelled == true)
+                                                        {
+                                                            <i class="fal fa-check"></i>
+                                                        }
+                                                        else if(item.IsDeliverd != null)
+                                                        {
+                                                            if(item.IsDeliverd == true)
+                                                            {
+                                                                <i class="fal fa-check"></i>
+                                                                
+                                                                                                }
+                                                            else
+                                                            {
+                                                                <i class="fal fal fa-times"></i>
+                                                            }
+                                                        }
+
+                                                }
+                                                  
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /CHECKOUT TABLE -->
+                    }
+                    else
+                    {
+                        <p>There no orders</p>
+                    }
+
+                }
+            </div>
+        </section>
+        <div class="limit-box fl-wrap"></div>
+    </div>
+    <!--content end-->
+    @{
+
+        //English
+        if (BrowserCulture == "en-US")
+        {
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/style.css")">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+        }
+        //Arabic
+        else
+        {
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+            <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+
+
+        }
+    }
+</div>

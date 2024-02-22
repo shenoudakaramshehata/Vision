@@ -1,0 +1,756 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.DashBoardAddListingModel
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "_DashBoard";
+    var Categories = _context.Categories.Select(e => new { e.CategoryId, e.CategoryTitleEn });
+    var Counties = _context.Countries.Select(e => new { e.CountryId, e.CountryTlEn });
+   
+
+    
+}
+<script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+          "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+    </script>
+    <style>
+        #map {
+            height: 100%;
+        }
+   
+#block-wrp {
+  width: 784px;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+#block-wrp .block-item {
+  height: 400px;
+  width: 48%;
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column
+}
+#block-wrp .block-item .map-item {
+  height: 90%
+}
+#block-wrp .block-item span.city-name {
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #a2ccff;
+  height: 10%;
+  line-height: 2em;
+}
+
+    </style>
+     
+<div class="col-md-9">
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateMyForm();">
+        <div asp-validation-summary="ModelOnly" style="color:red;"></div>
+        <div class="dashboard-title   fl-wrap">
+            <h3>@sharedResource["Add Listing"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                    <label>@sharedResource["Listing Title"] <i class="fal fa-briefcase"></i></label>
+                    <input asp-for="AddListing.Title" type="text" placeholder="@sharedResource["Enter Title"]" value="" />
+                    <span asp-validation-for="AddListing.Title" style="color:red;"></span>
+                </div>
+                <div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6" id="HrefCat">
+                        <label>@sharedResource["Type / Category"]</label>
+                        <div class="listsearch-input-item">
+                            <select id="CatId" asp-for="AddListing.CategoryId" data-placeholder="@sharedResource["Select Category"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Categories"]</option>
+                                @foreach (var item in Categories)
+                                {
+                                    <option value="@item.CategoryId">@item.CategoryTitleEn</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCatId" style="color:red;display:none">@sharedResource["Select Category"]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>@sharedResource["Tags"] <i class="fal fa-key"></i></label>
+                        <input asp-for="AddListing.Tags" type="text" placeholder="@sharedResource["Enter Tags"]" value="" />
+                        <span asp-validation-for="AddListing.Tags" style="color:red;"></span>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Location / Contacts"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                   
+                    <div >
+                        <input asp-for="AddListing.MainLocataion" type="text"  id="LatId" value="" hidden />
+
+                    </div>
+
+                </div>
+                <div class="map-container">
+                    <div id="map" style="height:400px;"></div>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+                                        
+                </div>
+              
+
+                <div class="row">
+                    <div class="col-md-6">
+                      <label>@sharedResource["City"]</label>
+                    <div class="listsearch-input-item">
+                    <select data-placeholder="City"  class="chosen-select no-search-select" id="CityDdId">
+                         <option>@sharedResource["All Cites"]</option>
+                       
+                          
+                    </select>
+
+                    </div>
+                    </div>
+                    <div class="col-md-6" id="HrefCou">
+                        <label>@sharedResource["Country"]</label>
+                        <div class="listsearch-input-item">
+                            <select onchange="selectedVal(this.selectedIndex)"  id="CouId" asp-for="AddListing.CountryId" data-placeholder="@sharedResource["Select Country"]" class="chosen-select no-search-select">
+                                <option>@sharedResource["All Countries"]</option>
+                                @foreach (var item in Counties)
+                                {
+                                    <option value="@item.CountryId">@item.CountryTlEn</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span id="SpanCouId" style="color:red;display:none">@sharedResource["Select Country"]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>@sharedResource["Contact Person"] <i class="fal fa-long-arrow-alt-down"></i> </label>
+                        <input asp-for="AddListing.ContactPeroson" type="text" placeholder="@sharedResource["Enter Contact Person"]" id="lat" value="" required />
+
+                        <div class="row">
+                            <span asp-validation-for="AddListing.ContactPeroson" style="color:red;"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Address"]<i class="fal fa-map-marker"></i></label>
+                        <input asp-for="AddListing.Address" type="text" placeholder="@sharedResource["Enter Address"]" value="" />
+                        <div class="row">
+                            <span asp-validation-for="AddListing.Address" style="color:red;"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Phone 1"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="AddListing.Phone1" type="text" placeholder="@sharedResource["Enter Phone"]" value="" />
+                        <div class="row">
+                            <span asp-validation-for="AddListing.Phone1" style="color:red;"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label>@sharedResource["Phone 2"]<i class="far fa-phone"></i>  </label>
+                        <input asp-for="AddListing.Phone2" type="text" placeholder="@sharedResource["Enter another Phone"]" value="" />
+                        <span asp-validation-for="AddListing.Phone2" style="color:red;"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label> @sharedResource["Website"] <i class="far fa-globe"></i>  </label>
+                        <input asp-for="AddListing.Website" type="text" placeholder="@sharedResource["Enter Website"]" value="" />
+                        <div class="row">
+                            <span asp-validation-for="AddListing.Website" style="color:red;"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label> @sharedResource["Fax"] <i class="fa fa-fax"></i>  </label>
+                        <input asp-for="AddListing.Fax" type="text" placeholder="@sharedResource["Enter Fax"]" value="" />
+                        <span asp-validation-for="AddListing.Fax" style="color:red;"></span>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <label>@sharedResource["Email Address"]<i class="far fa-envelope"></i>  </label>
+                        <input asp-for="AddListing.Email" type="text" placeholder="@sharedResource["Enter Email"]" value="" />
+                        <span asp-validation-for="AddListing.Email" style="color:red;"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Media"] </h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <div class="row">
+                    <!--col -->
+                    <div class="col-md-2">
+                        
+                        <div class="add-list-media-wrap">
+                            <div class="add-list-media-wrap">
+                                <div class="listsearch-input-item fl-wrap">
+                                    <div class="fuzone">
+                                        <div class="fu-text">
+                                            <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Logo"]</span>
+                                            <div class="photoUpload-files fl-wrap"></div>
+                                        </div>
+                                        <input type="file" accept="image/*" name="Listinglogo" class="upload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col end-->
+                    <!--col -->
+                    <div class="col-md-2">
+                      
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Banner"]</span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="image/*" name="listingbanner" class="upload">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                       
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Promo Video"]</span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="video/*" name="PromoVideo" class="upload">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                       
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Photos"]</span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="image/*" name="Photos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                       
+                        <div class="add-list-media-wrap">
+                            <div class="listsearch-input-item fl-wrap">
+                                <div class="fuzone">
+                                    <div class="fu-text">
+                                        <span><i class="fal fa-images"></i> @sharedResource["Click here or drop Videos"]</span>
+                                        <div class="photoUpload-files fl-wrap"></div>
+                                    </div>
+                                    <input type="file" accept="video/*" name="Videos" class="upload" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--col end-->
+                  </div>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Details"]</h3>
+        </div>
+        <!-- profile-edit-container-->
+        <div class="profile-edit-container fl-wrap block_box">
+            <div class="custom-form">
+                <label>@sharedResource["Description"]</label>
+                <textarea asp-for="AddListing.Discription" cols="40" rows="3" placeholder="@sharedResource["Enter Discription"]"></textarea>
+            </div>
+        </div>
+        <!-- profile-edit-container end-->
+        <div class="dashboard-title  dt-inbox fl-wrap">
+            <h3>@sharedResource["Branches"]</h3>
+
+        </div>
+        <div class="map-container">
+            <div id="block-wrp">
+  <div class="block-item">
+    <div id="mapCanvas2" class="map-item"> </div>
+    </div>
+</div>
+                    </div>
+       
+        <div class="profile-edit-container fl-wrap  block_box">
+            <div class="custom-form add_room-item-wrap">
+                <div class="add_room-container fl-wrap">
+                    <div class="add_room-item fl-wrap">
+                        <span class="remove-rp tolt" data-microtip-position="right" data-tooltip="@sharedResource["Remove"]"><i class="fal fa-times-circle"></i></span>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>@sharedResource["Title"]<i class="fal fa-briefcase"></i></label>
+                                <input class="titleinput" name="Title" type="text" placeholder="Enter Title" required value="" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>@sharedResource["Latetude"]<i class="fal fa-briefcase"></i></label>
+                                <input class="latinput" name="Lat" type="text" placeholder="Enter Latitude" required value="" />
+                            </div> <div class="col-md-4">
+                                <label>@sharedResource["Longtude"]<i class="fal fa-briefcase"></i></label>
+                                <input class="longinput" name="Long" type="text" placeholder="Enter Longtude" required value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="add-room-item" onclick="changeStylebutton('Branchbtnstyle')">@sharedResource["Add New"] <i class="fal fa-plus"></i> </a>
+
+            </div>
+            <div class="row">
+                <a onclick="branchtitle()" id="Branchbtnstyle" class="btn  color2-bg  float-btn">@sharedResource["Save All"]</a>
+            </div>
+        </div>
+       
+        <button type="submit" class="btn  color2-bg  float-btn">@sharedResource["Add Listing"]<i class="fal fa-paper-plane"></i></button>
+
+    </form>
+    <!-- profile-edit-container end-->
+</div>
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //English
+    if (BrowserCulture == "en-US")
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    //Arabic
+    else
+    {
+        
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+
+        //<link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+
+        //<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+        //<style>
+        // .dashboard-title h3 {
+        //        text-align: right;
+        //        font-weight: 600;
+        //        font-size: 21px;
+        //        color: #566985;
+        //        padding-right: 2rem;
+        //    }
+        //</style>
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+         <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+
+       
+
+
+    }
+}
+
+<script>
+     
+    var flag=false;
+     function selectedVal(val)
+     {
+         console.log(val);
+
+     }
+     function selectedVal(val) {
+          
+        $.ajax({
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            }
+            ,
+            url: "/TemplatePages/DashBoardAddListing?handler=FillCountryList",
+            async: false,
+            data: JSON.stringify(val),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+          
+            success: function (response) {
+                 var CityDrowpDown = document.getElementById("CityDdId");
+                  console.log(CityDrowpDown)
+              for(let i=0;i<response.length;i++)
+              {
+                  var option = document.createElement("option");
+                    option.value = response[i].CityId;
+                     console.log(option.value);
+                     option.text = response[i].CityTlEn;
+                     CityDrowpDown.add(option);
+                       console.log(CityDrowpDown)
+              }
+               console.log(response)
+
+            },
+            failure: function (response) {
+            }
+        });
+    }
+
+     function changeStylebutton(id) {
+
+         if (localStorage.getItem("lang") == "en") {
+             document.getElementById(id).textContent = "Save All";
+         } else {
+             document.getElementById(id).textContent = "حفظ الكل";
+         }
+
+         document.getElementById(id).style.backgroundColor = "#384f95";
+         //document.getElementsByClassName('mediainput')[0].style.display = 'flex';
+         //document.getElementsByClassName('mediashow')[0].style.display = 'none';
+     }
+     var counter = 0;
+     function branchtitle() {
+         var myList = new Array();
+         var inputvalue = document.getElementsByClassName("titleinput");
+         var latvalue = document.getElementsByClassName("latinput");
+         var longvalue = document.getElementsByClassName("longinput");
+         for (var i = 0; i < inputvalue.length; i++) {
+             var education = { Title: inputvalue[i].value, Lat: latvalue[i].value, Long: longvalue[i].value };
+             if (document.getElementsByClassName("titleinput")[i].value != "" && document.getElementsByClassName("latinput")[i].value != "" && document.getElementsByClassName("longinput")[i].value != "") {
+                 myList.push(education)
+             }
+         }
+         if (myList.length > 0) {
+             $.ajax({
+                 type: "POST",
+                 beforeSend: function (xhr) {
+                     xhr.setRequestHeader("XSRF-TOKEN",
+                         $('input:hidden[name="__RequestVerificationToken"]').val());
+                 }
+                 ,
+                 url: "/TemplatePages/DashBoardAddListing?handler=FillBranchesList",
+                 async: false,
+                 data: JSON.stringify(myList),
+                 dataType: "json",
+                 contentType: "application/json; charset=utf-8",
+
+                 success: function (response) {
+                     console.log("get selected rows successfully" + response)
+                     if (localStorage.getItem("lang") == "en") {
+                         document.getElementById("Branchbtnstyle").textContent = "Saved";
+                     } else {
+                         document.getElementById("Branchbtnstyle").textContent = "تم الحفظ";
+                     }
+                     document.getElementById("Branchbtnstyle").style.backgroundColor = "#257260";
+                     counter += 1;
+                 },
+                 failure: function (response) {
+                     alert(response);
+                 }
+             });
+
+         }
+         else {
+             console.log("Nobody has been selected")
+         }
+     }
+     function validateMyForm() {
+         var CatId = document.getElementById("CatId");
+         var CouId = document.getElementById("CouId");
+         console.log(CatId.value);
+         var SpanCatId = document.getElementById("SpanCatId")
+         var SpanCouId = document.getElementById("SpanCouId")
+         console.log(SpanCatId);
+         if(flag==false){
+             alert("You Must Select Location");
+         }
+         else if (CatId.value == "All Categories") {
+             console.log("entered");
+             SpanCatId.style.display = "flex";
+             window.location.href = "#HrefCat";
+
+             return false;
+         }else if(CouId.value == "All Countries"){
+             console.log("entered");
+             SpanCouId.style.display = "flex";
+             window.location.href = "#HrefCou";
+
+             return false;
+         }
+         else {
+             console.log("Not entered");
+             SpanCatId.style.display = "none";
+             SpanCouId.style.display = "none";
+             return true;
+         }
+
+     }
+     function initMap() {
+         var markers = [];
+         var uniqueId = 1;
+        var myLatlng = { lat: 29.378586, lng: 47.990341 };
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 4,
+            center: myLatlng,
+        });
+        
+        var infoWindow = new google.maps.InfoWindow({
+            content: "Select Location",
+            position: myLatlng,
+        });
+   
+        infoWindow.open(map);
+        map.addListener("click", function (mapsMouseEvent) {
+         ///////////////////////////
+            
+          var jsonobj=JSON.stringify(mapsMouseEvent.latLng.toJSON());
+          var myObj = JSON.parse(jsonobj);
+            sendReq(myObj);
+            var MarkerObj={lat: myObj.lat, lng: myObj.lng};
+            var marker = new google.maps.Marker({
+                position: MarkerObj,
+                map: map
+            });
+            marker.id = uniqueId;
+            uniqueId++;
+            markers.push(marker);
+               for (var i = 0; i < markers.length; i++) {
+            if (markers[i].id == marker.id-1) {               
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+                return;
+            }
+        }
+            infoWindow.open(map, marker);
+            infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            //infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+            //infoWindow.open(map);
+                });
+          
+    }
+    window.initMap = initMap;
+    function sendReq(obj){
+        flag=true;
+        console.log(obj);
+        document.getElementById("LatId").value=obj.lat+","+obj.lng;
+       // document.getElementById("LngId").value=obj.lng;
+        }
+    //function initMapLoc() {
+    //     var markers = [];
+    //     var uniqueId = 1;
+    //    var myLatlng = { lat: 29.378586, lng: 47.990341 };
+    //    var map = new google.maps.Map(document.getElementById("mapLocation"), {
+    //        zoom: 4,
+    //        center: myLatlng,
+    //    });
+        
+    //    var infoWindow = new google.maps.InfoWindow({
+    //        content: "Select Location",
+    //        position: myLatlng,
+    //    });
+   
+    //    infoWindow.open(map);
+    //    map.addListener("click", function (mapsMouseEvent) {
+    //     ///////////////////////////
+            
+    //      var jsonobj=JSON.stringify(mapsMouseEvent.latLng.toJSON());
+    //      var myObj = JSON.parse(jsonobj);
+    //        sendReqLoc(myObj);
+    //        var MarkerObj={lat: myObj.lat, lng: myObj.lng};
+    //        var marker = new google.maps.Marker({
+    //            position: MarkerObj,
+    //            map: map
+    //        });
+    //        marker.id = uniqueId;
+    //        uniqueId++;
+    //        markers.push(marker);
+    //           for (var i = 0; i < markers.length; i++) {
+    //        if (markers[i].id == marker.id-1) {               
+    //            markers[i].setMap(null);
+    //            markers.splice(i, 1);
+    //            return;
+    //        }
+    //    }
+    //        infoWindow.open(map, marker);
+    //        infoWindow.close();
+    //    infoWindow = new google.maps.InfoWindow({
+    //            position: mapsMouseEvent.latLng,
+    //        });
+    //        //infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+    //        //infoWindow.open(map);
+    //            });
+          
+    //}
+    //window.initMapLoc = initMapLoc;
+    //window.initMap = initMap;
+
+    //function sendReqLoc(obj){
+    //    flag=true;
+    //    console.log(obj);
+    //    document.getElementById("LatId").value=obj.lat+","+obj.lng;
+    //   // document.getElementById("LngId").value=obj.lng;
+    //    }
+    
+
+    // window.addEventListener('load', (event) => {
+    //     console.log('The page has fully loaded');
+
+    //     getLocation();
+
+    // });
+    // var logitude = 0;
+    // var latitude = 0;
+
+
+    // function getLocation() {
+    //     navigator.geolocation.getCurrentPosition(_fun_get_loc);
+    // }
+    // function _fun_get_loc(pos) {
+    //     longitude = pos.coords.longitude;
+    //     latitude = pos.coords.latitude;
+
+    //     initMap();
+    //     //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
+    //     //window.open(url,'_blank');
+    //     // location.replace(url);
+    // }
+    // //}
+    // function initMap() {
+
+    //     console.log("lat= " + latitude)
+    //     console.log("long= " + longitude)
+
+    //     // The location of Uluru
+    //     const uluru = { lat: latitude, lng: longitude };
+    //     var infowindow = new google.maps.InfoWindow({
+    //         content: ''
+    //     });
+    //     // The map, centered at Uluru
+    //     const map = new google.maps.Map(document.getElementById("singleMap"), {
+    //         zoom: 4, center: uluru,
+    //     });
+    //     // The marker, positioned at Uluru
+    //     const marker = new google.maps.Marker({
+    //         position: uluru,
+    //         map: map,
+    //     });
+    //     bindInfoWindow(map, marker, infowindow, latitude, longitude)
+    // }
+    // function bindInfoWindow(map, marker, infowindow, latitude, longitude) {
+    //     console.log(marker)
+    //     console.log(latitude)
+    //     console.log(longitude)
+    //     google.maps.event.addListener(marker, 'mouseover', function () {
+    //         infowindow.open(map, marker);
+    //         document.getElementById('lat').innerText = latitude + ',' + longitude;
+    //     });
+
+    // }
+
+    // window.addEventListener('load', (event) => {
+    //     console.log('The page has fully loaded');
+    //    getLocation();
+
+    //});
+
+    // var logitude = 0;
+    // var latitude = 0;
+
+
+    // function getLocation() {
+    //     navigator.geolocation.getCurrentPosition(_fun_get_loc);
+    // }
+    // function _fun_get_loc(pos) {
+    //     longitude = pos.coords.longitude;
+    //     latitude = pos.coords.latitude;
+
+    //     initMap();
+    //     //var url="https://www.google.com/maps?q="+latitude+",+"+longitude;
+    //     //window.open(url,'_blank');
+    //     // location.replace(url);
+    // }
+    // //}
+    // function initMap() {
+
+    //     console.log("long= "+longitude)
+    //     console.log("lat= "+latitude)
+    //     // The location of Uluru
+    //     const uluru = { lat:latitude , lng:logitude };
+
+    //     // The map, centered at Uluru
+    //     const map = new google.maps.Map(document.getElementById("singleMap"), {
+    //         zoom: 4, center: uluru,
+    //     });
+    //     console.log("uluru= "+uluru)
+    //     // The marker, positioned at Uluru
+    //     const marker = new google.maps.Marker({
+    //         position: uluru,
+    //         map: map,
+    //     });
+    //      console.log("marker= "+marker)
+    // }
+
+
+var map1, map2;
+function drawMap() {
+    
+    var mapOptions = {
+      zoom: 4,
+      
+      mapTypeControl: false,
+      fullscreenControl: true 
+     }
+    
+    mapOptions.center = new google.maps.LatLng(29.378586, 47.990341); // Amsterdam
+    map2 = new google.maps.Map(document.getElementById("mapCanvas2"), mapOptions);
+ }
+
+
+
+
+</script>
+ <script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyCvDN-LuS_9_VFkR71Sc56P6y4cwWKvEpU&callback=drawMap"></script>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

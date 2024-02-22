@@ -1,0 +1,337 @@
+﻿@page
+@model Vision.Pages.UserBusinessSingleProfileModel
+@inject CRMDBContext _context
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    Layout = "FrontSite/_TemplateLayout";
+
+}
+<style>
+    .profile-container {
+        margin: 0 auto;
+        background-color: #fff;
+        overflow: hidden;
+        margin-bottom:100px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+
+        .profile-container:hover {
+            transform: translateY(-5px);
+        }
+
+    .profile-cover {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .profile-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .profile {
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-picture {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+        border: 4px solid #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s ease;
+    }
+
+        .profile-picture:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+    .edit-profile {
+        margin-left: auto;
+    }
+
+    .edit-profile-btn {
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 2px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+        .edit-profile-btn:hover {
+            background-color: #333;
+        }
+
+    .profile-info {
+        color: #000;
+        text-align: right;
+    }
+
+    .profile-name {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .profile-location {
+        margin: 0;
+        font-size: 16px;
+        opacity: 0.8;
+    }
+
+    .profile-stats {
+        background-color: #f8f9fa;
+        padding: 20px;
+    }
+
+    .stats-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+        .stats-list li {
+            text-align: center;
+            margin-right: 20px;
+        }
+
+    .stats-number {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .stats-label {
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .profile-about {
+        padding: 20px;
+    }
+
+    .about-title {
+        margin: 0 0 10px;
+        font-size: 18px;
+    }
+
+    .about-content {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 2px;
+    }
+
+    .about-item {
+        margin: 0;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+</style>
+<div class="container" style=" padding-top: 300px; padding-bottom: 100px;">
+    
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="profile-container">
+            <div class="profile-head">
+                <div class="profile">
+                    <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="Profile Picture" width="130" class="profile-picture">
+                    <div class="profile-info">
+                        <h4 class="profile-name">Mark Williams</h4>
+                        <p class="profile-location">Kuwait</p>
+                    </div>
+                </div>
+                <a href="#" class="edit-profile-btn">Follow</a>
+            </div>
+            <h5 class="about-title">About</h5>
+                    <div class="profile-stats row">
+                
+                <div class="about-content col-6">
+                    <p class="about-item">Business owner</p>
+                    <p class="about-item">Lives in Kuwait</p>
+                </div>
+                        <ul class="stats-list col-6">
+                            <li>
+                                <h5 class="stats-number">215</h5>
+                                <span class="stats-label">Ads</span>
+                            </li>
+                            <li>
+                                <h5 class="stats-number">745</h5>
+                                <span class="stats-label">Followers</span>
+                            </li>
+                            <li>
+                                <h5 class="stats-number">340</h5>
+                                <span class="stats-label">Following</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                <section class="product-list-section">
+                    <h2 class="title title-center mb-5">Ads List</h2>
+                    <div class="row">
+                        <div class="col-lg-9 mb-5">
+                            <div class="row show-code-action cols-lg-1 cols-md-1 cols-sm-1">
+                                <div class="product product-list">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="~/FrontSite/assets/images/products/elements/2.jpg" alt="Product"
+                                                 width="330" height="338" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                               title="Quick View"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name">
+                                            <a href="product-default.html">Summer Sport Shoes</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="#" class="rating-reviews">(3 Reviews)</a>
+                                        </div>
+                                        <div class="product-price">$86.00</div>
+                                        <ul class="product-desc">
+                                            <li>Ultrices eros in cursus turpis massa cursus mattis.</li>
+                                            <li>Volutpat ac tincidunt vitae semper quis lectus.</li>
+                                            <li>Aliquam id diam maecenas ultricies mi eget mauris.</li>
+                                        </ul>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-cart" title="Add to Cart">
+                                                <i class="w-icon-cart"></i> Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product product-list">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="~/FrontSite/assets/images/products/elements/3.jpg" alt="Product"
+                                                 width="330" height="338" />
+                                        </a>
+                                        <div class="product-label-group">
+                                            <label class="product-label label-new">New</label>
+                                        </div>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                                               title="Quick View"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name">
+                                            <a href="product-default.html">Charming Design Watch</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="#" class="rating-reviews">(3 Reviews)</a>
+                                        </div>
+                                        <div class="product-price">$30.00</div>
+                                        <ul class="product-desc">
+                                            <li>Ultrices eros in cursus turpis massa cursus mattis.</li>
+                                            <li>Volutpat ac tincidunt vitae semper quis lectus.</li>
+                                            <li>Aliquam id diam maecenas ultricies mi eget mauris.</li>
+                                        </ul>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-cart" title="Add to Cart">
+                                                <i class="w-icon-cart"></i> Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="title-link-wrapper mb-2">
+                                <h4 class="title title-link title-sm font-weight-bold pt-0 pb-1">Businesses List</h4>
+                            </div>
+                            <div class="widget widget-products show-code-action">
+                                <div class="product product-widget">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="~/FrontSite/assets/images/products/elements/2.jpg" alt="Product"
+                                                 width="100" height="106" />
+                                        </a>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name">
+                                            <a href="product-default.html">Summer Sport Shoes</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                        </div>
+                                        <div class="product-price">$86.00</div>
+                                    </div>
+                                </div>
+                                <div class="product product-widget">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="~/FrontSite/assets/images/products/elements/3.jpg" alt="Product"
+                                                 width="100" height="106" />
+                                        </a>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name">
+                                            <a href="product-default.html">Charming Design Watch</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                        </div>
+                                        <div class="product-price">$30.00</div>
+                                    </div>
+                                </div>
+                                <div class="product product-widget">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="~/FrontSite/assets/images/products/elements/4-1.jpg" alt="Product"
+                                                 width="100" height="106" />
+                                        </a>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h4 class="product-name">
+                                            <a href="product-default.html">Populated Gaming Mouse</a>
+                                        </h4>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width: 100%;"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                        </div>
+                                        <div class="product-price">$236.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+       
+</div>

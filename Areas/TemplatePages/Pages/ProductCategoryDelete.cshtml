@@ -1,0 +1,54 @@
+﻿@page
+@model Vision.Areas.TemplatePages.Pages.ProductCategoryDeleteModel
+@{
+    Layout = "_DashBoard";
+    var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>
+           ();
+    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+
+    if (BrowserCulture == "en-US")
+    {
+
+
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&libraries=places&callback=initAutocomplete"></script>
+
+
+    }
+    else
+    {
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/Template/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/reset.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/plugins.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/dashboard-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/rtl-style.css")">
+        <link type="text/css" rel="stylesheet" href="@Url.Content("~/TemplateRTL/css/color.css")">
+    }
+
+}
+
+<div class="col-md-9">
+    <div class="dashboard-title  fl-wrap">
+        <h3>@sharedResource["Product Category Delete"]</h3>
+
+    </div>
+    <form asp-page-handler="DeleteProductCategory">
+        <div class="col-md-12">
+            <div class="profile-edit-container fl-wrap block_box">
+                <div class="custom-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>@sharedResource["Are you sure to delete this product category?"]  <i class="fal fa-briefcase"> @Model.ProductCategory.TitleEn</i></h3>
+                        </div>
+                    </div>
+                </div>
+                    <div class="custom-form">
+
+                        <button type="submit" class="btn float-btn color2-bg">@sharedResource["Delete"]<i class="fal fa-paper-plane"></i></button>
+                    <input asp-for="@Model.ProductCategory.ProductCategoryId"  hidden>
+                    </div>
+                </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,282 @@
+
+<link type="text/css" rel="stylesheet" href="~/Template/css/shop.css">
+<div id="wrapper">
+
+	<!-- content-->
+	<div class="content">
+		<!--section-->
+		<section class="gray-bg small-padding no-top-padding-sec" id="sec1">
+			<div class="container">
+				<div class="breadcrumbs inline-breadcrumbs fl-wrap block-breadcrumbs">
+					<a href="#">Home</a><a href="#">Pages</a> <a href="#">Shop</a><span>Product Single</span>
+					<div class="showshare brd-show-share color2-bg"> <i class="fas fa-share"></i> Share </div>
+				</div>
+				<div class="share-holder hid-share sing-page-share top_sing-page-share">
+					<div class="share-container  isShare"><a href="http://www.facebook.com/share.php?u=file%3A%2F%2F%2FD%3A%2FTemplates%2FTownHub2023%2Ftownhub%2Ftownhub.kwst.net%2Fproduct-single.html" title="Share this page on facebook" class="pop share-icon share-icon-facebook"></a><a href="http://pinterest.com/pin/create/button/?url=file%3A%2F%2F%2FD%3A%2FTemplates%2FTownHub2023%2Ftownhub%2Ftownhub.kwst.net%2Fproduct-single.html&amp;media=&amp;description=" title="Share this page on pinterest" class="pop share-icon share-icon-pinterest"></a><a href="https://plusone.google.com/_/+1/confirm?hl=en&amp;url=file%3A%2F%2F%2FD%3A%2FTemplates%2FTownHub2023%2Ftownhub%2Ftownhub.kwst.net%2Fproduct-single.html" title="Share this page on googleplus" class="pop share-icon share-icon-googleplus"></a><a href="https://twitter.com/share?via=in1.com&amp;text=Townhub - Directory Listing Template" title="Share this page on twitter" class="pop share-icon share-icon-twitter"></a><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=file%3A%2F%2F%2FD%3A%2FTemplates%2FTownHub2023%2Ftownhub%2Ftownhub.kwst.net%2Fproduct-single.html&amp;title=Townhub - Directory Listing Template&amp;summary=&amp;source=in1.com" title="Share this page on linkedin" class="pop share-icon share-icon-linkedin"></a></div>
+				</div>
+				<div class="fl-wrap">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="list-single-header list-single-header-inside block_box fl-wrap">
+								<div class="list-single-header-item  fl-wrap">
+									<div class="row">
+										<div class="col-md-8">
+											<h1>##00020## </h1>
+										</div>
+										<div class="col-md-4">
+											<div class="fl-wrap list-single-header-column  block_box">
+												<div class="listing-rating-count-wrap single-list-count">
+													<div class="review-score">##0007##</div>
+													<div class="pricerange" style="padding-top: 10px;"> ##00021## ##0005##</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="list-single-header_bottom fl-wrap">
+									<a class="listing-item-category-wrap" href="#">
+										<div class="listing-item-category  blue-bg"><i class="fal fa-bed"></i></div>
+										<span>##0000##</span>
+									</a>
+									<div class="list-single-author"> <a href="/UserSingleProfile?id=##00011##"><span class="author_avatar"> <img alt="" src="/##0004##">  </span>##0003##</a></div>
+									<div class="list-single-stats">
+										<ul class="no-list-style">
+											<li><span class="viewed-counter"><i class="fas fa-eye"></i> ##0002## -  ##0001## </span></li>
+											<li><span class="bookmark-counter"><i class="fas fa-heart"></i> ##00010## -  ##0009## </span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="list-single-main-wrapper fl-wrap" id="sec2">
+								##00023##
+								
+								<div class="list-single-main-item fl-wrap block_box">
+									<div class="list-single-main-item-title">
+										<h3>##0008##</h3>
+									</div>
+									<div class="list-single-main-item_content fl-wrap">
+										<p>##00022## </p>
+									</div>
+								</div>
+								
+								<div class="box-widget-item fl-wrap block_box">
+									<div class="box-widget-item-header">
+										<h3>##0006##</h3>
+									</div>
+									<div class="box-widget">
+										<div class="box-widget-content bwc-nopad">
+											<div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+												<div class="col-md-6">
+													<ul class="no-list-style">
+														<li><span> ##01002## :</span> <a >##1002##</a></li>
+														<li><span> ##01003## :</span> <a >##1003##</a></li>
+														
+													</ul>
+												</div>
+
+												<div class="col-md-6">
+													<ul class="no-list-style">
+														<li><span> ##01009## :</span> <a > ##1009##</a></li>
+														<li><span> ##01008## :</span> <a >##1008##</a></li>
+													</ul>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								
+								<!-- list-single-main-item end -->
+								<!-- list-single-main-item -->
+								
+								<!-- list-single-main-item end -->
+								<!-- accordion-->
+								<!-- accordion end -->
+								<!-- list-single-main-item-->
+								<!-- list-single-main-item end -->
+								<!-- list-single-main-item -->
+					
+								<!-- list-single-main-item end -->
+							</div>
+
+							<!-- shop-tabs-->
+							
+							<!-- shop-tabs end-->
+							<!-- list-single-main-item -->
+						
+							<!-- list-single-main-item end -->
+						</div>
+						<div class="col-md-4">
+							
+							<div class="box-widget-item fl-wrap block_box" style="display:none">
+										<div class="box-widget-item-header">
+											<h3> Price Range </h3>
+										</div>
+										<div class="box-widget">
+											<div class="box-widget-content">
+												<div class="claim-price-wdget fl-wrap">
+													<div class="claim-price-wdget-content fl-wrap">
+														<div class="pricerange fl-wrap"><span>##0007## : </span> 81$ - 320$ </div>
+														<div class="claim-widget-link fl-wrap"><span>Own or work here?</span><a href="#">Claim Now!</a></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+							
+							<div class="box-widget-item fl-wrap block_box">
+								
+								<div class="box-widget">
+									##1004##
+									<div class="box-widget-content bwc-nopad">
+										<div class="list-author-widget-contacts list-item-widget-contacts bwc-padside">
+											<ul class="no-list-style">
+												<li><span><i class="fal fa-phone"></i> ##00012## :</span> <a>##00013##</a></li>
+											</ul>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							
+							<div class="fl-wrap lws_mobile vishidelem" style="display:none">
+								<!--box-widget-item -->
+								<div class="box-widget-item fl-wrap block_box">
+									<div class="box-widget-item-header">
+										<h3>Search Products</h3>
+									</div>
+									<div class="box-widget fl-wrap">
+										<div class="box-widget-content">
+											<div class="search-widget">
+												<form action="#" class="fl-wrap">
+													<input name="se" id="se" type="text" class="search" placeholder="Search.." value="">
+													<button class="search-submit color2-bg" id="submit_btn"><i class="fal fa-search"></i> </button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--box-widget-item end -->
+								<!--box-widget-item -->
+								<div class="box-widget-item fl-wrap block_box" style="display:none">
+									<div class="box-widget-item-header">
+										<h3>Price Filter</h3>
+									</div>
+									<div class="box-widget fl-wrap">
+										<div class="box-widget-content">
+											<div class="price-rage-wrap shop-rage-wrap fl-wrap">
+												<a href="#" class="srw_btn color-bg">Update</a>
+												<div class="price-rage-item fl-wrap">
+													<span class="irs js-irs-0"><span class="irs"><span class="irs-line" tabindex="0"><span class="irs-line-left"></span><span class="irs-line-mid"></span><span class="irs-line-right"></span></span><span class="irs-min" style="visibility: hidden;">$0</span><span class="irs-max" style="visibility: visible;">$1 000</span><span class="irs-from" style="visibility: hidden;">0</span><span class="irs-to" style="visibility: hidden;">0</span><span class="irs-single" style="left: -1.36719%;">$0</span></span><span class="irs-grid"></span><span class="irs-bar" style="left: 3.51562%; width: 0%;"></span><span class="irs-bar-edge"></span><span class="irs-shadow shadow-single" style="display: none;"></span><span class="irs-slider single" style="left: 0%;"></span></span><input type="text" class="shop-price irs-hidden-input" data-min="0" data-max="1000" name="shop-price" data-step="10" value="$$" tabindex="-1" readonly="">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--box-widget-item end -->
+								<!--box-widget-item -->
+								<div class="box-widget-item fl-wrap block_box" style="display:none">
+									<div class="box-widget-item-header">
+										<h3>Product Categories</h3>
+									</div>
+									<div class="box-widget fl-wrap">
+										<div class="box-widget-content">
+											<ul class="cat-item no-list-style">
+												<li><a href="#">Pizza</a> <span>3</span></li>
+												<li><a href="#">Pasta</a> <span>6 </span></li>
+												<li><a href="#">Sea Products</a> <span>12 </span></li>
+												<li><a href="#">Drinks</a> <span>4</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--box-widget-item end -->
+								<!--box-widget-item -->
+								<div class="box-widget-item fl-wrap block_box" style="display:none">
+									<div class="box-widget-item-header">
+										<h3>Products</h3>
+									</div>
+									<div class="box-widget fl-wrap">
+										<div class="box-widget-content">
+											<ul class="cart-modal-list no-list-style fl-wrap">
+												<li>
+													<a class="cart-modal-image" href="product-single.html">
+														<img src="~/Template/images/shop/4.jpg" alt="">
+													</a>
+													<div class="cart-modal-det">
+														<a href="product-single.html">Grilled Filet of Cod</a>
+														<div class="quantity"> <span class="woocommerce-Price-amount">$56.15</span></div>
+													</div>
+												</li>
+												<li>
+													<a class="cart-modal-image" href="product-single.html">
+														<img src="~/Template/images/shop/2.jpg" alt="">
+													</a>
+													<div class="cart-modal-det">
+														<a href="product-single.html">Saute Crispy Goats</a>
+														<div class="quantity"> <span class="woocommerce-Price-amount">$17.00</span></div>
+													</div>
+												</li>
+												<li>
+													<a class="cart-modal-image" href="product-single.html">
+														<img src="~/Template/images/shop/3.jpg" alt="">
+													</a>
+													<div class="cart-modal-det">
+														<a href="product-single.html">Warm Chocolate Pudding</a>
+														<div class="quantity"> <span class="woocommerce-Price-amount">$90.20</span></div>
+													</div>
+												</li>
+												<li>
+													<a class="cart-modal-image" href="product-single.html">
+														<img src="~/Template/images/shop/1.jpg" alt="">
+													</a>
+													<div class="cart-modal-det">
+														<a href="product-single.html">Warm Chocolate Pudding</a>
+														<div class="quantity"> <span class="woocommerce-Price-amount">$90.20</span></div>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--box-widget-item end -->
+								<!--box-widget-item -->
+								<div class="box-widget-item fl-wrap block_box">
+									<div class="list-single-tags tags-stylwrap">
+										<div class="col-md-6">
+
+											<ul class="no-list-style shop-list fl-wrap">
+												<li><span>Product Number :</span>#41121120</li>
+												<li><span>Ingredients : </span> meat ,  mustard  , ketchup ,  bread</li>
+												<li><span>The weight : </span>  5 pounds / 2,3 kg</li>
+											</ul>
+
+										</div>
+										<div class="col-md-6">
+
+											<ul class="no-list-style shop-list fl-wrap">
+												<li><span>Product Number :</span>#41121120</li>
+												<li><span>Ingredients : </span> meat ,  mustard  , ketchup ,  bread</li>
+												<li><span>The weight : </span>  5 pounds / 2,3 kg</li>
+											</ul>
+
+										</div>
+
+
+									</div>
+								</div>
+								<!--box-widget-item end -->
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--section end-->
+		<div class="limit-box fl-wrap"></div>
+	</div>
+	<!--content end-->
+	
+</div>

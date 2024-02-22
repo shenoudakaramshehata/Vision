@@ -1,0 +1,117 @@
+﻿@page
+@model RegisterConfirmationModel
+@using Microsoft.AspNetCore.Localization;
+@{
+    ViewData["Title"] = "Register confirmation";
+     Layout = "";
+}
+
+
+
+
+<!doctype html>
+<html lang="en">
+
+<!-- Mirrored from themesbrand.com/admiria/layouts/vertical/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Dec 2021 13:10:17 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <title>@sharedResource["Register confirmation"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/Admin/assets/images/favicon.ico">
+
+    @{
+        var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+        var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+        //English
+        if (BrowserCulture == "en-US")
+        {
+            <style>
+                html {
+                    direction: ltr !important;
+                }
+            </style>
+            
+            <link href="@Url.Content("~/Admin/assets/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/app.min.css")" rel="stylesheet" type="text/css" />
+
+
+        }
+        //Arabic
+        else
+        {
+            <style>
+                html {
+                    direction: rtl !important;
+                }
+            </style>
+               <link href="@Url.Content("~/Admin/assets/css/bootstrap-rtl.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+            <link href="@Url.Content("~/Admin/assets/css/app-rtl.min.css")" rel="stylesheet" type="text/css" />
+
+        }
+
+    }
+    <link href="~/Admin/assets/css/custom.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+    <!-- Begin page -->
+    <div class="accountbg" style="background: url('../../../../Admin/assets/images/bg.jpg');background-size: cover;background-position: center;"></div>
+    <div class="account-pages mt-5 pt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-5 col-xl-4"style="width:30rem">
+                    <div class="card" style="height:30rem">
+                        <div class="card-body" style="margin:auto">
+                            <div class="text-center mt-4">
+                                <div class="mb-3">
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                @if (@Model.DisplayConfirmAccountLink)
+                                {
+                                <p>
+                                    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+                                    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+                                </p>
+                                }
+                                else
+                                {
+                                <p style="text-align: center;font-size: 50px;">
+                                    Please check your email to confirm your account.
+                                </p>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="~/Admin/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/Admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Admin/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/Admin/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Admin/assets/libs/node-waves/waves.min.js"></script>
+
+    <script src="~/Admin/assets/js/app.js"></script>
+    
+</body>
+
+</html>
+
+

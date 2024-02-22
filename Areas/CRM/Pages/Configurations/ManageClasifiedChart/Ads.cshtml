@@ -1,0 +1,277 @@
+﻿@page
+@model Vision.Areas.CRM.Pages.Configurations.ManageClasifiedChart.AdsModel
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+<!doctype html>
+
+<html lang="en" dir="ltr" id="masterPageId" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg">
+    
+<head>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+    @*<script type='text/javascript' src='https://knockoutjs.com/downloads/knockout-3.5.0.debug.js'></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.js'></script>
+    <script src="~/js/devextreme/jquery.js"></script>
+    <script src="~/js/devextreme/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>*@
+    <script type='text/javascript' src='https://knockoutjs.com/downloads/knockout-3.5.0.debug.js'></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/jquery-ui-dist@1.12.1/jquery-ui.min.js'></script>
+
+    @*<script src="~/Admin/lib/popper/js/popper.js"></script>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+    @Html.Partial("././Shared/_Links")
+@*    <partial name="/Areas/CRM/Pages/Shared/_Links"/>
+*@    <style>
+        @@media (min-width: 576px) .modal-dialog {
+            max-width: none !important;
+        }
+
+    </style>
+    @*           <link href="~/assets/css/custom-rtl.min.css" rel="stylesheet" type="text/css" />
+    *@
+</head>
+<body id="masterbodyid">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <partial name="_menu" />
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <partial name="_page_title" />
+
+
+
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12">
+                            <div class="card card-height-100">
+                                <div class="card-header align-items-center d-flex">
+                                    <h4 class="card-title mb-0 flex-grow-1">@sharedResource["Ads"]</h4>
+
+                                </div>
+                                <!-- end card header -->
+                                <!-- card body -->
+                                <div class="card-body">
+                                    @(Html.DevExtreme().DataGrid<Vision.ViewModels.AdsGrid>()
+                                        .ID("gridContainer")
+                                        .DataSource(Model.classifiedAds
+
+                                        )
+                                        .Columns(columns =>
+                                        {
+                                                columns.AddFor(m => m.MainPic).Width(100)
+                                            .AllowFiltering(false)
+                                            .AllowSorting(false)
+                                            .CellTemplate(@<text>
+                                                <div>
+                                                    <img src="</%- value %>" alt="" width="35" height="35" />
+                                                </div>
+                                            </text>).Caption(sharedResource["Photo"]);
+                                                columns.AddFor(m => m.PublishDate).Visible(true).Fixed(true).SortOrder(SortOrder.Desc).Caption(sharedResource["Publish Date"]);
+                                                columns.AddFor(m => m.TitleEn).Visible(true).Caption(sharedResource["TitleEn"]);
+                                                columns.AddFor(m => m.TitleAr).Visible(true).Fixed(true).Caption(sharedResource["TitleAr"]);
+                                                columns.AddFor(m => m.Price).Visible(true).Caption(sharedResource["Price"]);
+                                                columns.AddFor(m => m.City).Visible(true).Caption(sharedResource["City"]);
+                                                columns.AddFor(m => m.Area).Visible(true).Caption(sharedResource["Area"]);
+                                                columns.AddFor(m => m.ClassifiedAdsCategoryTitleEn).Visible(true).Fixed(true).Caption(sharedResource["CategoryTitleEn"]);
+                                                columns.AddFor(m => m.ClassifiedAdsCategoryTitleAr).Visible(true).Fixed(true).Caption(sharedResource["CategoryTitleAr"]);
+                                                columns.AddFor(m => m.Views).Visible(true).Caption(sharedResource["Views"]);
+                                                columns.AddFor(m => m.Description).Visible(true).Caption(sharedResource["Description"]);
+
+                                                columns.AddFor(m => m.Active).Visible(true).Caption(sharedResource["Active"]);
+                                           
+                                        })
+                                        .ShowColumnLines(true)
+                                        .ShowRowLines(true)
+                                        .Export(e => e.Enabled(true).AllowExportSelectedData(true))
+                                        .OnExporting("exporting")
+                                        .RowAlternationEnabled(true)
+                                        .RemoteOperations(false)
+                                        .FilterRow(f => f.Visible(true))
+                                        .HeaderFilter(f => f.Visible(true))
+                                        .GroupPanel(p => p.Visible(true))
+                                        .Scrolling(scrolling => scrolling.RowRenderingMode(GridRowRenderingMode.Virtual))
+                                        .Selection(s => s.Mode(SelectionMode.Multiple))
+                                        .Paging(paging => paging.PageSize(10))
+                                        .AllowColumnReordering(true)
+                                        .AllowColumnResizing(true)
+                                        .ColumnAutoWidth(true)
+                                        .ShowBorders(true)
+                                        .ColumnChooser(c => c.Enabled(true))
+                                        .ColumnFixing(c => c.Enabled(true))
+                                        .ShowBorders(true)
+                                        .Grouping(g => g.AutoExpandAll(false))
+                                        .Pager(pager =>
+                                        {
+                                            pager.Visible(true);
+                                            pager.DisplayMode(GridPagerDisplayMode.Full);
+                                            pager.ShowPageSizeSelector(true);
+                                            pager.AllowedPageSizes(new JS("[5,10,20,50,100,'all']"));
+                                            pager.ShowInfo(true);
+                                            pager.ShowNavigationButtons(true);
+                                        })
+                                        .SearchPanel(searchPanel => searchPanel
+                                        .Visible(true)
+                                        .Width(240)
+                                        .Placeholder(sharedResource["SearchTxt"]))
+
+                                        .RemoteOperations(true)
+                                        .RtlEnabled(bool.Parse(sharedResource["Direction"]))
+                                        )
+
+
+                                    @* PopUp *@
+
+                                    @(Html.DevExtreme().Popup()
+                                        .ID("ViewPopup")
+                                        .Width(360)
+                                        .Height(320)
+                                        .Visible(false)
+                                        .Title("Downtown Inn")
+                                        .CloseOnOutsideClick(true)
+                                        .ShowCloseButton(true)
+                                        .ContentTemplate(new TemplateName("popup-template"))
+                                        .ToolbarItems(barItems =>
+                                        {
+                                            barItems.Add()
+                                            .Toolbar(Toolbar.Bottom)
+                                            .Location(ToolbarItemLocation.Center)
+                                            .Widget(widget => widget.Button()
+                                            .Text("Print")
+                                            .Type(ButtonType.Default)
+                                            .StylingMode(ButtonStylingMode.Contained)
+                                            .Width(300)
+                                            .OnClick("hidePopup")
+                                            );
+                                        })
+                                        )
+
+
+                                    @using (Html.DevExtreme().NamedTemplate("popup-template"))
+                                    {
+                                        @(Html.DevExtreme().ScrollView()
+                                            .Width("100%")
+                                            .Height("100%")
+                                            .Content(@<text>
+                                                <div class="caption">Description</div>
+                                                In the heart of LA&apos;s business district, the Downtown Inn has a welcoming staff
+                                                and award winning restaurants that remain open 24 hours a day.
+                                                Use our conference room facilities to conduct meetings and have a drink
+                                                at our beautiful rooftop bar.
+                                                <br><br>
+                                                <div class="content">
+                                                    <div>
+                                                        <div class="caption">Features</div>
+                                                        <div>Concierge</div>
+                                                        <div>Restaurant</div>
+                                                        <div>Valet Parking</div>
+                                                        <div>Fitness Center</div>
+                                                        <div>Sauna</div>
+                                                        <div>Airport Shuttle</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="caption">Rooms</div>
+                                                        <div>Climate control</div>
+                                                        <div>Air conditioning</div>
+                                                        <div>Coffee/tea maker</div>
+                                                        <div>Iron/ironing</div>
+                                                    </div>
+                                                </div>
+                                            </text>)
+                                            )
+                                    }
+
+
+                                </div>
+                                <!-- end card body -->
+                            </div><!-- end card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <partial name="_footer" />
+
+        </div>
+
+    </div>
+    <!-- END layout-wrapper -->
+    @*   @Html.Partial("_customizer.cshtml")*@
+    <partial name="_vendor_scripts" />
+    <partial name="_ValidationScriptsPartial" />
+
+
+
+
+    @await Component.InvokeAsync("NToastNotify")
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.10.1/polyfill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/3.8.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
+
+    <script>
+
+        //window.addEventListener('DOMContentLoaded', (event) => {
+        //    if (localStorage.getItem("lang") != "") {
+
+        //        if (localStorage.getItem("lang") == "ar") {
+        //            console.log("In Page")
+        //            dataGrid = $("#gridContainerID").dxDataGrid("instance");
+        //            //dataGrid.option("rtlEnabled", isRTL);
+        //            //dataGrid.option("searchPanel.placeholder", (isRTL) ? "بحث" : "Search...");
+        //            //dataGrid = $("#AssetLookupListId").dxDataGrid("instance");
+        //            dataGrid.option("rtlEnabled", true);
+        //        }
+        //    }
+        //});
+
+        function exporting(e) {
+            var workbook = new ExcelJS.Workbook();
+            var worksheet = workbook.addWorksheet('Orders');
+
+            DevExpress.excelExporter.exportDataGrid({
+                component: e.component,
+                worksheet: worksheet,
+                autoFilterEnabled: true
+            }).then(function () {
+                workbook.xlsx.writeBuffer().then(function (buffer) {
+                    var currentdate = new Date();
+                    var datetime = currentdate.getDate() + "_"
+                        + (currentdate.getMonth() + 1) + "_"
+                        + currentdate.getFullYear() + "_"
+                        + currentdate.getHours() + "_"
+                        + currentdate.getMinutes() + "_"
+                        + currentdate.getSeconds();
+                    saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Orders_' + datetime + '.xlsx');
+                });
+            });
+            e.cancel = true;
+        }
+
+
+    </script>
+</body>
+</html>
+
+

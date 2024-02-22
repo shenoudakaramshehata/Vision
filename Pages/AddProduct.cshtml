@@ -1,0 +1,290 @@
+﻿@page
+@model Vision.Pages.AddProductModel
+
+
+@inject CRMDBContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = "FrontSite/_TemplateLayout";
+     var locale = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+     var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+    //var ProductTypes = _context.ProductTypes.Select(e => new { e.TitleAr, e.TitleEn, e.ProductTypeId });
+    //var Categories = _context.ProductCategories.Select(e => new { e.TitleAr, e.TitleEn, e.ProductCategoryId });
+
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    .form-group .form-control {
+        background-color: #f4f4f4;
+        border: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-group .form-control:hover {
+            border-color: #000;
+            color: #000;
+        }
+
+        .form-group .form-control:focus {
+            outline: none;
+            border-color: #000;
+            color: #000;
+        }
+
+    .file-upload {
+        position: relative;
+        display: inline-block;
+    }
+
+        .file-upload input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .file-upload label:hover {
+                background-color: #2980b9;
+            }
+
+        .file-upload .file-name {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .file-upload .file-names {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+
+</style>
+<!-- Start of Main -->
+<main class="main checkout" style="padding-top: 250px; padding-bottom: 50px;">
+    <!-- Start of PageContent -->
+    <div class="page-content d-flex align-items-center justify-content-center">
+        <div class="container">
+            <form class="form checkout-form" action="#" method="post">
+                <div class="row mb-9">
+                    <div class="col-lg-9 pr-lg-4 mb-4">
+                        <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
+                            Add Product
+                        </h3>
+
+                        <div class="row mb-9">
+
+
+                            <div class="col-lg-3 form-group">
+                                <label><i class="w-icon-cart2 mr-1"></i> Product Name</label>
+                                <input type="text" class="form-control form-control-md" name="titleAr">
+                            </div>
+
+                            <div class="col-lg-3 form-group">
+                                <label><i class="w-icon-bars mr-1"></i> Sort Order</label>
+                                <input type="text" class="form-control form-control-md" name="titleEn">
+                            </div>
+                            <div class="col-lg-3 form-group checkbox-toggle pb-2">
+                                <input type="checkbox" class="custom-checkbox" id="shipping-toggle" name="shipping-toggle" checked>
+                                <label for="shipping-toggle">Fixed Price</label>
+                            </div>
+
+                            <div class="checkbox-content">
+                                <div class="row gutter-sm">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price Title En*</label>
+                                            <input type="text" class="form-control form-control-md" name="price_title_en[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price Title Ar*</label>
+                                            <input type="text" class="form-control form-control-md" name="price_title_ar[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" class="form-control form-control-md" name="price[]" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-dark add-price-btn">Add Price</button>
+
+                            </div>
+
+                            <div class="col-lg-12 form-group fixed-price-input">
+                                <label>
+                                    <i class="w-icon-wallet2 mr-1"></i> Price
+                                </label>
+                                <input type="number" class="form-control form-control-md fixed-price" name="fixed_price">
+                            </div>
+
+                            @*<div class="form-group checkbox-toggle pb-2">
+                                <input type="checkbox" class="custom-checkbox" id="shipping-toggle"
+                                       name="shipping-toggle">
+                                <label for="shipping-toggle">Fixed Price</label>
+                            </div>
+                            <div class="checkbox-content">
+                                <div class="row gutter-sm">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price Title En*</label>
+                                            <input type="text" class="form-control form-control-md" name="firstname"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price Title Ar*</label>
+                                            <input type="text" class="form-control form-control-md" name="lastname"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" class="form-control form-control-md" name="lastname"
+                                                   required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 form-group">
+                                <label>
+                                    <i class="w-icon-wallet2 mr-1"></i> Price
+                                </label>
+                                <input type="number" class="form-control form-control-md" name="delivery_cost">
+                            </div>*@
+                        </div>
+                        <div class="row mb-9">
+                            <div class="col-lg-6 form-group">
+                                <label><i class="w-icon-movie mr-1"></i> Image File</label>
+                                <div class="file-upload">
+                                    <input type="file" id="video-file" name="video-file">
+                                    <label for="video-file">Choose File</label>
+                                    <span class="file-name"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label><i class="w-icon-check mr-1"></i> Active</label>
+                                <div class="checkbox">
+                                    <input type="checkbox" name="active">
+                                </div>
+                            </div>
+                            <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">
+                                Extra Features
+                            </h3>
+                            <div class="content">
+                                <div class="row gutter-sm">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Product Title En*</label>
+                                            <input type="text" class="form-control form-control-md" name="price_title_en[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Product Title Ar*</label>
+                                            <input type="text" class="form-control form-control-md" name="price_title_ar[]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Price</label>
+                                            <input type="text" class="form-control form-control-md" name="price[]" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-dark add-price-btn">Add Extra</button>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group place-order pt-6 row mb-9">
+                        <button type="submit" class="btn btn-dark btn-block btn-rounded" style="width: 930px;">
+                            Add Product
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End of PageContent -->
+</main>
+<!-- End of Main -->
+
+<script>
+
+
+    var videoFileInput = document.getElementById('video-file');
+    var videoFileNameSpan = document.querySelector('.form-group .file-name');
+    videoFileInput.addEventListener('change', function () {
+        videoFileNameSpan.textContent = this.files[0].name;
+    });
+
+    var imageFilesInput = document.getElementById('image-files');
+    var imageFileNamesSpan = document.querySelector('.form-group .file-names');
+    imageFilesInput.addEventListener('change', function () {
+        var fileNames = Array.from(this.files).map(function (file) {
+            return file.name;
+        });
+        imageFileNamesSpan.textContent = fileNames.join(', ');
+    });
+    $(document).ready(function () {
+        // Show/hide checkbox-content and fixed price input based on checkbox state
+        $('#shipping-toggle').change(function () {
+            if ($(this).is(':checked')) {
+                $('.checkbox-content').hide();
+                $('.fixed-price-input').show();
+            } else {
+                $('.checkbox-content').show();
+                $('.fixed-price-input').hide();
+            }
+        });
+
+        // Add Price button click event
+        $('.add-price-btn').click(function () {
+            var lastRow = $('.checkbox-content .row.gutter-sm:last');
+            var newRow = lastRow.clone();
+            newRow.find('input').val('');
+            newRow.append('<button class="btn btn-danger remove-price-btn">Remove</button>');
+            lastRow.after(newRow);
+        });
+
+        // Remove Price button click event
+        $('.checkbox-content').on('click', '.remove-price-btn', function () {
+            $(this).closest('.row.gutter-sm').remove();
+        });
+
+        // Initially hide fixed price input and show checkbox-content
+        $('.fixed-price-input').hide();
+        $('.checkbox-content').show();
+    });
+
+</script>
+
+
